@@ -1,0 +1,69 @@
+
+큐리 인사.png
+size: 754,536
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+눈
+  rotate: true
+  xy: 2, 2
+  size: 217, 163
+  orig: 218, 163
+  offset: 1, 0
+  index: -1
+머리
+  rotate: true
+  xy: 161, 224
+  size: 310, 294
+  orig: 310, 295
+  offset: 0, 1
+  index: -1
+목도리
+  rotate: true
+  xy: 2, 221
+  size: 313, 157
+  orig: 314, 158
+  offset: 1, 1
+  index: -1
+볼터치
+  rotate: false
+  xy: 457, 225
+  size: 244, 133
+  orig: 245, 133
+  offset: 0, 0
+  index: -1
+오른쪽 귀
+  rotate: false
+  xy: 582, 67
+  size: 168, 156
+  orig: 170, 158
+  offset: 1, 1
+  index: -1
+오른쪽 손
+  rotate: true
+  xy: 167, 15
+  size: 207, 246
+  orig: 207, 247
+  offset: 0, 1
+  index: -1
+왼쪽 귀
+  rotate: false
+  xy: 415, 54
+  size: 165, 168
+  orig: 165, 168
+  offset: 0, 0
+  index: -1
+왼쪽 손
+  rotate: false
+  xy: 457, 360
+  size: 295, 174
+  orig: 296, 175
+  offset: 0, 0
+  index: -1
+입
+  rotate: true
+  xy: 703, 312
+  size: 46, 49
+  orig: 46, 49
+  offset: 0, 0
+  index: -1

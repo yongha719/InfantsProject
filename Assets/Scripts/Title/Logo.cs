@@ -6,5 +6,6 @@ public class Logo : MonoBehaviour
 {
     public static Animator animator;
 
+    void Awake() =>animator = GetComponent<Animator>();
     public void StopAnimator() => animator.speed = 0;
 }

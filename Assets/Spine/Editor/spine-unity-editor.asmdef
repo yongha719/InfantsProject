@@ -1,21 +1,13 @@
 {
     "name": "spine-unity-editor",
-    "rootNamespace": "",
     "references": [
         "spine-csharp",
         "spine-unity"
     ],
+    "optionalUnityReferences": [],
     "includePlatforms": [
-        "Android",
-        "Editor",
-        "WindowsStandalone64"
+        "Editor"
     ],
     "excludePlatforms": [],
-    "allowUnsafeCode": false,
-    "overrideReferences": false,
-    "precompiledReferences": [],
-    "autoReferenced": true,
-    "defineConstraints": [],
-    "versionDefines": [],
-    "noEngineReferences": false
+    "allowUnsafeCode": false
 }

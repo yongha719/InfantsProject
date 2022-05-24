@@ -10,9 +10,6 @@ public class TitleManager : MonoBehaviour
 {
     [SerializeField] List<Button> LunchBoxButtons;
 
-    [SerializeField] RectTransform LogoRectTr;
-    [SerializeField] RectTransform CurieRectTr;
-
     void Start()
     {
         setButtons();
@@ -37,14 +34,8 @@ public class TitleManager : MonoBehaviour
         {
             lbbtn.onClick.AddListener(() =>
             {
-                SceneManager.LoadScene($"Stage{lbbtn.name}");
-                print($"Stage{lbbtn.name}");
+                //SceneManager.LoadScene($"Stage{lbbtn.name}");
             });
         }
-    }
-
-    void Update()
-    {
-
-    }
+    }  
 }

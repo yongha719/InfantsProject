@@ -575,28 +575,22 @@ namespace Spine.Unity.Editor {
 					pageName = "Material";
 
 				string materialPath = assetPath + "/" + primaryName + "_" + pageName + ".mat";
-				Material material = (Material)AssetDatabase.LoadAssetAtPath(materialPath, typeof(Material));
+				Material mat = (Material)AssetDatabase.LoadAssetAtPath(materialPath, typeof(Material));
 
-				if (material == null) {
-					Shader defaultShader = Shader.Find(SpineEditorUtilities.Preferences.DefaultShader);
-					material = defaultShader != null ? new Material(defaultShader) : null;
-					if (material) {
-						ApplyPMAOrStraightAlphaSettings(material, SpineEditorUtilities.Preferences.textureSettingsReference);
-						AssetDatabase.CreateAsset(material, materialPath);
-					}
+				if (mat == null) {
+					mat = new Material(Shader.Find(SpineEditorUtilities.Preferences.defaultShader));
+					ApplyPMAOrStraightAlphaSettings(mat, SpineEditorUtilities.Preferences.textureSettingsReference);
+					AssetDatabase.CreateAsset(mat, materialPath);
 				} else {
-					vestigialMaterials.Remove(material);
+					vestigialMaterials.Remove(mat);
 				}
 
-				if (material != null) {
-					if (texture != null) {
-						material.mainTexture = texture;
-					}
+				if (texture != null)
+					mat.mainTexture = texture;
 
-					EditorUtility.SetDirty(material);
-					// note: don't call AssetDatabase.SaveAssets() since this would trigger OnPostprocessAllAssets() every time unnecessarily.
-					populatingMaterials.Add(material); //atlasAsset.materials[i] = mat;
-				}
+				EditorUtility.SetDirty(mat);
+				// note: don't call AssetDatabase.SaveAssets() since this would trigger OnPostprocessAllAssets() every time unnecessarily.
+				populatingMaterials.Add(mat); //atlasAsset.materials[i] = mat;
 			}
 
 			atlasAsset.materials = populatingMaterials.ToArray();

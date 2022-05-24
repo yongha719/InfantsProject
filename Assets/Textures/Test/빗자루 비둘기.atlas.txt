@@ -1,0 +1,62 @@
+
+빗자루 비둘기.png
+size: 453,129
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+꼬리
+  rotate: false
+  xy: 244, 67
+  size: 113, 60
+  orig: 113, 60
+  offset: 0, 0
+  index: -1
+눈
+  rotate: false
+  xy: 338, 4
+  size: 26, 40
+  orig: 26, 40
+  offset: 0, 0
+  index: -1
+머리
+  rotate: false
+  xy: 164, 14
+  size: 78, 113
+  orig: 78, 113
+  offset: 0, 0
+  index: -1
+빗자루
+  rotate: true
+  xy: 2, 2
+  size: 125, 160
+  orig: 125, 160
+  offset: 0, 0
+  index: -1
+오른발
+  rotate: false
+  xy: 390, 7
+  size: 20, 37
+  orig: 20, 37
+  offset: 0, 0
+  index: -1
+옷
+  rotate: false
+  xy: 359, 46
+  size: 92, 81
+  orig: 92, 81
+  offset: 0, 0
+  index: -1
+왼발
+  rotate: false
+  xy: 366, 7
+  size: 22, 37
+  orig: 22, 37
+  offset: 0, 0
+  index: -1
+팔
+  rotate: false
+  xy: 244, 3
+  size: 92, 62
+  orig: 92, 62
+  offset: 0, 0
+  index: -1

@@ -12,6 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a6b194f808b1af6499c93410e504af42, type: 3}
   m_Name: curie_Atlas
   m_EditorClassIdentifier: 
-  atlasFile: {fileID: 4900000, guid: 1185e2adf04aa3c45980f57f5267472c, type: 3}
+  atlasFile: {fileID: 4900000, guid: ec8d82952d5b90145ab264fc4573cca2, type: 3}
   materials:
-  - {fileID: 2100000, guid: 88f32b5d23ac4af4a8941ea648fe6058, type: 2}
+  - {fileID: 2100000, guid: 620457030325c5240911957fccaf286f, type: 2}

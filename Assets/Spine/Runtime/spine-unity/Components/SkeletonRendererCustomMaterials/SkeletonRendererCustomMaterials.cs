@@ -90,8 +90,7 @@ namespace Spine.Unity {
 					continue;
 
 				Slot slotObject = skeletonRenderer.skeleton.FindSlot(slotMaterialOverride.slotName);
-				if (slotObject != null)
-					skeletonRenderer.CustomSlotMaterials[slotObject] = slotMaterialOverride.material;
+				skeletonRenderer.CustomSlotMaterials[slotObject] = slotMaterialOverride.material;
 			}
 		}
 
@@ -107,8 +106,7 @@ namespace Spine.Unity {
 					continue;
 
 				Slot slotObject = skeletonRenderer.skeleton.FindSlot(slotMaterialOverride.slotName);
-				if (slotObject == null)
-					continue;
+
 				Material currentMaterial;
 				if (!skeletonRenderer.CustomSlotMaterials.TryGetValue(slotObject, out currentMaterial))
 					continue;

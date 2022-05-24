@@ -1,0 +1,89 @@
+{
+    "skeleton":{
+        "hash":"nou6qRWWTBm4p47HS/8bev9AK4U",
+        "spine":"4.0.31","x":-549.24,"y":-109.32,
+        "width":919,
+        "height":892,
+        "images":"./images/",
+        "audio":"N:/. Personal_folder/학교-집 작업물/유아용 게임"
+    },
+"bones":[
+    {"name":"root"},
+    {"name":"bone","parent":"root","length":180.18,"rotation":65.81,"x":-59.37,"y":592.76},
+    {"name":"bone2","parent":"root","length":158.04,"rotation":164.71,"x":-377.37,"y":443.89},
+    {"name":"bone3","parent":"root","length":337.29,"rotation":47.86,"x":99.03,"y":104.45},
+    {"name":"bone4","parent":"root","length":327.23,"rotation":173.52,"x":-166.56,"y":32.99},
+    {"name":"bone5","parent":"root","length":226.29,"rotation":112.92,"x":-80.81,"y":316.45},
+    {"name":"bone6","parent":"root","length":86.95,"rotation":-66.6,"x":-80.81,"y":325.98}
+],
+"slots":[
+           {"name":"왼쪽 손","bone":"bone4","attachment":"왼쪽 손"},
+           {"name":"오른쪽 손","bone":"bone3","attachment":"오른쪽 손"},
+           {"name":"왼쪽 귀","bone":"bone2","attachment":"왼쪽 귀"},
+           {"name":"오른쪽 귀","bone":"bone","attachment":"오른쪽 귀"},
+           {"name":"목도리","bone":"root","attachment":"목도리"},
+           {"name":"머리","bone":"root","attachment":"머리"},
+           {"name":"눈","bone":"bone5","attachment":"눈"},
+           {"name":"입","bone":"bone6","attachment":"입"},
+           {"name":"볼터치","bone":"root","attachment":"볼터치"}
+],
+"skins":[
+    {"name":"default",
+    "attachments":{
+      "입":{"
+    입":{"x":33.38,"y":-2.93,"rotation":66.6,"width":92,"height":97}
+    },
+    "눈":{
+    "눈":{"x":106.01,"y":2.33,"rotation":-112.92,"width":436,"height":325}
+        },
+        "오른쪽 귀":{
+         "오른쪽 귀":{"x":33.47,"y":3.38,"rotation":-65.81,"width":339,"height":316}
+    },
+    "목도리":{
+    "목도리":{"x":-68.24,"y":176.18,"width":628,"height":315}
+      },
+    "오른쪽 손":{
+          "오른쪽 손":{"x":67.02,"y":-25.3,"rotation":-47.86,"width":414,"height":493}
+          },
+    "왼쪽 귀":{
+              "왼쪽 귀":{"x":0.64,"y":23.72,"rotation":-164.71,"width":330,"height":335}
+    },
+    "볼터치":{
+        "볼터치":{"x":-75.74,"y":314.68,"width":489,"height":266}
+    },
+    "왼쪽 손":{
+        "왼쪽 손":{"x":63.43,"y":-25.19,"rotation":-173.52,"width":591,"height":349}
+    },
+    "머리":{
+        "머리":{"x":-120.74,"y":393.68,"width":619,"height":590}
+    }
+    }
+    }
+],
+"animations":{
+    "animation":{
+        "bones":{
+            "bone":{
+                "rotate":[{},{"time":0.8333,"angle":-11.67},{"time":1.6667}],
+                "translate":[{},{"time":0.8333,"x":14.7},{"time":1.6667}]
+                },
+            "bone2":{
+                "rotate":[{},{"time":0.8333,"angle":11.31},{"time":1.6667}],
+                "translate":[{},{"time":0.8333,"y":-4.32},{"time":1.6667}]
+            },
+            "bone3":{
+                "rotate":[{},{"time":0.8333,"angle":-3.43},{"time":1.6667}]
+                },
+            "bone4":{
+                "rotate":[{},{"time":0.8333,"angle":2.63},{"time":1.6667}]
+                },
+            "bone5":{
+                "scale":[{},{"time":0.8333,"x":0.933},{"time":1.6667}]
+            },
+            "bone6":{
+                "scale":[{},{"time":0.8333,"x":0.312},{"time":1.6667}]
+            }
+            }
+        }
+    }
+}

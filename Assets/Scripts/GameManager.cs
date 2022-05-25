@@ -2,10 +2,14 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
     public static GameManager Instance;
+
+    [SerializeField]
+    private List<Button> LunchBoxButtons;
 
     [SerializeField]
     private RectTransform ParentRt;
@@ -19,14 +23,16 @@ public class GameManager : MonoBehaviour
     //[SerializeField] 
     //private List <Button> Bananas;
 
+
     void Awake()
     {
         Instance = this;
         DontDestroyOnLoad(this);
     }
+
     void Start()
     {
-        
+        StartCoroutine(EWaitTouch());
     }
 
     void Update()
@@ -34,11 +40,23 @@ public class GameManager : MonoBehaviour
 
     }
 
-    public void StartStageOne()
+    private void setButtons()
+    {
+        foreach (var lbbtn in LunchBoxButtons)
+        {
+            lbbtn.onClick.AddListener(() =>
+            {
+                SceneManager.LoadScene($"Stage{lbbtn.name}");
+
+                Invoke($"StartStage{lbbtn.name}");
+            });
+        }
+    }
+    public void StartStage1()
     {
         randomInstBox(Boxs, 1);
 
-
+        print(nameof(StartStage1));
     }
 
     void randomInstBox(List<Button> buttons, int selectnum)
@@ -63,9 +81,34 @@ public class GameManager : MonoBehaviour
             instbuttons.RemoveAt(num);
         }
     }
-
     void CheckBasket(GameObject button)
     {
 
     }
+
+    IEnumerator EWaitTouch()
+    {
+        var wait = new WaitForSeconds(0.001f);
+
+        while (true)
+        {
+            if (Input.GetMouseButtonDown(0) || Input.anyKeyDown)
+            {
+                Curie.animator.SetBool("isStart", true);
+                Logo.animator.SetBool("isStart", true);
+                yield break;
+            }
+
+            //if(Input.touchCount > 0)
+            //{
+            //    Curie.animator.SetBool("isStart", true);
+            //    Logo.animator.SetBool("isStart", true);
+            //    yield break;
+            //}
+            yield return wait;
+        }
+    }
+
+    void Invoke(string name) => Invoke(name, 0);
+
 }

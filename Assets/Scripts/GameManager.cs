@@ -3,20 +3,21 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public enum EStageType
-{
-    One, Two, Three, Four, Five, Six, End
-}
 public class GameManager : MonoBehaviour
 {
     public static GameManager Instance;
 
-    public EStageType eStageType;
     [SerializeField]
-    private RectTransform BoxParent;
+    private RectTransform ParentRt;
 
     [SerializeField]
     private List<Button> Boxs;
+
+    [SerializeField]
+    private List<Button> Bananas;
+
+    //[SerializeField] 
+    //private List <Button> Bananas;
 
     void Awake()
     {
@@ -25,7 +26,7 @@ public class GameManager : MonoBehaviour
     }
     void Start()
     {
-        randomInstBox();
+        
     }
 
     void Update()
@@ -35,23 +36,36 @@ public class GameManager : MonoBehaviour
 
     public void StartStageOne()
     {
-        randomInstBox();
+        randomInstBox(Boxs, 1);
+
+
     }
 
-    void randomInstBox()
+    void randomInstBox(List<Button> buttons, int selectnum)
     {
-        var buttons = new List<Button>();
+        var instbuttons = new List<Button>();
 
-        foreach (var button in Boxs)
-            buttons.Add(button);
+        foreach (var button in buttons)
+            instbuttons.Add(button);
 
-        int count = buttons.Count;
+        int count = instbuttons.Count;
 
         for (int i = 0; i < count; i++)
         {
-            int num = Random.Range(0, buttons.Count);
-            Button button = Instantiate(buttons[num], BoxParent);
-            buttons.RemoveAt(num);
+            int num = Random.Range(0, instbuttons.Count);
+            Button button = Instantiate(instbuttons[num], ParentRt);
+
+            button.onClick.AddListener(() =>
+            {
+                if (selectnum == num)
+                    CheckBasket(button.gameObject);
+            });
+            instbuttons.RemoveAt(num);
         }
+    }
+
+    void CheckBasket(GameObject button)
+    {
+
     }
 }

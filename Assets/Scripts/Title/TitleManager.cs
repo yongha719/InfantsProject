@@ -14,6 +14,7 @@ public class TitleManager : MonoBehaviour
     void Start()
     {
         setButtons();
+        StartCoroutine(EWaitTouch());
     }
 
     private void setButtons()
@@ -24,8 +25,31 @@ public class TitleManager : MonoBehaviour
             {
                 SceneManager.LoadScene($"Stage{lbbtn.name}");
 
-                GameManager.Instance.Invoke($"StartStage{lbbtn.name}");  
+                GameManager.Instance.Invoke($"StartStage{lbbtn.name}");
             });
+        }
+    }
+
+    IEnumerator EWaitTouch()
+    {
+        var wait = new WaitForSeconds(0.001f);
+
+        while (true)
+        {
+            if (Input.GetMouseButtonDown(0) || Input.anyKeyDown)
+            {
+                Curie.animator.SetBool("isStart", true);
+                Logo.animator.SetBool("isStart", true);
+                yield break;
+            }
+
+            //if(Input.touchCount > 0)
+            //{
+            //    Curie.animator.SetBool("isStart", true);
+            //    Logo.animator.SetBool("isStart", true);
+            //    yield break;
+            //}
+            yield return wait;
         }
     }
 }

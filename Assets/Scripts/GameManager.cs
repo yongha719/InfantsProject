@@ -4,11 +4,15 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
+public enum EStageState
+{
+    One, Two, Three, Four, Five, Six, End
+}
 public class GameManager : MonoBehaviour
 {
     public static GameManager Instance;
 
-
+    public EStageState Estagestate;
 
     [SerializeField]
     private RectTransform ParentRt;
@@ -22,7 +26,6 @@ public class GameManager : MonoBehaviour
     //[SerializeField] 
     //private List <Button> Bananas;
 
-
     void Awake()
     {
         Instance = this;
@@ -31,7 +34,7 @@ public class GameManager : MonoBehaviour
 
     void Start()
     {
-        StartCoroutine(EWaitTouch());
+
     }
 
     void Update()
@@ -43,8 +46,6 @@ public class GameManager : MonoBehaviour
     public void StartStage1()
     {
         randomInstBox(Boxs, 1);
-
-        print(nameof(StartStage1));
     }
 
     void randomInstBox(List<Button> buttons, int selectnum)
@@ -52,7 +53,7 @@ public class GameManager : MonoBehaviour
         Instantiate(ParentRt, GameObject.Find("Canvas").transform);
 
         var instbuttons = new List<Button>();
-        
+
         foreach (var button in buttons)
             instbuttons.Add(button);
 
@@ -76,28 +77,7 @@ public class GameManager : MonoBehaviour
 
     }
 
-    IEnumerator EWaitTouch()
-    {
-        var wait = new WaitForSeconds(0.001f);
-
-        while (true)
-        {
-            if (Input.GetMouseButtonDown(0) || Input.anyKeyDown)
-            {
-                Curie.animator.SetBool("isStart", true);
-                Logo.animator.SetBool("isStart", true);
-                yield break;
-            }
-
-            //if(Input.touchCount > 0)
-            //{
-            //    Curie.animator.SetBool("isStart", true);
-            //    Logo.animator.SetBool("isStart", true);
-            //    yield break;
-            //}
-            yield return wait;
-        }
-    }
+    
 
     public void Invoke(string name)
     {

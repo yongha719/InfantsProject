@@ -8,8 +8,7 @@ public class GameManager : MonoBehaviour
 {
     public static GameManager Instance;
 
-    [SerializeField]
-    private List<Button> LunchBoxButtons;
+
 
     [SerializeField]
     private RectTransform ParentRt;
@@ -40,18 +39,7 @@ public class GameManager : MonoBehaviour
 
     }
 
-    private void setButtons()
-    {
-        foreach (var lbbtn in LunchBoxButtons)
-        {
-            lbbtn.onClick.AddListener(() =>
-            {
-                SceneManager.LoadScene($"Stage{lbbtn.name}");
 
-                Invoke($"StartStage{lbbtn.name}");
-            });
-        }
-    }
     public void StartStage1()
     {
         randomInstBox(Boxs, 1);
@@ -61,8 +49,10 @@ public class GameManager : MonoBehaviour
 
     void randomInstBox(List<Button> buttons, int selectnum)
     {
-        var instbuttons = new List<Button>();
+        Instantiate(ParentRt, GameObject.Find("Canvas").transform);
 
+        var instbuttons = new List<Button>();
+        
         foreach (var button in buttons)
             instbuttons.Add(button);
 
@@ -109,6 +99,8 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    void Invoke(string name) => Invoke(name, 0);
-
+    public void Invoke(string name)
+    {
+        Invoke(name, 0);
+    }
 }

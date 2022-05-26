@@ -8,16 +8,37 @@ using UnityEngine.EventSystems;
 
 public class TitleManager : MonoBehaviour
 {
+    public static TitleManager Instance = null;
     [SerializeField]
     private List<Button> LunchBoxButtons;
 
-    void Start()
+    [SerializeField]
+    private GameObject logo;
+
+    [SerializeField]
+    private RectTransform curie;
+
+    private static bool isStart;
+
+    private void Awake()
     {
-        setButtons();
-        StartCoroutine(EWaitTouch());
+        Instance = this;
     }
 
-    private void setButtons()
+    void Start()
+    {
+        SetUI();
+        SetButtons();
+        if (isStart == false)
+            StartCoroutine(EWaitTouch());
+        print(curie.sizeDelta);
+    }
+
+    private void Update()
+    {
+        
+    }
+    private void SetButtons()
     {
         foreach (var lbbtn in LunchBoxButtons)
         {
@@ -25,11 +46,19 @@ public class TitleManager : MonoBehaviour
             {
                 SceneManager.LoadScene($"Stage{lbbtn.name}");
 
-                GameManager.Instance.Invoke($"StartStage{lbbtn.name}");
+                GameManager.Estagestate = (EStageState)int.Parse(lbbtn.name) - 1;
             });
         }
     }
 
+    private void SetUI()
+    {
+        if (isStart)
+        {
+            logo.SetActive(false);
+            Curie.animator.SetBool("AlreadyStart", true);
+        }
+    }
     IEnumerator EWaitTouch()
     {
         var wait = new WaitForSeconds(0.001f);
@@ -38,8 +67,9 @@ public class TitleManager : MonoBehaviour
         {
             if (Input.GetMouseButtonDown(0) || Input.anyKeyDown)
             {
-                Curie.animator.SetBool("isStart", true);
-                Logo.animator.SetBool("isStart", true);
+                isStart = true;
+                Curie.animator.SetBool("isStart", isStart);
+                Logo.animator.SetBool("isStart", isStart);
                 yield break;
             }
 

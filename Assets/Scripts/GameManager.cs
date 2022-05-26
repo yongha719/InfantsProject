@@ -6,13 +6,13 @@ using UnityEngine.SceneManagement;
 
 public enum EStageState
 {
-    One, Two, Three, Four, Five, Six, End
+    One = 0, Two, Three, Four, Five, Six, End
 }
 public class GameManager : MonoBehaviour
 {
     public static GameManager Instance;
 
-    public EStageState Estagestate;
+    public static EStageState Estagestate;
 
     [SerializeField]
     private RectTransform ParentRt;
@@ -34,7 +34,7 @@ public class GameManager : MonoBehaviour
 
     void Start()
     {
-
+        SelectStage();
     }
 
     void Update()
@@ -42,15 +42,40 @@ public class GameManager : MonoBehaviour
 
     }
 
-
+    void SelectStage()
+    {
+        int num = (int)Estagestate + 1;
+        switch (Estagestate)
+        {
+            case EStageState.One:
+                randomInstBox(Boxs, num);
+                Invoke($"StartStage{num}");
+                break;
+            case EStageState.Two:
+                randomInstBox(Bananas, num);
+                Invoke($"StartStage{num}");
+                break;
+            case EStageState.Three:
+                break;
+            case EStageState.Four:
+                break;
+            case EStageState.Five:
+                break;
+            case EStageState.Six:
+                break;
+            default:
+                Debug.Assert(false);
+                break;
+        }
+    }
     public void StartStage1()
     {
-        randomInstBox(Boxs, 1);
+
     }
 
     void randomInstBox(List<Button> buttons, int selectnum)
     {
-        Instantiate(ParentRt, GameObject.Find("Canvas").transform);
+        var parentrt = Instantiate(ParentRt, GameObject.Find("Canvas").transform);
 
         var instbuttons = new List<Button>();
 
@@ -62,7 +87,7 @@ public class GameManager : MonoBehaviour
         for (int i = 0; i < count; i++)
         {
             int num = Random.Range(0, instbuttons.Count);
-            Button button = Instantiate(instbuttons[num], ParentRt);
+            Button button = Instantiate(instbuttons[num], parentrt);
 
             button.onClick.AddListener(() =>
             {
@@ -77,7 +102,7 @@ public class GameManager : MonoBehaviour
 
     }
 
-    
+
 
     public void Invoke(string name)
     {

@@ -187,7 +187,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 2
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &320122264
 PrefabInstance:
@@ -286,7 +286,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2629110348807301615, guid: 75ac9c2f9a1a99243a1a859f30ee0433, type: 3}
       propertyPath: m_PreserveAspect
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 75ac9c2f9a1a99243a1a859f30ee0433, type: 3}
@@ -391,7 +391,7 @@ GameObject:
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
-  m_Icon: {fileID: 3306451490063965843, guid: 0000000000000000d000000000000000, type: 0}
+  m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
@@ -428,7 +428,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 3
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!224 &1028079646 stripped
 RectTransform:
@@ -521,6 +521,7 @@ GameObject:
   - component: {fileID: 2011063834}
   - component: {fileID: 2011063833}
   - component: {fileID: 2011063832}
+  - component: {fileID: 2011063835}
   - component: {fileID: 2011063831}
   m_Layer: 5
   m_Name: Canvas
@@ -612,6 +613,26 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
+--- !u!114 &2011063835
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2011063830}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c93124f2366d96f4794df5a4fe05cfe4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  MatSprites:
+  - {fileID: 21300000, guid: 5c6a4d7fb8e0b2b499bab7c60f0c85f0, type: 3}
+  - {fileID: 21300000, guid: d580d3ff4c4c9514dbd52d1b9808561a, type: 3}
+  - {fileID: 21300000, guid: c8de0024b3afef54899d7b5e58bb8d4e, type: 3}
+  - {fileID: 21300000, guid: b64672637f86d764788851a21fff173e, type: 3}
+  - {fileID: 21300000, guid: 34c49476def9fef45b87476c712510f5, type: 3}
+  - {fileID: 21300000, guid: 375bf7f3679c57b45b99e41ad964b486, type: 3}
+  Mat: {fileID: 1552820713}
 --- !u!1001 &616403044503183306
 PrefabInstance:
   m_ObjectHideFlags: 0

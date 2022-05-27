@@ -10,8 +10,6 @@ public enum EStageState
 }
 public class GameManager : MonoBehaviour
 {
-    public static GameManager Instance;
-
     public static EStageState Estagestate;
 
     [SerializeField]
@@ -26,11 +24,6 @@ public class GameManager : MonoBehaviour
     //[SerializeField] 
     //private List <Button> Bananas;
 
-    void Awake()
-    {
-        Instance = this;
-        DontDestroyOnLoad(this);
-    }
 
     void Start()
     {
@@ -42,7 +35,7 @@ public class GameManager : MonoBehaviour
 
     }
 
-    void SelectStage()
+    public void SelectStage()
     {
         int num = (int)Estagestate + 1;
 
@@ -50,11 +43,11 @@ public class GameManager : MonoBehaviour
         {
             case EStageState.One:
                 RandomInstantiateButton(Boxs, num);
-                StartStage1();
+                Invoke($"StartStage{num}");
                 break;
             case EStageState.Two:
                 RandomInstantiateButton(Bananas, num);
-                Invoke($"StartStage{num}");
+                //Invoke($"StartStage{num}");
                 break;
             case EStageState.Three:
                 break;
@@ -71,8 +64,9 @@ public class GameManager : MonoBehaviour
     }
     public void StartStage1()
     {
-
+        print(nameof(StartStage1));
     }
+
 
     void RandomInstantiateButton(List<Button> buttons, int selectnum)
     {
@@ -103,9 +97,6 @@ public class GameManager : MonoBehaviour
     {
 
     }
-
-
-
     public void Invoke(string name)
     {
         Invoke(name, 0);

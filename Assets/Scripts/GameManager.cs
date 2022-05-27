@@ -45,14 +45,15 @@ public class GameManager : MonoBehaviour
     void SelectStage()
     {
         int num = (int)Estagestate + 1;
+
         switch (Estagestate)
         {
             case EStageState.One:
-                randomInstBox(Boxs, num);
-                Invoke($"StartStage{num}");
+                RandomInstantiateButton(Boxs, num);
+                StartStage1();
                 break;
             case EStageState.Two:
-                randomInstBox(Bananas, num);
+                RandomInstantiateButton(Bananas, num);
                 Invoke($"StartStage{num}");
                 break;
             case EStageState.Three:
@@ -73,7 +74,7 @@ public class GameManager : MonoBehaviour
 
     }
 
-    void randomInstBox(List<Button> buttons, int selectnum)
+    void RandomInstantiateButton(List<Button> buttons, int selectnum)
     {
         var parentrt = Instantiate(ParentRt, GameObject.Find("Canvas").transform);
 
@@ -94,6 +95,7 @@ public class GameManager : MonoBehaviour
                 if (selectnum == num)
                     CheckBasket(button.gameObject);
             });
+
             instbuttons.RemoveAt(num);
         }
     }

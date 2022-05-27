@@ -70,6 +70,9 @@ public class TitleManager : MonoBehaviour
                 isStart = true;
                 Curie.animator.SetBool("isStart", isStart);
                 Logo.animator.SetBool("isStart", isStart);
+
+                yield return new WaitForSeconds(0.5f);
+                Curie.animator.SetBool("AlreadyStart", true);
                 yield break;
             }
 

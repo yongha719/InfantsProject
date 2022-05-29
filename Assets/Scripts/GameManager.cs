@@ -16,17 +16,21 @@ public class GameManager : MonoBehaviour
     private RectTransform ParentRt;
 
     [SerializeField]
+    private List<List<Button>> Ingredients = new List<List<Button>>();
+
+    [SerializeField]
     private List<Button> Boxs;
 
     [SerializeField]
     private List<Button> Bananas;
 
-    //[SerializeField] 
-    //private List <Button> Bananas;
-
-
+    private void Awake()
+    {
+    }
     void Start()
     {
+        Ingredients.Add(Boxs);
+        Ingredients.Add(Bananas);
         SelectStage();
     }
 
@@ -42,11 +46,11 @@ public class GameManager : MonoBehaviour
         switch (Estagestate)
         {
             case EStageState.One:
-                RandomInstantiateButton(Boxs, num);
+                RandomInstantiateButton(Ingredients[num - 1], num);
                 Invoke($"StartStage{num}");
                 break;
             case EStageState.Two:
-                RandomInstantiateButton(Bananas, num);
+                RandomInstantiateButton(Ingredients[num - 1], num);
                 //Invoke($"StartStage{num}");
                 break;
             case EStageState.Three:
@@ -64,14 +68,12 @@ public class GameManager : MonoBehaviour
     }
     public void StartStage1()
     {
-        print(nameof(StartStage1));
+        
     }
 
 
     void RandomInstantiateButton(List<Button> buttons, int selectnum)
     {
-        var parentrt = Instantiate(ParentRt, GameObject.Find("Canvas").transform);
-
         var instbuttons = new List<Button>();
 
         foreach (var button in buttons)
@@ -82,7 +84,7 @@ public class GameManager : MonoBehaviour
         for (int i = 0; i < count; i++)
         {
             int num = Random.Range(0, instbuttons.Count);
-            Button button = Instantiate(instbuttons[num], parentrt);
+            Button button = Instantiate(instbuttons[num], ParentRt);
 
             button.onClick.AddListener(() =>
             {

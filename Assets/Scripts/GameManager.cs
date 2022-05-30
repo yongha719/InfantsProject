@@ -9,7 +9,7 @@ public enum EStageState
 {
     One = 0, Two, Three, Four, Five, Six, End
 }
-public class GameManager : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler
+public class GameManager : MonoBehaviour
 {
     public static EStageState Estagestate;
 
@@ -30,10 +30,12 @@ public class GameManager : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndD
     }
     void Start()
     {
-        SelectStage();
-
         for (int i = 0; i < ParentRt.childCount; i++)
+        {
             slots.Add(ParentRt.GetChild(i));
+        }
+
+        SelectStage();
     }
 
     void Update()
@@ -84,7 +86,8 @@ public class GameManager : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndD
 
         for (int i = 0; i < count; i++)
         {
-            int num = Random.Range(0, slots.Count);
+            int num = Random.Range(0, slottr.Count);
+            print($"{i}  :  {num}");
             Button button = Instantiate(buttons[i], slottr[num]);
 
             button.onClick.AddListener(() =>
@@ -105,19 +108,4 @@ public class GameManager : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndD
     {
         Invoke(name, 0);
     }
-
-    public void OnDrag(PointerEventData eventData)
-    {
-
-    }
-    public void OnBeginDrag(PointerEventData eventData)
-    {
-
-    }
-
-    public void OnEndDrag(PointerEventData eventData)
-    {
-
-    }
-
 }

@@ -6,6 +6,8 @@ using UnityEngine.EventSystems;
 
 public class Ingredient : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler
 {
+    public bool IsCurrect;
+    public int num;
 
     public Transform OriginParent;
     public Vector2 OriginPos;
@@ -34,6 +36,9 @@ public class Ingredient : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDr
 
         transform.SetParent(Parent);
         transform.SetAsLastSibling();
+
+        canvasGroup.alpha = 0.6f;
+        canvasGroup.blocksRaycasts = false;
     }
     public void OnDrag(PointerEventData eventData)
     {
@@ -48,5 +53,8 @@ public class Ingredient : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDr
             transform.SetParent(OriginParent);
             rectTransform.position = OriginParent.GetComponent<RectTransform>().position;
         }
+
+        canvasGroup.alpha = 1f;
+        canvasGroup.blocksRaycasts = true;
     }
 }

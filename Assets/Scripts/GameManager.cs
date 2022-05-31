@@ -89,11 +89,18 @@ public class GameManager : MonoBehaviour
             int num = Random.Range(0, slottr.Count);
             print($"{i}  :  {num}");
             Button button = Instantiate(buttons[i], slottr[num]);
+            button.GetComponent<Ingredient>().num = i + 1;
 
             button.onClick.AddListener(() =>
             {
-                if (selectnum == num)
+                Ingredient ingredient = EventSystem.current.currentSelectedGameObject.GetComponent<Ingredient>();
+
+                if (selectnum == button.GetComponent<Ingredient>().num)
+                {
+                    print("Onclick Select");
+                    button.GetComponent<Ingredient>().IsCurrect = true;
                     CheckBasket(button.gameObject);
+                }
             });
 
             slottr.RemoveAt(num);

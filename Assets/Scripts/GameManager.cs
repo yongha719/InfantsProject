@@ -9,11 +9,15 @@ public enum EStageState
 }
 public class GameManager : MonoBehaviour
 {
-    public static EStageState Estagestate;
+    public static EStageState Estagestate { get; set; }
 
     [SerializeField]
     private RectTransform ParentRt;
     private List<Transform> slots = new List<Transform>();
+
+    [SerializeField]
+    private Transform lunchBox;
+    List<GameObject> lunchBoxChilds = new List<GameObject>();
 
     [SerializeField]
     private List<GameObject> Boxs;
@@ -21,7 +25,9 @@ public class GameManager : MonoBehaviour
     [SerializeField]
     private List<GameObject> Bananas;
 
-    public static Action CurrectAction;
+    public int ad;
+    public static Action CurrectAction { get; private set; }
+
 
     private void Awake()
     {
@@ -32,6 +38,11 @@ public class GameManager : MonoBehaviour
         for (int i = 0; i < ParentRt.childCount; i++)
         {
             slots.Add(ParentRt.GetChild(i));
+        }
+
+        for (int i = 0; i < lunchBox.childCount; i++)
+        {
+            lunchBoxChilds.Add(lunchBox.GetChild(i).gameObject);
         }
 
         SelectStage();
@@ -50,7 +61,6 @@ public class GameManager : MonoBehaviour
         {
             case EStageState.One:
                 RandomInstantiateButton(Boxs, num);
-                CurrectAction = () => StartStageOneAction();
                 break;
             case EStageState.Two:
                 RandomInstantiateButton(Bananas, num);
@@ -67,10 +77,13 @@ public class GameManager : MonoBehaviour
                 Debug.Assert(false);
                 break;
         }
+
+        CurrectAction = () => StageClearFunc();
     }
-    public void StartStageOneAction()
+    public void StageClearFunc()
     {
-        
+        lunchBoxChilds[(int)Estagestate].SetActive(true);
+        lunchBox.GetChild(lunchBox.childCount - 1).gameObject.SetActive(false);
     }
 
     void RandomInstantiateButton(List<GameObject> buttons, int selectnum)
@@ -86,16 +99,18 @@ public class GameManager : MonoBehaviour
         {
             int num = Random.Range(0, slottr.Count);
 
-            GameObject ingredient = Instantiate(buttons[i], slottr[num]);
-            ingredient.GetComponent<Ingredient>().num = i + 1;
-            if (selectnum == ingredient.GetComponent<Ingredient>().num)
-                ingredient.GetComponent<Ingredient>().IsCurrect = true;
+            GameObject ingredientobj = Instantiate(buttons[i], slottr[num]);
+            Ingredient ingredient = ingredientobj.GetComponent<Ingredient>();
+
+            ingredient.num = i + 1;
+
+            if (selectnum == ingredient.num)
+            {
+                ingredient.IsCurrect = true;
+                print(ingredientobj.GetComponent<Ingredient>().num);
+            }
+
             slottr.RemoveAt(num);
         }
-    }
-
-    public void Invoke(string name)
-    {
-        Invoke(name, 0);
     }
 }

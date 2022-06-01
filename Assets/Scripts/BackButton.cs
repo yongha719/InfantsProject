@@ -6,11 +6,5 @@ using UnityEngine.SceneManagement;
 
 public class BackButton : MonoBehaviour
 {
-    Button button => GetComponent<Button>();
-
-    private void Awake() =>
-        button.onClick.AddListener(() =>
-        {
-            SceneManager.LoadScene("Title");
-        });
+    
 }

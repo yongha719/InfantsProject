@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
 
+[RequireComponent(typeof(CanvasGroup))]
 public class Ingredient : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler
 {
     public bool IsCurrect;
@@ -11,8 +12,6 @@ public class Ingredient : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDr
     public int num;
 
     public Transform OriginParent;
-    public Vector2 OriginPos;
-
     private Transform Parent;
     private RectTransform rectTransform;
     private CanvasGroup canvasGroup;
@@ -25,6 +24,8 @@ public class Ingredient : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDr
         Parent = GameObject.FindGameObjectWithTag("Canvas").transform;
 
         OriginParent = transform.parent;
+
+        CanDrag = true;
     }
 
     void Update()
@@ -33,8 +34,6 @@ public class Ingredient : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDr
     }
     public void OnBeginDrag(PointerEventData eventData)
     {
-        OriginPos = eventData.position;
-
         transform.SetParent(Parent);
         transform.SetAsLastSibling();
 
@@ -50,7 +49,6 @@ public class Ingredient : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDr
     {
         if (transform.parent == Parent)
         {
-            // 기존 부모 설정 및 위치 되돌림
             transform.SetParent(OriginParent);
             rectTransform.position = OriginParent.GetComponent<RectTransform>().position;
         }
@@ -59,8 +57,6 @@ public class Ingredient : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDr
         canvasGroup.blocksRaycasts = true;
         rectTransform.anchoredPosition = Vector2.zero;
 
-
-        //이제 드래그 안되게 함
         if (CanDrag == false)
         {
             var ingredients = FindObjectsOfType<Ingredient>();

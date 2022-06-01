@@ -5,6 +5,8 @@ using UnityEngine.EventSystems;
 
 public class Slot : MonoBehaviour, IDropHandler
 {
+    public bool IsLunch;
+
     void Start()
     {
 
@@ -13,12 +15,16 @@ public class Slot : MonoBehaviour, IDropHandler
     {
         if (eventData.pointerDrag != null)
         {
-            if (eventData.pointerDrag.GetComponent<Ingredient>().IsCurrect == false) return;
+            GameObject dragingobj = eventData.pointerDrag;
+            Ingredient ingredient = dragingobj.GetComponent<Ingredient>();
 
-            eventData.pointerDrag.transform.SetParent(transform);
-            eventData.pointerDrag.GetComponent<Ingredient>().OriginParent = transform;
-            eventData.pointerDrag.GetComponent<RectTransform>().localPosition = Vector3.zero;
-            eventData.pointerDrag.GetComponent<Ingredient>().CanDrag = false;
+            if (ingredient.IsCurrect != false)
+            {
+                dragingobj.transform.SetParent(transform);
+                ingredient.OriginParent = transform;
+                ingredient.CanDrag = false;
+                dragingobj.GetComponent<RectTransform>().localPosition = Vector3.zero;
+            }
         }
     }
 }

@@ -559,13 +559,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ParentRt: {fileID: 1907799877}
   Boxs:
-  - {fileID: 6708538580372329583, guid: 501bb438308bda74b832822eaa9d743c, type: 3}
-  - {fileID: 3552375790648508607, guid: dff4b712fbb47d847803f133d830bd7f, type: 3}
-  - {fileID: 857318153941463781, guid: e936fdea919bc2548bcd8452fc68c145, type: 3}
+  - {fileID: 5920923075097274568, guid: 501bb438308bda74b832822eaa9d743c, type: 3}
+  - {fileID: 3999429316023866145, guid: e936fdea919bc2548bcd8452fc68c145, type: 3}
+  - {fileID: 7902058283892392762, guid: dff4b712fbb47d847803f133d830bd7f, type: 3}
   Bananas:
-  - {fileID: 5289250662046892955, guid: 7cb21f3e6f81dc6489082f3e6bf92a71, type: 3}
-  - {fileID: 1374463830809324109, guid: a009626dcfc6ab84296eefacb2e0afcd, type: 3}
-  - {fileID: 4422271852427702097, guid: 100c2af88b788b94ea76c53b23080b3d, type: 3}
+  - {fileID: 5289250662046892957, guid: 7cb21f3e6f81dc6489082f3e6bf92a71, type: 3}
+  - {fileID: 1374463830809324111, guid: a009626dcfc6ab84296eefacb2e0afcd, type: 3}
+  - {fileID: 4422271852427702103, guid: 100c2af88b788b94ea76c53b23080b3d, type: 3}
 --- !u!4 &1021274377
 Transform:
   m_ObjectHideFlags: 0
@@ -903,7 +903,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 9197408905557799616, guid: 8118264924212534b9c58b1694eefaf6, type: 3}
       propertyPath: m_ChildAlignment
-      value: 1
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 9197408905557799617, guid: 8118264924212534b9c58b1694eefaf6, type: 3}
       propertyPath: m_Pivot.x

@@ -1,9 +1,7 @@
-using System.Collections;
+using System;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
-using UnityEngine.EventSystems;
-using UnityEngine.SceneManagement;
+using Random = UnityEngine.Random;
 
 public enum EStageState
 {
@@ -17,12 +15,13 @@ public class GameManager : MonoBehaviour
     private RectTransform ParentRt;
     private List<Transform> slots = new List<Transform>();
 
+    [SerializeField]
+    private List<GameObject> Boxs;
 
     [SerializeField]
-    private List<Button> Boxs;
+    private List<GameObject> Bananas;
 
-    [SerializeField]
-    private List<Button> Bananas;
+    public static Action CurrectAction;
 
     private void Awake()
     {
@@ -51,6 +50,7 @@ public class GameManager : MonoBehaviour
         {
             case EStageState.One:
                 RandomInstantiateButton(Boxs, num);
+                CurrectAction = () => StartStageOneAction();
                 break;
             case EStageState.Two:
                 RandomInstantiateButton(Bananas, num);
@@ -67,15 +67,13 @@ public class GameManager : MonoBehaviour
                 Debug.Assert(false);
                 break;
         }
-        Invoke($"StartStage{num}");
     }
-    public void StartStage1()
+    public void StartStageOneAction()
     {
-
+        
     }
 
-
-    void RandomInstantiateButton(List<Button> buttons, int selectnum)
+    void RandomInstantiateButton(List<GameObject> buttons, int selectnum)
     {
         var slottr = new List<Transform>();
 
@@ -87,28 +85,13 @@ public class GameManager : MonoBehaviour
         for (int i = 0; i < count; i++)
         {
             int num = Random.Range(0, slottr.Count);
-            print($"{i}  :  {num}");
-            Button button = Instantiate(buttons[i], slottr[num]);
-            button.GetComponent<Ingredient>().num = i + 1;
 
-            button.onClick.AddListener(() =>
-            {
-                Ingredient ingredient = EventSystem.current.currentSelectedGameObject.GetComponent<Ingredient>();
-
-                if (selectnum == button.GetComponent<Ingredient>().num)
-                {
-                    print("Onclick Select");
-                    button.GetComponent<Ingredient>().IsCurrect = true;
-                    CheckBasket(button.gameObject);
-                }
-            });
-
+            GameObject ingredient = Instantiate(buttons[i], slottr[num]);
+            ingredient.GetComponent<Ingredient>().num = i + 1;
+            if (selectnum == ingredient.GetComponent<Ingredient>().num)
+                ingredient.GetComponent<Ingredient>().IsCurrect = true;
             slottr.RemoveAt(num);
         }
-    }
-    void CheckBasket(GameObject button)
-    {
-
     }
 
     public void Invoke(string name)

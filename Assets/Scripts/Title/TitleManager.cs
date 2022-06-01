@@ -64,12 +64,6 @@ public class TitleManager : MonoBehaviour
                 yield break;
             }
 
-            //if(Input.touchCount > 0)
-            //{
-            //    Curie.animator.SetBool("isStart", true);
-            //    Logo.animator.SetBool("isStart", true);
-            //    yield break;
-            //}
             yield return wait;
         }
     }

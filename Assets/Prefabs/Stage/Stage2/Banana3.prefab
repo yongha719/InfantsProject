@@ -12,6 +12,8 @@ GameObject:
   - component: {fileID: 4422271852427702099}
   - component: {fileID: 4422271852427702098}
   - component: {fileID: 4422271852427702097}
+  - component: {fileID: 5782330310877639519}
+  - component: {fileID: 5676273293737911181}
   m_Layer: 5
   m_Name: Banana3
   m_TagString: Untagged
@@ -33,8 +35,8 @@ RectTransform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 519, y: 180}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -120,3 +122,31 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
+--- !u!225 &5782330310877639519
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4422271852427702103}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
+--- !u!114 &5676273293737911181
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4422271852427702103}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ebfca161713664a4eb7d71c4c11d1b4c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  IsCurrect: 0
+  num: 0
+  OriginParent: {fileID: 0}
+  OriginPos: {x: 0, y: 0}

@@ -7,6 +7,7 @@ using UnityEngine.EventSystems;
 public class Ingredient : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler
 {
     public bool IsCurrect;
+    public bool CanDrag = true;
     public int num;
 
     public Transform OriginParent;
@@ -56,5 +57,19 @@ public class Ingredient : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDr
 
         canvasGroup.alpha = 1f;
         canvasGroup.blocksRaycasts = true;
+        rectTransform.anchoredPosition = Vector2.zero;
+
+
+        //이제 드래그 안되게 함
+        if (CanDrag == false)
+        {
+            var ingredients = FindObjectsOfType<Ingredient>();
+
+            foreach (var ing in ingredients)
+                ing.enabled = false;
+
+            GameManager.CurrectAction();
+        }
     }
 }
+

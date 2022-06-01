@@ -20,9 +20,9 @@ public class Slot : MonoBehaviour, IDropHandler
 
             if (ingredient.IsCurrect != false)
             {
-                dragingobj.transform.SetParent(transform);
                 ingredient.OriginParent = transform;
                 ingredient.CanDrag = false;
+                dragingobj.transform.SetParent(transform);
                 dragingobj.GetComponent<RectTransform>().localPosition = Vector3.zero;
             }
         }

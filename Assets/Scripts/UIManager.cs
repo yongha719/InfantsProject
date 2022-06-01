@@ -11,6 +11,9 @@ public class UIManager : MonoBehaviour
     public Image SpeechBubbleNum;
     public List<Sprite> SpeechBubbleNumSprites = new List<Sprite>();
 
+    public Transform LunchBox;
+    private List<GameObject> lunchBoxChilds = new List<GameObject>();
+
     public Button BackButton;
 
     private void Start()
@@ -20,9 +23,17 @@ public class UIManager : MonoBehaviour
             SceneManager.LoadScene("Title");
         });
 
+        for (int i = 0; i < LunchBox.childCount; i++)
+        {
+            lunchBoxChilds.Add(LunchBox.GetChild(i).gameObject);
+        }
+
         int estagestatenum = (int)GameManager.Estagestate;
 
         Mat.sprite = MatSprites[estagestatenum];
+
         SpeechBubbleNum.sprite = SpeechBubbleNumSprites[estagestatenum];
+
+        lunchBoxChilds[estagestatenum].gameObject.SetActive(true);
     }
 }

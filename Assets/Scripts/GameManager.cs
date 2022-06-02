@@ -7,15 +7,13 @@ using Random = UnityEngine.Random;
 public class GameManager : MonoBehaviour
 {
     public static bool IsClear = false;
-    public static int StageNum
-    {
-        get => StageNum;
-        set => StageNum = value;
-    }
+    public static int StageNum { get; set; } = 1;
 
     [SerializeField]
     private RectTransform ParentRt;
     private List<Transform> slots = new List<Transform>();
+    [SerializeField]
+    private GameObject SpeechBubble;
 
     [Header("Stage 1")]
     [Space(10)]
@@ -34,8 +32,10 @@ public class GameManager : MonoBehaviour
 
     [SerializeField]
     private Transform lunchBox;
-    [SerializeField]
-    private List<GameObject> LunchBoxIngredients;
+    Animator lunchBoxAnimator;
+    private List<GameObject> LunchBoxIngredients = new List<GameObject>();
+
+    bool IsEnd;
 
     [Header("Stage 2")]
     [Space(10)]
@@ -54,13 +54,18 @@ public class GameManager : MonoBehaviour
         {
             LunchBoxIngredients.Add(lunchBox.GetChild(i).gameObject);
         }
-
+        lunchBoxAnimator = lunchBox.GetComponent<Animator>();
+        SpeechBubble.SetActive(true);
         Invoke($"Stage{StageNum}");
     }
 
     void Update()
     {
-
+        if (Input.GetKeyDown(KeyCode.A))
+        {
+            print(IsClear);
+            IsClear = true;
+        }
     }
 
     void Stage1()
@@ -80,30 +85,36 @@ public class GameManager : MonoBehaviour
 
     void Stage1Clear()
     {
-
+        print("clear");
+        SpeechBubble.SetActive(false);
+        lunchBoxAnimator.SetBool("IsClear", true);
     }
 
     IEnumerator EStageStart()
     {
         var wait = new WaitForSeconds(0.001f);
 
-        for (int i = 0; i < StageOneIngredients.Count; i++)
+        for (int i = 0; i <= StageOneIngredients.Count; i++)
         {
-
             while (true)
             {
-                if (IsClear)
+                if (IsClear && i != StageOneIngredients.Count)
                 {
                     RandomInstantiateButton(StageOneIngredients[i]);
-                    LunchBoxIngredients[StageNum - 1].SetActive(true);
+                    LunchBoxIngredients[i].SetActive(true);
                     lunchBox.GetChild(lunchBox.childCount - 1).gameObject.SetActive(false);
                     IsClear = false;
-                    yield break;
+                    break;
+                }
+                else if (IsClear)
+                {
+                    LunchBoxIngredients[i].SetActive(true);
+                    break;
                 }
                 yield return wait;
             }
         }
-
+        //LunchBoxIngredients[LunchBoxIngredients.Count - 1].SetActive(true);
         Stage1Clear();
     }
 

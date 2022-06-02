@@ -28,7 +28,7 @@ public class UIManager : MonoBehaviour
             lunchBoxChilds.Add(LunchBox.GetChild(i).gameObject);
         }
 
-        int estagestatenum = GameManager.StageNum;
+        int estagestatenum = GameManager.StageNum - 1;
 
         Mat.sprite = MatSprites[estagestatenum];
 

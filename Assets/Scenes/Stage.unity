@@ -780,7 +780,6 @@ MonoBehaviour:
   - {fileID: 5289250662046892957, guid: 7cb21f3e6f81dc6489082f3e6bf92a71, type: 3}
   - {fileID: 1374463830809324111, guid: a009626dcfc6ab84296eefacb2e0afcd, type: 3}
   - {fileID: 4422271852427702103, guid: 100c2af88b788b94ea76c53b23080b3d, type: 3}
-  ad: 0
 --- !u!4 &1021274377
 Transform:
   m_ObjectHideFlags: 0
@@ -1353,7 +1352,7 @@ MonoBehaviour:
   - {fileID: 21300000, guid: ea2fd0db128d0484cbd916155512d551, type: 3}
   - {fileID: 21300000, guid: 74eb762c21825d146a8537f127a5dc27, type: 3}
   - {fileID: 21300000, guid: 37db303462cc65144bdbfc0ba9db2761, type: 3}
-  LunchBox: {fileID: 0}
+  LunchBox: {fileID: 2040029051}
   BackButton: {fileID: 616403044503183307}
 --- !u!1 &2040029050
 GameObject:

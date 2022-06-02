@@ -25,14 +25,12 @@ public class GameManager : MonoBehaviour
     [SerializeField]
     private List<GameObject> Bananas;
 
-    public int ad;
+    int Stagenum
+    {
+        get => (int)Estagestate + 1;
+    }
     public static Action CurrectAction { get; private set; }
 
-
-    private void Awake()
-    {
-
-    }
     void Start()
     {
         for (int i = 0; i < ParentRt.childCount; i++)
@@ -46,6 +44,8 @@ public class GameManager : MonoBehaviour
         }
 
         SelectStage();
+
+        CurrectAction = () => StageClearFunc();
     }
 
     void Update()
@@ -55,15 +55,13 @@ public class GameManager : MonoBehaviour
 
     public void SelectStage()
     {
-        int num = (int)Estagestate + 1;
-
         switch (Estagestate)
         {
             case EStageState.One:
-                RandomInstantiateButton(Boxs, num);
+                RandomInstantiateButton(Boxs, Stagenum);
                 break;
             case EStageState.Two:
-                RandomInstantiateButton(Bananas, num);
+                RandomInstantiateButton(Bananas, Stagenum);
                 break;
             case EStageState.Three:
                 break;
@@ -77,13 +75,17 @@ public class GameManager : MonoBehaviour
                 Debug.Assert(false);
                 break;
         }
-
-        CurrectAction = () => StageClearFunc();
     }
     public void StageClearFunc()
     {
         lunchBoxChilds[(int)Estagestate].SetActive(true);
         lunchBox.GetChild(lunchBox.childCount - 1).gameObject.SetActive(false);
+        Invoke($"Stage{Stagenum}", 0);
+    }
+
+    void StageOne()
+    {
+        RandomInstantiateButton(Boxs, Stagenum);
     }
 
     void RandomInstantiateButton(List<GameObject> buttons, int selectnum)

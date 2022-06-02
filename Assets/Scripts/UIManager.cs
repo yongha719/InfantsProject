@@ -28,12 +28,12 @@ public class UIManager : MonoBehaviour
             lunchBoxChilds.Add(LunchBox.GetChild(i).gameObject);
         }
 
-        int estagestatenum = (int)GameManager.Estagestate;
+        int estagestatenum = GameManager.StageNum;
 
         Mat.sprite = MatSprites[estagestatenum];
 
         SpeechBubbleNum.sprite = SpeechBubbleNumSprites[estagestatenum];
 
-        lunchBoxChilds[estagestatenum].gameObject.SetActive(true);
+        //lunchBoxChilds[estagestatenum].gameObject.SetActive(true);
     }
 }

@@ -16,6 +16,7 @@ public class Ingredient : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDr
     private RectTransform rectTransform;
     private CanvasGroup canvasGroup;
 
+    public Vector2 pos;
     void Start()
     {
         rectTransform = GetComponent<RectTransform>();
@@ -26,12 +27,15 @@ public class Ingredient : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDr
         OriginParent = transform.parent;
 
         CanDrag = true;
+
+        pos = rectTransform.anchoredPosition;
     }
 
     void Update()
     {
 
     }
+
     public void OnBeginDrag(PointerEventData eventData)
     {
         transform.SetParent(Parent);
@@ -40,6 +44,7 @@ public class Ingredient : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDr
         canvasGroup.alpha = 0.6f;
         canvasGroup.blocksRaycasts = false;
     }
+
     public void OnDrag(PointerEventData eventData)
     {
         rectTransform.position = eventData.position;
@@ -55,16 +60,16 @@ public class Ingredient : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDr
 
         canvasGroup.alpha = 1f;
         canvasGroup.blocksRaycasts = true;
-        rectTransform.anchoredPosition = Vector2.zero;
+        rectTransform.anchoredPosition = pos;
 
         if (CanDrag == false)
         {
             var ingredients = FindObjectsOfType<Ingredient>();
 
-            foreach (var ing in ingredients)
-                ing.enabled = false;
+            GameManager.IsClear = true;
 
-            GameManager.CurrectAction();
+            foreach (var ing in ingredients)
+                Destroy(ing.gameObject);
         }
     }
 }

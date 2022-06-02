@@ -43,7 +43,7 @@ public class TitleManager : MonoBehaviour
             lbbtn.onClick.AddListener(() =>
             {
                 SceneManager.LoadScene("Stage");
-                GameManager.Estagestate = (EStageState)int.Parse(lbbtn.name) - 1;
+                GameManager.StageNum = int.Parse(lbbtn.name);
             });
         }
     }

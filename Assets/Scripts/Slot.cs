@@ -5,12 +5,11 @@ using UnityEngine.EventSystems;
 
 public class Slot : MonoBehaviour, IDropHandler
 {
-    public bool IsLunch;
-
     void Start()
     {
 
     }
+
     public void OnDrop(PointerEventData eventData)
     {
         if (eventData.pointerDrag != null)
@@ -23,7 +22,7 @@ public class Slot : MonoBehaviour, IDropHandler
                 ingredient.OriginParent = transform;
                 ingredient.CanDrag = false;
                 dragingobj.transform.SetParent(transform);
-                dragingobj.GetComponent<RectTransform>().localPosition = Vector3.zero;
+                dragingobj.GetComponent<RectTransform>().localPosition = Vector2.zero;
             }
         }
     }

@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 4443545524689914550}
   - component: {fileID: -6068934525083319540}
   m_Layer: 5
-  m_Name: Three
+  m_Name: Orange3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -36,7 +36,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0}
   m_AnchorMax: {x: 0.5, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 30}
   m_SizeDelta: {x: 350, y: 437.8187}
   m_Pivot: {x: 0.5, y: 0}
 --- !u!222 &1478766577018754798
@@ -67,7 +67,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 19b21e6490e30684d85710671d7bca98, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 6647eacd94a0fd74783d1864e4c508cd, type: 3}
   m_Type: 0
   m_PreserveAspect: 1
   m_FillCenter: 1
@@ -93,6 +93,7 @@ MonoBehaviour:
   CanDrag: 0
   num: 0
   OriginParent: {fileID: 0}
+  pos: {x: 0, y: 0}
 --- !u!225 &-6068934525083319540
 CanvasGroup:
   m_ObjectHideFlags: 0

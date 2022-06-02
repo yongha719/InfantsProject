@@ -11,14 +11,22 @@ public class GameManager : MonoBehaviour
 
     [SerializeField]
     private RectTransform ParentRt;
-    private List<Transform> slots = new List<Transform>();
-    [SerializeField]
-    private GameObject SpeechBubble;
+    private List<Transform> slots = new List<Transform>();//슬롯
 
-    [Header("Stage 1")]
-    [Space(10)]
     [SerializeField]
-    private List<GameObject> Boxs;
+    private GameObject SpeechBubble;//말풍선
+
+    [SerializeField]
+    private List<GameObject> Boxs;//도시락
+    private List<List<GameObject>> StageIngredients = new List<List<GameObject>>();//도시락 재료들
+
+    [SerializeField]
+    private Transform lunchBox;
+    Animator lunchBoxAnimator;
+    private List<GameObject> LunchBoxIngredients = new List<GameObject>();//맞았을 떄 띄우는 이미지들
+
+    [Header("Stage 1=================================================================")]
+    [Space(10)]
     [SerializeField]
     private List<GameObject> Apples;
     [SerializeField]
@@ -28,79 +36,93 @@ public class GameManager : MonoBehaviour
     [SerializeField]
     private List<GameObject> Rice_Roll;
 
-    private List<List<GameObject>> StageOneIngredients = new List<List<GameObject>>();
-
-    [SerializeField]
-    private Transform lunchBox;
-    Animator lunchBoxAnimator;
-    private List<GameObject> LunchBoxIngredients = new List<GameObject>();
-
-    bool IsEnd;
-
-    [Header("Stage 2")]
+    [Header("Stage 2=================================================================")]
     [Space(10)]
     [SerializeField]
+    private List<GameObject> Sandwichs;
+    [SerializeField]
     private List<GameObject> Bananas;
-
+    [SerializeField]
+    private List<GameObject> Tomatos;
+    [SerializeField]
+    private List<GameObject> CupCakes;
 
     void Start()
     {
+        Init();
+
+        StartStage();
+    }
+    void Init()
+    {
+        IsClear = false;
         for (int i = 0; i < ParentRt.childCount; i++)
         {
             slots.Add(ParentRt.GetChild(i));
         }
 
+        lunchBox = GameObject.FindGameObjectWithTag("LunchBox").transform.Find($"Stage{StageNum}");
+        print($"Stage{StageNum}");
+        lunchBox.gameObject.SetActive(true);
+        lunchBoxAnimator = lunchBox.GetComponent<Animator>();
+
         for (int i = 0; i < lunchBox.childCount; i++)
         {
             LunchBoxIngredients.Add(lunchBox.GetChild(i).gameObject);
         }
-        lunchBoxAnimator = lunchBox.GetComponent<Animator>();
+
+
         SpeechBubble.SetActive(true);
-        Invoke($"Stage{StageNum}");
     }
 
-    void Update()
+    void StartStage()
     {
-        if (Input.GetKeyDown(KeyCode.A))
-        {
-            print(IsClear);
-            IsClear = true;
-        }
-    }
-
-    void Stage1()
-    {
-        SetStageOne();
+        SetStage();
         RandomInstantiateButton(Boxs);
         StartCoroutine(EStageStart());
     }
 
-    void SetStageOne()
+    void SetStage()
     {
-        StageOneIngredients.Add(Rice_Roll);
-        StageOneIngredients.Add(Breads);
-        StageOneIngredients.Add(Apples);
-        StageOneIngredients.Add(Oranges);
-    }
+        switch (StageNum)
+        {
 
-    void Stage1Clear()
-    {
-        print("clear");
-        SpeechBubble.SetActive(false);
-        lunchBoxAnimator.SetBool("IsClear", true);
+            case 1:
+                StageIngredients.Add(Rice_Roll);
+                StageIngredients.Add(Breads);
+                StageIngredients.Add(Apples);
+                StageIngredients.Add(Oranges);
+                break;
+            case 2:
+                StageIngredients.Add(Sandwichs);
+                StageIngredients.Add(Bananas);
+                StageIngredients.Add(Tomatos);
+                StageIngredients.Add(CupCakes);
+                break;
+            case 3:
+                break;
+            case 4:
+                break;
+            case 5:
+                break;
+            case 6:
+                break;
+            default:
+                break;
+        }
     }
 
     IEnumerator EStageStart()
     {
         var wait = new WaitForSeconds(0.001f);
 
-        for (int i = 0; i <= StageOneIngredients.Count; i++)
+        for (int i = 0; i <= StageIngredients.Count; i++)
         {
             while (true)
             {
-                if (IsClear && i != StageOneIngredients.Count)
+                if (IsClear && i != StageIngredients.Count)
                 {
-                    RandomInstantiateButton(StageOneIngredients[i]);
+                    RandomInstantiateButton(StageIngredients[i]);
                     LunchBoxIngredients[i].SetActive(true);
                     lunchBox.GetChild(lunchBox.childCount - 1).gameObject.SetActive(false);
                     IsClear = false;
@@ -114,8 +136,10 @@ public class GameManager : MonoBehaviour
                 yield return wait;
             }
         }
-        //LunchBoxIngredients[LunchBoxIngredients.Count - 1].SetActive(true);
-        Stage1Clear();
+
+        //Stage Clear
+        SpeechBubble.SetActive(false);
+        lunchBoxAnimator.SetBool("IsClear", true);
     }
 
     void RandomInstantiateButton(List<GameObject> buttons)
@@ -139,6 +163,4 @@ public class GameManager : MonoBehaviour
             slottr.RemoveAt(num);
         }
     }
-
-    void Invoke(string name) => Invoke(name, 0);
 }

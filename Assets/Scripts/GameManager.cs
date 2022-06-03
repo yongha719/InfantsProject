@@ -62,7 +62,6 @@ public class GameManager : MonoBehaviour
         }
 
         lunchBox = GameObject.FindGameObjectWithTag("LunchBox").transform.Find($"Stage{StageNum}");
-        print($"Stage{StageNum}");
         lunchBox.gameObject.SetActive(true);
         lunchBoxAnimator = lunchBox.GetComponent<Animator>();
 
@@ -120,16 +119,17 @@ public class GameManager : MonoBehaviour
         {
             while (true)
             {
-                if (IsClear && i != StageIngredients.Count)
+                if (IsClear)
                 {
-                    RandomInstantiateButton(StageIngredients[i]);
-                    LunchBoxIngredients[i].SetActive(true);
-                    lunchBox.GetChild(lunchBox.childCount - 1).gameObject.SetActive(false);
-                    IsClear = false;
-                    break;
-                }
-                else if (IsClear)
-                {
+                    if (i != StageIngredients.Count)
+                    {
+                        RandomInstantiateButton(StageIngredients[i]);
+                        LunchBoxIngredients[i].SetActive(true);
+                        lunchBox.GetChild(lunchBox.childCount - 1).gameObject.SetActive(false);
+                        IsClear = false;
+                        break;
+                    }
+
                     LunchBoxIngredients[i].SetActive(true);
                     break;
                 }

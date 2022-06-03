@@ -26,10 +26,6 @@ public class TitleManager : MonoBehaviour
             StartCoroutine(EWaitTouch());
     }
 
-    private void Update()
-    {
-        
-    }
     private void SetUI()
     {
         if (isStart)

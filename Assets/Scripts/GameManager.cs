@@ -47,10 +47,11 @@ public class GameManager : MonoBehaviour
     [SerializeField]
     private List<GameObject> CupCakes;
 
+
     void Start()
     {
         Init();
-
+        
         StartStage();
     }
     void Init()

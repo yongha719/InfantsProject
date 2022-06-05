@@ -21,6 +21,7 @@ public class TitleManager : MonoBehaviour
     void Start()
     {
         SetResolution();
+
         SetUI();
         if (isStart == false)
             StartCoroutine(EWaitTouch());
@@ -64,7 +65,8 @@ public class TitleManager : MonoBehaviour
         }
     }
 
-    public void SetResolution()
+
+    private void SetResolution()
     {
         int setWidth = 1920; // 사용자 설정 너비
         int setHeight = 1080; // 사용자 설정 높이

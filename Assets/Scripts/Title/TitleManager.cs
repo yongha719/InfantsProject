@@ -39,8 +39,8 @@ public class TitleManager : MonoBehaviour
         {
             lbbtn.onClick.AddListener(() =>
             {
-                SceneManager.LoadScene("Stage");
                 GameManager.StageNum = int.Parse(lbbtn.name);
+                StartCoroutine(Fade());
             });
         }
     }
@@ -65,6 +65,11 @@ public class TitleManager : MonoBehaviour
         }
     }
 
+    IEnumerator Fade()
+    {
+
+        yield return null;
+    }
 
     private void SetResolution()
     {

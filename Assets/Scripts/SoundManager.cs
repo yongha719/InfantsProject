@@ -2,8 +2,20 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+public class SoundSystem : MonoBehaviour
+{
+    public static SoundSystem Instance { get; private set; } = null;
+
+    public Dictionary<string, AudioClip> SoundSources = new Dictionary<string, AudioClip>();
+
+    void Awake()
+    {
+        Instance = this;
+    }
+
+}
 public static class SoundManager
 {
-    public static Dictionary<string, AudioSource> SoundSources = new Dictionary<string, AudioSource>();
-    
+    private static SoundSystem soundSystem => SoundSystem.Instance;
+
 }

@@ -9,51 +9,42 @@ public class GameManager : MonoBehaviour
     public static bool IsClear = false;
     public static int StageNum { get; set; } = 1;
 
-    [SerializeField]
-    private RectTransform ParentRt;
+
+    [SerializeField] private RectTransform ParentRt;
     private List<Transform> slots = new List<Transform>();//슬롯
 
-    [SerializeField]
-    private GameObject SpeechBubble;//말풍선
+    [SerializeField] private GameObject SpeechBubble;//말풍선
 
-    [SerializeField]
-    private List<GameObject> Boxs;//도시락
+    [SerializeField] private List<GameObject> Boxs;//도시락
     private List<List<GameObject>> StageIngredients = new List<List<GameObject>>();//도시락 재료들
 
-    [SerializeField]
-    private Transform lunchBox;
+    [SerializeField] private Transform lunchBox;
     Animator lunchBoxAnimator;
     private List<GameObject> LunchBoxIngredients = new List<GameObject>();//맞았을 떄 띄우는 이미지들
 
     [Header("Stage 1=================================================================")]
     [Space(10)]
-    [SerializeField]
-    private List<GameObject> Apples;
-    [SerializeField]
-    private List<GameObject> Breads;
-    [SerializeField]
-    private List<GameObject> Oranges;
-    [SerializeField]
-    private List<GameObject> Rice_Roll;
+    [SerializeField] private List<GameObject> Apples;
+    [SerializeField] private List<GameObject> Breads;
+    [SerializeField] private List<GameObject> Oranges;
+    [SerializeField] private List<GameObject> Rice_Roll;
 
     [Header("Stage 2=================================================================")]
     [Space(10)]
-    [SerializeField]
-    private List<GameObject> Sandwichs;
-    [SerializeField]
-    private List<GameObject> Bananas;
-    [SerializeField]
-    private List<GameObject> Tomatos;
-    [SerializeField]
-    private List<GameObject> CupCakes;
+    [SerializeField] private List<GameObject> Sandwichs;
+    [SerializeField] private List<GameObject> Bananas;
+    [SerializeField] private List<GameObject> Tomatos;
+    [SerializeField] private List<GameObject> CupCakes;
 
 
     void Start()
     {
         Init();
-        
+
         StartStage();
+
     }
+
     void Init()
     {
         IsClear = false;
@@ -78,8 +69,16 @@ public class GameManager : MonoBehaviour
     void StartStage()
     {
         SetStage();
-        RandomInstantiateButton(Boxs);
-        StartCoroutine(EStageStart());
+
+        if (StageNum < 4)
+        {
+            RandomInstantiateButton(Boxs);
+            StartCoroutine(EUptoStageThree());
+        }
+        else
+        {
+
+        }
     }
 
     void SetStage()
@@ -112,8 +111,13 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    IEnumerator EStageStart()
+
+    /// <summary>
+    /// 3스테이지까지
+    /// </summary>
+    IEnumerator EUptoStageThree()
     {
+        //Stage Start
         var wait = new WaitForSeconds(0.001f);
 
         for (int i = 0; i <= StageIngredients.Count; i++)
@@ -134,6 +138,7 @@ public class GameManager : MonoBehaviour
                     LunchBoxIngredients[i].SetActive(true);
                     break;
                 }
+
                 yield return wait;
             }
         }
@@ -141,8 +146,8 @@ public class GameManager : MonoBehaviour
         //Stage Clear
         SpeechBubble.SetActive(false);
         lunchBoxAnimator.SetBool("IsClear", true);
+        
     }
-
     void RandomInstantiateButton(List<GameObject> buttons)
     {
         var slottr = new List<Transform>();
@@ -150,9 +155,7 @@ public class GameManager : MonoBehaviour
         foreach (var slot in slots)
             slottr.Add(slot);
 
-        int count = slots.Count;
-
-        for (int i = 0; i < count; i++)
+        for (int i = 0; i < slots.Count; i++)
         {
             int num = Random.Range(0, slottr.Count);
 

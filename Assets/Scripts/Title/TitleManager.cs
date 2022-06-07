@@ -40,10 +40,15 @@ public class TitleManager : MonoBehaviour
             lbbtn.onClick.AddListener(() =>
             {
                 GameManager.StageNum = int.Parse(lbbtn.name);
-                StartCoroutine(Fade());
+                //여기에 Fade 넣어야됨
             });
         }
     }
+
+    /// <summary>
+    /// 터치 기다리는 코루틴
+    /// </summary>
+    /// <returns></returns>
     IEnumerator EWaitTouch()
     {
         var wait = new WaitForSeconds(0.001f);
@@ -65,11 +70,6 @@ public class TitleManager : MonoBehaviour
         }
     }
 
-    IEnumerator Fade()
-    {
-
-        yield return null;
-    }
 
     private void SetResolution()
     {

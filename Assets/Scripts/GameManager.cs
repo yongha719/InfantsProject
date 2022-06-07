@@ -45,6 +45,7 @@ public class GameManager : MonoBehaviour
 
     }
 
+
     void Init()
     {
         IsClear = false;
@@ -72,7 +73,7 @@ public class GameManager : MonoBehaviour
 
         if (StageNum < 4)
         {
-            RandomInstantiateButton(Boxs);
+            RandomInstantiateFood(Boxs);
             StartCoroutine(EUptoStageThree());
         }
         else
@@ -80,7 +81,9 @@ public class GameManager : MonoBehaviour
 
         }
     }
-
+    /// <summary>
+    //  스테이지 세팅
+    /// </summary>
     void SetStage()
     {
         switch (StageNum)
@@ -128,7 +131,7 @@ public class GameManager : MonoBehaviour
                 {
                     if (i != StageIngredients.Count)
                     {
-                        RandomInstantiateButton(StageIngredients[i]);
+                        RandomInstantiateFood(StageIngredients[i]);
                         LunchBoxIngredients[i].SetActive(true);
                         lunchBox.GetChild(lunchBox.childCount - 1).gameObject.SetActive(false);
                         IsClear = false;
@@ -146,9 +149,13 @@ public class GameManager : MonoBehaviour
         //Stage Clear
         SpeechBubble.SetActive(false);
         lunchBoxAnimator.SetBool("IsClear", true);
-        
+
     }
-    void RandomInstantiateButton(List<GameObject> buttons)
+    /// <summary>
+    /// 3스테이지까지의 게임들을 셋팅해줌
+    /// </summary>
+    /// <param name="buttons"></param>
+    void RandomInstantiateFood(List<GameObject> buttons)
     {
         var slottr = new List<Transform>();
 

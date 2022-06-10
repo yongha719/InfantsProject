@@ -5,7 +5,7 @@ using UnityEngine.UI;
 using UnityEngine.EventSystems;
 
 [RequireComponent(typeof(CanvasGroup))]
-public class Ingredient : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler
+public class Food : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler
 {
     public bool IsCurrect;
     public bool CanDrag = true;
@@ -64,7 +64,7 @@ public class Ingredient : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDr
 
         if (CanDrag == false)
         {
-            var ingredients = FindObjectsOfType<Ingredient>();
+            var ingredients = FindObjectsOfType<Food>();
 
             GameManager.IsClear = true;
 

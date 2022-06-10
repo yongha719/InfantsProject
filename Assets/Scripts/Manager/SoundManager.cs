@@ -7,17 +7,18 @@ public enum SoundType
 {
     BGM, EFFECT, BUTTON, END
 }
-public class Clip
+public static class SoundName
 {
-    public string name;
-    public AudioClip clip;
+    public static readonly string APPEAR = "Appear";
+    public static readonly string FADE = "Fade";
+    public static readonly string MISTAKE = "Mistake";
 }
 public class SoundManager : MonoBehaviour
 {
     public static SoundManager Instance { get; private set; } = null;
 
     AudioSource[] audioSources = new AudioSource[(int)SoundType.END];
-    List<Clip> Clips = new List<Clip>();
+    Dictionary<string, AudioClip> Clips = new Dictionary<string, AudioClip>();
 
     private float bgm_volume = 0.5f;
     public float BgmVolume
@@ -38,6 +39,7 @@ public class SoundManager : MonoBehaviour
         {
             soundvolume = value;
             audioSources[(int)SoundType.EFFECT].volume = soundvolume;
+            audioSources[(int)SoundType.BUTTON].volume = soundvolume;
         }
     }
 
@@ -62,18 +64,32 @@ public class SoundManager : MonoBehaviour
                 }
             }
         }
+
+        AudioClip[] audioClip = Resources.LoadAll<AudioClip>("Sound");
+        for (int i = 0; i < audioClip.Length; i++)
+        {
+            Clips.Add(audioClip[i].name, audioClip[i]);
+        }
+    }
+    private void Start()
+    {
+        Play("BGM", SoundType.BGM);
     }
 
     public void Play(string name, SoundType soundType = SoundType.EFFECT)
     {
-        var clip = Clips.Find((o) => { return o.name == name; });
-        if (clip == null)
-        {
-            throw new NullReferenceException($"Audio Clip {name} Is NULL!!");
-        }
         AudioSource audioSource;
 
-        audioSource = audioSources[(int)soundType];
-        audioSource.PlayOneShot(clip.clip);
+        if (Clips.TryGetValue(name, out AudioClip audioClip) == false)
+        {
+            throw new NullReferenceException("AudioClip is NUll!!");
+        }
+        else
+        {
+            audioSource = audioSources[(int)soundType];
+            audioSource.clip = audioClip;
+            audioSource.PlayOneShot(audioClip);
+        }
+
     }
 }

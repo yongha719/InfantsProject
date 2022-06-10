@@ -15,15 +15,17 @@ public class Slot : MonoBehaviour, IDropHandler
         if (eventData.pointerDrag != null)
         {
             GameObject dragingobj = eventData.pointerDrag;
-            Ingredient ingredient = dragingobj.GetComponent<Ingredient>();
+            Food ingredient = dragingobj.GetComponent<Food>();
 
-            if (ingredient.IsCurrect != false)
+            if (ingredient.IsCurrect == true)
             {
                 ingredient.OriginParent = transform;
                 ingredient.CanDrag = false;
                 dragingobj.transform.SetParent(transform);
                 dragingobj.GetComponent<RectTransform>().localPosition = Vector2.zero;
             }
+            else
+                SoundManager.Instance.Play(SoundName.MISTAKE, SoundType.EFFECT);
         }
     }
 }

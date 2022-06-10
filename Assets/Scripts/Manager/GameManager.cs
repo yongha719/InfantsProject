@@ -1,4 +1,4 @@
-using System;
+ï»¿using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -9,19 +9,28 @@ public class GameManager : MonoBehaviour
     public static bool IsClear = false;
     public static int StageNum { get; set; } = 1;
 
+    #region Stage GameObjects
 
+    //ìŠ¬ë¡¯
     [SerializeField] private RectTransform ParentRt;
-    private List<Transform> slots = new List<Transform>();//½½·Ô
+    private List<Transform> slots = new List<Transform>();
 
-    [SerializeField] private GameObject SpeechBubble;//¸»Ç³¼±
+    //ë§í’ì„ 
+    [SerializeField] private GameObject SpeechBubble;
 
-    [SerializeField] private List<GameObject> Boxs;//µµ½Ã¶ô
-    private List<List<GameObject>> StageIngredients = new List<List<GameObject>>();//µµ½Ã¶ô Àç·áµé
+    //ë„ì‹œë½
+    [SerializeField] private List<GameObject> Boxs;
+    //ë„ì‹œë½ ì¬ë£Œë“¤
+    private List<List<GameObject>> StageIngredients = new List<List<GameObject>>();
 
+    /// <summary>
+    /// 1~3ìŠ¤í…Œì´ì§€ì˜ ë§ì•˜ì„ ë•Œ ê°€ì ¸ì˜¬ ì˜¤ë¸Œì íŠ¸
+    /// </summary>
     [SerializeField] private Transform lunchBox;
     Animator lunchBoxAnimator;
-    private List<GameObject> LunchBoxIngredients = new List<GameObject>();//¸Â¾ÒÀ» ‹š ¶ç¿ì´Â ÀÌ¹ÌÁöµé
-
+    //ë§ì•˜ì„ ë–„ ë„ìš°ëŠ” ì´ë¯¸ì§€ë“¤
+    private List<GameObject> LunchBoxFoods = new List<GameObject>();
+    #region Foods
     [Header("Stage 1=================================================================")]
     [Space(10)]
     [SerializeField] private List<GameObject> Apples;
@@ -35,10 +44,14 @@ public class GameManager : MonoBehaviour
     [SerializeField] private List<GameObject> Bananas;
     [SerializeField] private List<GameObject> Tomatos;
     [SerializeField] private List<GameObject> CupCakes;
+    #endregion
+    #endregion
 
-
+    SoundManager SM;
     void Start()
     {
+        SM = SoundManager.Instance;
+
         Init();
 
         StartStage();
@@ -49,6 +62,7 @@ public class GameManager : MonoBehaviour
     void Init()
     {
         IsClear = false;
+
         for (int i = 0; i < ParentRt.childCount; i++)
         {
             slots.Add(ParentRt.GetChild(i));
@@ -60,9 +74,8 @@ public class GameManager : MonoBehaviour
 
         for (int i = 0; i < lunchBox.childCount; i++)
         {
-            LunchBoxIngredients.Add(lunchBox.GetChild(i).gameObject);
+            LunchBoxFoods.Add(lunchBox.GetChild(i).gameObject);
         }
-
 
         SpeechBubble.SetActive(true);
     }
@@ -82,7 +95,7 @@ public class GameManager : MonoBehaviour
         }
     }
     /// <summary>
-    //  ½ºÅ×ÀÌÁö ¼¼ÆÃ
+    //  ìŠ¤í…Œì´ì§€ ì„¸íŒ…
     /// </summary>
     void SetStage()
     {
@@ -116,7 +129,7 @@ public class GameManager : MonoBehaviour
 
 
     /// <summary>
-    /// 3½ºÅ×ÀÌÁö±îÁö
+    /// 3ìŠ¤í…Œì´ì§€ê¹Œì§€
     /// </summary>
     IEnumerator EUptoStageThree()
     {
@@ -132,13 +145,13 @@ public class GameManager : MonoBehaviour
                     if (i != StageIngredients.Count)
                     {
                         RandomInstantiateFood(StageIngredients[i]);
-                        LunchBoxIngredients[i].SetActive(true);
+                        LunchBoxFoods[i].SetActive(true);
                         lunchBox.GetChild(lunchBox.childCount - 1).gameObject.SetActive(false);
                         IsClear = false;
                         break;
                     }
 
-                    LunchBoxIngredients[i].SetActive(true);
+                    LunchBoxFoods[i].SetActive(true);
                     break;
                 }
 
@@ -146,30 +159,38 @@ public class GameManager : MonoBehaviour
             }
         }
 
-        //Stage Clear
+        StageClear();
+    }
+
+    void StageClear()
+    {
         SpeechBubble.SetActive(false);
         lunchBoxAnimator.SetBool("IsClear", true);
-
+        if(StageNum < 6)
+        {
+            
+        }
     }
     /// <summary>
-    /// 3½ºÅ×ÀÌÁö±îÁöÀÇ °ÔÀÓµéÀ» ¼ÂÆÃÇØÁÜ
+    /// 3ìŠ¤í…Œì´ì§€ê¹Œì§€ì˜ ê²Œì„ë“¤ì„ ì…‹íŒ…í•´ì¤Œ
     /// </summary>
-    /// <param name="buttons"></param>
-    void RandomInstantiateFood(List<GameObject> buttons)
+    /// <param name="foods"></param>
+    void RandomInstantiateFood(List<GameObject> foods)
     {
         var slottr = new List<Transform>();
 
         foreach (var slot in slots)
             slottr.Add(slot);
 
+        Food food;
+
         for (int i = 0; i < slots.Count; i++)
         {
             int num = Random.Range(0, slottr.Count);
 
-            Ingredient ingredient = Instantiate(buttons[i], slottr[num]).GetComponent<Ingredient>();
-
-            ingredient.num = i + 1;
-            ingredient.IsCurrect = (StageNum == ingredient.num);
+            food = Instantiate(foods[i], slottr[num]).GetComponent<Food>();
+            food.num = i + 1;
+            food.IsCurrect = (StageNum == food.num);
 
             slottr.RemoveAt(num);
         }

@@ -47,7 +47,7 @@ public class GameManager : MonoBehaviour
     #endregion
     #endregion
 
-    SoundManager SM;
+    private SoundManager SM;
     void Start()
     {
         SM = SoundManager.Instance;
@@ -174,7 +174,6 @@ public class GameManager : MonoBehaviour
     /// <summary>
     /// 3스테이지까지의 게임들을 셋팅해줌
     /// </summary>
-    /// <param name="foods"></param>
     void RandomInstantiateFood(List<GameObject> foods)
     {
         var slottr = new List<Transform>();

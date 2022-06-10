@@ -49,7 +49,6 @@ public class TitleManager : MonoBehaviour
     /// <summary>
     /// 터치 기다리는 코루틴
     /// </summary>
-    /// <returns></returns>
     IEnumerator EWaitTouch()
     {
         var wait = new WaitForSeconds(0.001f);

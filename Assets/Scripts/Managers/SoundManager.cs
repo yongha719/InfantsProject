@@ -62,10 +62,13 @@ public class SoundManager : MonoBehaviour
                     audioSources[i] = playobj.AddComponent<AudioSource>();
                     playobj.transform.SetParent(sound.transform);
                 }
+
+                audioSources[(int)SoundType.BGM].loop = true;
             }
         }
 
         AudioClip[] audioClip = Resources.LoadAll<AudioClip>("Sound");
+
         for (int i = 0; i < audioClip.Length; i++)
         {
             Clips.Add(audioClip[i].name, audioClip[i]);
@@ -82,7 +85,7 @@ public class SoundManager : MonoBehaviour
 
         if (Clips.TryGetValue(name, out AudioClip audioClip) == false)
         {
-            throw new NullReferenceException("AudioClip is NUll!!");
+            throw new NullReferenceException($"AudioClip {audioClip.name} is NUll!!");
         }
         else
         {

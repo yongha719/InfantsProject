@@ -18,10 +18,7 @@ public class UIManager : MonoBehaviour
 
     private void Start()
     {
-        BackButton.onClick.AddListener(() =>
-        {
-            SceneManager.LoadScene("Title");
-        });
+        BackButton.onClick.AddListener(() => { SceneManager.LoadScene("Title"); });
 
         for (int i = 0; i < LunchBox.childCount; i++)
         {

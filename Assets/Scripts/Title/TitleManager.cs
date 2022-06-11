@@ -10,11 +10,11 @@ public class TitleManager : MonoBehaviour
 {
     public List<Button> LunchBoxButtons;
 
-    [SerializeField]
-    private GameObject logo;
+    [SerializeField] private GameObject logo;
 
-    [SerializeField]
-    private RectTransform curie;
+    [SerializeField] private RectTransform curie;
+
+    [SerializeField] private Slider BGMSlider;
 
     private static bool isStart;
 
@@ -23,6 +23,7 @@ public class TitleManager : MonoBehaviour
         SetResolution();
 
         SetUI();
+
         if (isStart == false)
             StartCoroutine(EWaitTouch());
     }
@@ -34,17 +35,17 @@ public class TitleManager : MonoBehaviour
             logo.SetActive(false);
             Curie.animator.SetBool("AlreadyStart", true);
         }
+        else
+        {
+           
+        }
 
         foreach (var lbbtn in LunchBoxButtons)
-        {
-            lbbtn.onClick.AddListener(() =>
-            {
-                GameManager.StageNum = int.Parse(lbbtn.name);
-                SceneManager.LoadScene("Stage");
-                //여기에 Fade 넣어야됨
-            });
-        }
+            lbbtn.onClick.AddListener(() => { GameManager.StageNum = int.Parse(lbbtn.name); });
+
+        BGMSlider.onValueChanged.AddListener((volume) => { SoundManager.Instance.BgmVolume = volume; });
     }
+
 
     /// <summary>
     /// 터치 기다리는 코루틴

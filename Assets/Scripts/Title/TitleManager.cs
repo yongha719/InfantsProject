@@ -10,10 +10,6 @@ public class TitleManager : MonoBehaviour
 {
     [SerializeField] List<Button> Lunchboxsbtn;
 
-    [SerializeField] private GameObject logo;
-
-    [SerializeField] private RectTransform curie;
-
     [SerializeField] private Slider BGMSlider;
 
 

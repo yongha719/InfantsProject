@@ -14,7 +14,6 @@ public class GameManager : MonoBehaviour
         set
         {
             stagenum = value;
-            print("Stage num set");
             Fade.Instance.FadeIn();
         }
     }

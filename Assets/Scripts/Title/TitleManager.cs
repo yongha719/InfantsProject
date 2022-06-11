@@ -8,7 +8,7 @@ using UnityEngine.EventSystems;
 
 public class TitleManager : MonoBehaviour
 {
-    public List<Button> LunchBoxButtons;
+    [SerializeField] List<Button> Lunchboxsbtn;
 
     [SerializeField] private GameObject logo;
 
@@ -16,7 +16,6 @@ public class TitleManager : MonoBehaviour
 
     [SerializeField] private Slider BGMSlider;
 
-    private static bool isStart;
 
     void Start()
     {
@@ -24,53 +23,22 @@ public class TitleManager : MonoBehaviour
 
         SetUI();
 
-        if (isStart == false)
-            StartCoroutine(EWaitTouch());
     }
 
     private void SetUI()
     {
-        if (isStart)
+        foreach (var lbbtn in Lunchboxsbtn)
         {
-            logo.SetActive(false);
-            Curie.animator.SetBool("AlreadyStart", true);
-        }
-        else
-        {
-           
+            lbbtn.onClick.AddListener(() =>
+            {
+                GameManager.StageNum = int.Parse(lbbtn.name);
+            });
         }
 
-        foreach (var lbbtn in LunchBoxButtons)
-            lbbtn.onClick.AddListener(() => { GameManager.StageNum = int.Parse(lbbtn.name); });
 
         BGMSlider.onValueChanged.AddListener((volume) => { SoundManager.Instance.BgmVolume = volume; });
+        BGMSlider.value = SoundManager.Instance.BgmVolume;
     }
-
-
-    /// <summary>
-    /// 터치 기다리는 코루틴
-    /// </summary>
-    IEnumerator EWaitTouch()
-    {
-        var wait = new WaitForSeconds(0.001f);
-
-        while (true)
-        {
-            if (Input.GetMouseButtonDown(0) || Input.anyKeyDown)
-            {
-                isStart = true;
-                Curie.animator.SetBool("isStart", isStart);
-                Logo.animator.SetBool("isStart", isStart);
-
-                yield return new WaitForSeconds(0.5f);
-                Curie.animator.SetBool("AlreadyStart", true);
-                yield break;
-            }
-
-            yield return wait;
-        }
-    }
-
 
     private void SetResolution()
     {

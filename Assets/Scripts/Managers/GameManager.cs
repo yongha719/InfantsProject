@@ -6,7 +6,7 @@ using UnityEngine.UI;
 public class GameManager : MonoBehaviour
 {
     public static bool IsClear = false;
-    private static int stagenum;
+    private static int stagenum = 1;
     public static int StageNum
     {
         get => stagenum;
@@ -14,6 +14,7 @@ public class GameManager : MonoBehaviour
         set
         {
             stagenum = value;
+            print("Stage num set");
             Fade.Instance.FadeIn();
         }
     }
@@ -73,8 +74,6 @@ public class GameManager : MonoBehaviour
 
     void Start()
     {
-        stagenum = 1;
-
         SM = SoundManager.Instance;
 
         Fade.Instance.FadeOut();

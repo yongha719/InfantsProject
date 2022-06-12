@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
+using DG.Tweening;
 
 public class GameManager : MonoBehaviour
 {
@@ -49,8 +51,9 @@ public class GameManager : MonoBehaviour
     /// 1~3스테이지가 끝났을 때 띄울 오브젝트
     /// </summary>
     [SerializeField] private Transform finishLunchBoxTr;
-    Animator finishLunchBoxAnimator;
+    private Animator finishLunchBoxAnimator;
     private List<GameObject> finishLunchBoxFoods = new List<GameObject>();
+    [SerializeField] private ParticleSystem ClearParticle;
 
     #region Foods
     [Header("Stage 1=================================================================")]
@@ -170,10 +173,9 @@ public class GameManager : MonoBehaviour
                 {
                     if (i != StageFoods.Count)
                     {
-                        print("Coroutine");
                         RandomInstantiateFood(StageFoods[i]);
                         finishLunchBoxFoods[i].SetActive(true);
-                        finishLunchBoxTr.GetChild(finishLunchBoxTr.childCount - 1).gameObject.SetActive(false);
+                        //finishLunchBoxTr.GetChild(finishLunchBoxTr.childCount - 1).gameObject.SetActive(false);
                         IsClear = false;
                         break;
                     }
@@ -191,12 +193,38 @@ public class GameManager : MonoBehaviour
 
     void StageClear()
     {
+        StartCoroutine(EStageClear());
+    }
+
+
+    IEnumerator EStageClear()
+    {
         SpeechBubble.SetActive(false);
-        finishLunchBoxAnimator.SetBool("IsClear", true);
-        if (stagenum < 4)
+
+
+
+        if (stagenum < 7)
+        {
+            Button nextbutton = goToNextStageButtons[stagenum - 1];
+
+            nextbutton.gameObject.SetActive(true);
+            nextbutton.onClick.AddListener(() =>
+            {
+                nextbutton.gameObject.SetActive(false);
+                StageNum++;
+            });
+            nextbutton.transform.DOLocalMoveX(30, 2f);
+
+            finishLunchBoxAnimator.SetBool("IsClear", true);
+            yield return new WaitForSeconds(2f);
+            ClearParticle.Play();
+        }
+        else
         {
 
         }
+
+        yield return null;
     }
     /// <summary>
     /// 3스테이지까지의 게임들을 셋팅해줌

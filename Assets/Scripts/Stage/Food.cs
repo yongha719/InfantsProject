@@ -64,12 +64,12 @@ public class Food : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHand
 
         if (CanDrag == false)
         {
-            var ingredients = FindObjectsOfType<Food>();
+            var foods = FindObjectsOfType<Food>();
 
             GameManager.IsClear = true;
 
-            foreach (var ing in ingredients)
-                Destroy(ing.gameObject);
+            foreach (var food in foods)
+                Destroy(food.gameObject);
         }
     }
 }

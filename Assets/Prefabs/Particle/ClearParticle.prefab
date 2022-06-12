@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 2818275803141509852}
   - component: {fileID: 2818275803141509851}
   - component: {fileID: 2818275803141509850}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: ClearParticle
   m_TagString: Untagged
   m_Icon: {fileID: 0}

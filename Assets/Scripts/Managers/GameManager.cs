@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-using UnityEngine.SceneManagement;
 using DG.Tweening;
 
 public class GameManager : MonoBehaviour
@@ -20,7 +19,7 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    #region Stage 1 ~ 6 GameObjects 
+    #region Stage GameObjects 
 
     /// <summary>
     /// 슬롯
@@ -111,19 +110,19 @@ public class GameManager : MonoBehaviour
     {
         SetStage();
 
-        if (stagenum < 7)
+        if (stagenum <= 3)
         {
             print("Startstage");
             RandomInstantiateFood(LunchBoxs);
-            StartCoroutine(ESystemUptoSixStage());
+            StartCoroutine(ESystemUptoThreeStage());
         }
-        else
+        else if (stagenum <= 6)
         {
 
         }
     }
     /// <summary>
-    //  스테이지 세팅
+    ///  스테이지 세팅
     /// </summary>
     void SetStage()
     {
@@ -142,15 +141,17 @@ public class GameManager : MonoBehaviour
                 StageFoods.Add(Tomatos);
                 StageFoods.Add(CupCakes);
                 break;
-            case 3:
-                break;
-            case 4:
-                break;
-            case 5:
-                break;
-            case 6:
-                break;
+            /*
+        case 3:
+            break;
+        case 4:
+            break;
+        case 5:
+            break;
+        case 6:
+            break;*/
             default:
+                Debug.Assert(false, "응 나가");
                 break;
         }
     }
@@ -158,7 +159,7 @@ public class GameManager : MonoBehaviour
     /// <summary>
     /// 6스테이지까지의 시스템
     /// </summary>
-    IEnumerator ESystemUptoSixStage()
+    IEnumerator ESystemUptoThreeStage()
     {
         //Stage Start
         var wait = new WaitForSeconds(0.001f);
@@ -203,7 +204,7 @@ public class GameManager : MonoBehaviour
 
 
 
-        if (stagenum < 7)
+        if (stagenum <= 3)
         {
             Button nextbutton = goToNextStageButtons[stagenum - 1];
 
@@ -219,7 +220,7 @@ public class GameManager : MonoBehaviour
             yield return new WaitForSeconds(2f);
             ClearParticle.Play();
         }
-        else
+        else if (stagenum <= 6)
         {
 
         }

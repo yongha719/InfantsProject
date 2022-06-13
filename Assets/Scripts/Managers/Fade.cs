@@ -47,7 +47,7 @@ public class Fade : MonoBehaviour
         upper_left.DOAnchorPos(Vector2.zero, fadeTime);
         upper_right.DOAnchorPos(Vector2.zero, fadeTime);
 
-        SoundManager.Instance.Play(SoundName.FADE);
+        //SoundManager.Instance.Play(SoundName.FADE);
 
         yield return waitTime;
 
@@ -56,10 +56,10 @@ public class Fade : MonoBehaviour
 
     private IEnumerator EFadeOut(bool reload = false)
     {
-        lower_left.DOAnchorPos( new Vector2(-1100, -700), fadeTime);
+        lower_left.DOAnchorPos(new Vector2(-1100, -700), fadeTime);
         lower_right.DOAnchorPos(new Vector2(1100, -700), fadeTime);
-        upper_left.DOAnchorPos( new Vector2(-1100, 700), fadeTime);
-        upper_right.DOAnchorPos(new Vector2(1100, 700),  fadeTime);
+        upper_left.DOAnchorPos(new Vector2(-1100, 700), fadeTime);
+        upper_right.DOAnchorPos(new Vector2(1100, 700), fadeTime);
 
         yield return waitTime;
 

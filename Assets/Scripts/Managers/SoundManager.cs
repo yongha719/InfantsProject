@@ -9,9 +9,9 @@ public enum SoundType
 }
 public static class SoundName
 {
-    public static readonly string APPEAR = "Appear";
-    public static readonly string FADE = "Fade";
-    public static readonly string MISTAKE = "Mistake";
+    public const string MISTAKE = "Mistake";
+    public const string APPEAR = "Appear";
+    public const string FADE = "Fade";
 }
 public class SoundManager : MonoBehaviour
 {

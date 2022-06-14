@@ -6,7 +6,7 @@ using DG.Tweening;
 
 public class GameManager : MonoBehaviour
 {
-    public static bool IsClear = false;
+    public static bool IsClear;
     private static int stagenum = 1;
     public static int StageNum
     {
@@ -77,16 +77,14 @@ public class GameManager : MonoBehaviour
     {
         SM = SoundManager.Instance;
 
-        Fade.Instance.FadeOut();
-
         Init();
-
-        StartStage();
     }
 
 
     void Init()
     {
+        Fade.Instance.FadeOut();
+
         IsClear = false;
 
         for (int i = 0; i < ParentRt.childCount; i++)
@@ -94,7 +92,7 @@ public class GameManager : MonoBehaviour
             slots.Add(ParentRt.GetChild(i));
         }
 
-        finishLunchBoxTr = GameObject.FindGameObjectWithTag("LunchBox").transform.Find($"Stage{StageNum}");
+        finishLunchBoxTr = GameObject.FindGameObjectWithTag("LunchBox").transform.Find($"Stage{stagenum}");
         finishLunchBoxTr.gameObject.SetActive(true);
         finishLunchBoxAnimator = finishLunchBoxTr.GetComponent<Animator>();
 
@@ -104,6 +102,8 @@ public class GameManager : MonoBehaviour
         }
 
         SpeechBubble.SetActive(true);
+
+        StartStage();
     }
 
     void StartStage()
@@ -161,7 +161,6 @@ public class GameManager : MonoBehaviour
     /// </summary>
     IEnumerator ESystemUptoThreeStage()
     {
-        //Stage Start
         var wait = new WaitForSeconds(0.001f);
 
         int count = StageFoods.Count;
@@ -176,7 +175,6 @@ public class GameManager : MonoBehaviour
                     {
                         RandomInstantiateFood(StageFoods[i]);
                         finishLunchBoxFoods[i].SetActive(true);
-                        //finishLunchBoxTr.GetChild(finishLunchBoxTr.childCount - 1).gameObject.SetActive(false);
                         IsClear = false;
                         break;
                     }
@@ -189,20 +187,12 @@ public class GameManager : MonoBehaviour
             }
         }
 
-        StageClear();
+        yield return StartCoroutine(EStageClear());
     }
-
-    void StageClear()
-    {
-        StartCoroutine(EStageClear());
-    }
-
 
     IEnumerator EStageClear()
     {
         SpeechBubble.SetActive(false);
-
-
 
         if (stagenum <= 3)
         {
@@ -217,7 +207,9 @@ public class GameManager : MonoBehaviour
             nextbutton.transform.DOLocalMoveX(30, 2f);
 
             finishLunchBoxAnimator.SetBool("IsClear", true);
+
             yield return new WaitForSeconds(2f);
+
             ClearParticle.Play();
         }
         else if (stagenum <= 6)

@@ -12,13 +12,11 @@ public class TitleManager : MonoBehaviour
 
     [SerializeField] private Slider BGMSlider;
 
-
     void Start()
     {
         SetResolution();
 
         SetUI();
-
     }
 
     private void SetUI()

@@ -6,7 +6,7 @@ using UnityEngine.EventSystems;
 public class Slot : MonoBehaviour, IDropHandler
 {
     /// <summary>
-    /// 보따리에 있는 슬롯인지 판별
+    /// 보따리 위에 있는 슬롯인지 판별
     /// </summary>
     public bool CurrectSlot = false;
     void Start()
@@ -27,11 +27,12 @@ public class Slot : MonoBehaviour, IDropHandler
             {
                 ingredient.OriginParent = transform;
                 ingredient.CanDrag = false;
+
                 dragingobj.transform.SetParent(transform);
                 dragingobj.GetComponent<RectTransform>().localPosition = Vector2.zero;
             }
             else
-                SoundManager.Instance.Play(SoundName.MISTAKE, SoundType.EFFECT);
+                SoundManager.Instance.Play(SoundName.MISTAKE);
         }
     }
 }

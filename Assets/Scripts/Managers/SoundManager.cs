@@ -49,30 +49,28 @@ public class SoundManager : MonoBehaviour
         {
             Instance = this;
 
-            GameObject sound = GameObject.Find("SoundManager");
             string[] soundNames = Enum.GetNames(typeof(SoundType));
 
-            if (sound != null)
+            DontDestroyOnLoad(this);
+
+            for (int i = 0; i < soundNames.Length - 1; i++)
             {
-                DontDestroyOnLoad(sound);
-
-                for (int i = 0; i < soundNames.Length - 1; i++)
-                {
-                    GameObject playobj = new GameObject { name = soundNames[i] };
-                    audioSources[i] = playobj.AddComponent<AudioSource>();
-                    playobj.transform.SetParent(sound.transform);
-                }
-
-                audioSources[(int)SoundType.BGM].loop = true;
+                GameObject playobj = new GameObject { name = soundNames[i] };
+                audioSources[i] = playobj.AddComponent<AudioSource>();
+                playobj.transform.SetParent(transform);
             }
+
+            audioSources[(int)SoundType.BGM].loop = true;
+
         }
 
         AudioClip[] audioClip = Resources.LoadAll<AudioClip>("Sound");
 
-        for (int i = 0; i < audioClip.Length; i++)
+        foreach (var clip in audioClip)
         {
-            Clips.Add(audioClip[i].name, audioClip[i]);
+            Clips.Add(clip.name, clip);
         }
+
     }
     private void Start()
     {
@@ -81,7 +79,7 @@ public class SoundManager : MonoBehaviour
 
     public void Play(string name, SoundType soundType = SoundType.EFFECT)
     {
-        AudioSource audioSource;
+        AudioSource audioSource = null;
 
         if (Clips.TryGetValue(name, out AudioClip audioClip) == false)
         {

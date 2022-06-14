@@ -4,24 +4,29 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using UnityEngine.EventSystems;
+using DG.Tweening;
 
 
 public class TitleManager : MonoBehaviour
 {
-    [SerializeField] List<Button> Lunchboxsbtn;
+    [SerializeField] List<Button> LunchBoxsButtons;
+    [SerializeField] List<Button> LockButtons;
+    [SerializeField] Image WaringImage;
 
     [SerializeField] private Slider BGMSlider;
+
 
     void Start()
     {
         SetResolution();
 
         SetUI();
+
     }
 
     private void SetUI()
     {
-        foreach (var lbbtn in Lunchboxsbtn)
+        foreach (var lbbtn in LunchBoxsButtons)
         {
             lbbtn.onClick.AddListener(() =>
             {
@@ -29,9 +34,25 @@ public class TitleManager : MonoBehaviour
             });
         }
 
+        foreach (var btn in LockButtons)
+        {
+            btn.onClick.AddListener(() =>
+            {
+                StartCoroutine(ELockWaring());
+            });
+        }
 
         BGMSlider.onValueChanged.AddListener((volume) => { SoundManager.Instance.BgmVolume = volume; });
         BGMSlider.value = SoundManager.Instance.BgmVolume;
+    }
+
+    IEnumerator ELockWaring()
+    {
+        WaringImage.gameObject.SetActive(true);
+        WaringImage.DOFade(0, 1.5f);
+        yield return new WaitForSeconds(1.5f);
+        WaringImage.gameObject.SetActive(false);
+        yield return null;
     }
 
     private void SetResolution()

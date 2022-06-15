@@ -24,7 +24,8 @@ public class UIManager : MonoBehaviour
 
         SoundManager.AddButtonClick(findbutton);
 
-        if (SceneManager.GetActiveScene().Equals("Title") == true)
+        print(SceneManager.GetActiveScene().name);
+        if (SceneManager.GetActiveScene().name.Equals("Title") == true)
         {
             BGMSlider.onValueChanged.AddListener((volume) => { SoundManager.Instance.BgmVolume = volume; });
             BGMSlider.value = SoundManager.Instance.BgmVolume;

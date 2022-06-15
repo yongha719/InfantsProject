@@ -55,19 +55,23 @@ public class GameManager : MonoBehaviour
     [SerializeField] private ParticleSystem ClearParticle;
 
     #region Foods
-    [Header("Stage 1=================================================================")]
-    [Space(10)]
+    [Header("Stage 1================================================================="), Space(10)]
     [SerializeField] private List<GameObject> Apples;
     [SerializeField] private List<GameObject> Breads;
     [SerializeField] private List<GameObject> Oranges;
     [SerializeField] private List<GameObject> Rice_Roll;
 
-    [Header("Stage 2=================================================================")]
-    [Space(10)]
+    [Header("Stage 2================================================================="), Space(10)]
     [SerializeField] private List<GameObject> Sandwichs;
     [SerializeField] private List<GameObject> Bananas;
     [SerializeField] private List<GameObject> Tomatos;
     [SerializeField] private List<GameObject> CupCakes;
+
+    [Header("Stage 3================================================================="), Space(10)]
+    [SerializeField] private List<GameObject> RiceBalls;
+    [SerializeField] private List<GameObject> WaterMelons;
+    [SerializeField] private List<GameObject> Sausages;
+    [SerializeField] private List<GameObject> Carrots;
     #endregion
     #endregion
 
@@ -141,9 +145,13 @@ public class GameManager : MonoBehaviour
                 StageFoods.Add(Tomatos);
                 StageFoods.Add(CupCakes);
                 break;
+            case 3:
+                StageFoods.Add(RiceBalls);
+                StageFoods.Add(WaterMelons);
+                StageFoods.Add(Sausages);
+                StageFoods.Add(Carrots);
+                break;
             /*
-        case 3:
-            break;
         case 4:
             break;
         case 5:

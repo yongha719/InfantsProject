@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public enum SoundType
 {
@@ -9,6 +10,7 @@ public enum SoundType
 }
 public static class SoundName
 {
+    public const string BUTTONCLICK = "ButtonClick";
     public const string MISTAKE = "Mistake";
     public const string APPEAR = "Appear";
     public const string FADE = "Fade";
@@ -68,7 +70,7 @@ public class SoundManager : MonoBehaviour
 
         foreach (var clip in audioClip)
         {
-            Clips.Add(clip.name, clip);
+            Clips[clip.name] = clip;
         }
 
     }
@@ -77,13 +79,25 @@ public class SoundManager : MonoBehaviour
         Play("BGM", SoundType.BGM);
     }
 
+    public static void AddButtonClick(Button[] buttons)
+    {
+        foreach (var button in buttons)
+        {
+            button.onClick.AddListener(() =>
+            {
+                //Instance.Play(SoundName.BUTTONCLICK, SoundType.BUTTON);
+                print("btnclick");
+            });
+        }
+    }
+
     public void Play(string name, SoundType soundType = SoundType.EFFECT)
     {
         AudioSource audioSource = null;
 
         if (Clips.TryGetValue(name, out AudioClip audioClip) == false)
         {
-            throw new NullReferenceException($"AudioClip {audioClip.name} is NUll!!");
+            throw new KeyNotFoundException($"AudioClip {audioClip.name} is not find!!");
         }
         else
         {

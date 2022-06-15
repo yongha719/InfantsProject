@@ -11,17 +11,13 @@ public class TitleManager : MonoBehaviour
 {
     [SerializeField] List<Button> LunchBoxsButtons;
     [SerializeField] List<Button> LockButtons;
-    [SerializeField] Image WaringImage;
-
-    [SerializeField] private Slider BGMSlider;
-
+    [SerializeField] Image WarningImage;
 
     void Start()
     {
         SetResolution();
 
         SetUI();
-
     }
 
     private void SetUI()
@@ -41,17 +37,14 @@ public class TitleManager : MonoBehaviour
                 StartCoroutine(ELockWaring());
             });
         }
-
-        BGMSlider.onValueChanged.AddListener((volume) => { SoundManager.Instance.BgmVolume = volume; });
-        BGMSlider.value = SoundManager.Instance.BgmVolume;
     }
 
     IEnumerator ELockWaring()
     {
-        WaringImage.gameObject.SetActive(true);
-        WaringImage.DOFade(0, 1.5f);
+        WarningImage.gameObject.SetActive(true);
+        WarningImage.DOFade(0, 1.5f);
         yield return new WaitForSeconds(1.5f);
-        WaringImage.gameObject.SetActive(false);
+        WarningImage.gameObject.SetActive(false);
         yield return null;
     }
 

@@ -9,9 +9,9 @@ public class StageClear : MonoBehaviour
     public Animator Lid;
 
     /// <summary>
-    /// Animation Event Method of Up to Six Stage 
+    /// Animation Event Method of Up to Three Stage 
     /// </summary>
-    public void UptoSixStage()
+    public void UptoThreeStage()
     {
         Lid.SetBool("IsClear", true);
     }

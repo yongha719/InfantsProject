@@ -9,10 +9,6 @@ public class Slot : MonoBehaviour, IDropHandler
     /// 보따리 위에 있는 슬롯인지 판별
     /// </summary>
     public bool CurrectSlot = false;
-    void Start()
-    {
-
-    }
 
     public void OnDrop(PointerEventData eventData)
     {

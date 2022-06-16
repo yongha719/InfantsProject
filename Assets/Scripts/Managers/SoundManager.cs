@@ -64,19 +64,29 @@ public class SoundManager : MonoBehaviour
 
             audioSources[(int)SoundType.BGM].loop = true;
 
+            AudioClip[] audioClip = Resources.LoadAll<AudioClip>("Sound");
+
+            foreach (var clip in audioClip)
+            {
+                Clips[clip.name] = clip;
+            }
         }
-
-        AudioClip[] audioClip = Resources.LoadAll<AudioClip>("Sound");
-
-        foreach (var clip in audioClip)
+        else
         {
-            Clips[clip.name] = clip;
+            Destroy(gameObject);
         }
-
     }
     private void Start()
     {
         Play("BGM", SoundType.BGM);
+    }
+
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.S))
+        {
+            print(audioSources[(int)SoundType.BGM].isPlaying);
+        }
     }
 
     public static void AddButtonClick(Button[] buttons)
@@ -93,16 +103,23 @@ public class SoundManager : MonoBehaviour
 
     public void Play(string name, SoundType soundType = SoundType.EFFECT)
     {
-        AudioSource audioSource = null;
+        AudioSource audioSource = audioSources[(int)soundType];
+
+        if (audioSource == null)
+            throw new NullReferenceException($"AudioSource is Null!!\n soundtype is {soundType}");
 
         if (Clips.TryGetValue(name, out AudioClip audioClip) == false)
-        {
             throw new KeyNotFoundException($"AudioClip {audioClip.name} is not find!!");
+
+        if (soundType == SoundType.BGM)
+        {
+            if (audioSource.isPlaying)
+                return;
+            audioSource.clip = audioClip;
+            audioSource.Play();
         }
         else
         {
-            audioSource = audioSources[(int)soundType];
-            audioSource.clip = audioClip;
             audioSource.PlayOneShot(audioClip);
         }
 

@@ -36,8 +36,8 @@ public class Fade : MonoBehaviour
     /// <summary>
     /// Fade In
     /// </summary>
-    /// <param name="GotoTItle"> if true go title scene else go stage scene </param>
-    public void FadeIn(bool GotoTItle = false) => StartCoroutine(EFadeIn(GotoTItle));
+    /// <param name="GotoTitle"> if true go title scene else go stage scene </param>
+    public void FadeIn(bool GotoTitle = false) => StartCoroutine(EFadeIn(GotoTitle));
     public void FadeOut() => StartCoroutine(EFadeOut());
     private IEnumerator EFadeIn(bool GotoTItle = false)
     {

@@ -72,6 +72,15 @@ public class GameManager : MonoBehaviour
     [SerializeField] private List<GameObject> WaterMelons;
     [SerializeField] private List<GameObject> Sausages;
     [SerializeField] private List<GameObject> Carrots;
+
+    /// <summary>
+    /// Stage 4~6 LunchBoxs
+    /// </summary>
+    [Header("Stage 4 ~ 6============================================================="), Space(10)]
+    [SerializeField] private List<GameObject> StageLunchBoxs;
+    [SerializeField] private List<GameObject> Mats;
+    [SerializeField] private List<GameObject> Spoons;
+    [SerializeField] private List<GameObject> Bottles;
     #endregion
     #endregion
 
@@ -151,13 +160,14 @@ public class GameManager : MonoBehaviour
                 StageFoods.Add(Sausages);
                 StageFoods.Add(Carrots);
                 break;
-            /*
-        case 4:
-            break;
-        case 5:
-            break;
-        case 6:
-            break;*/
+            case 4:
+            case 5:
+            case 6:
+                StageFoods.Add(StageLunchBoxs);
+                StageFoods.Add(Mats);
+                StageFoods.Add(Spoons);
+                StageFoods.Add(Bottles);
+                break;
             default:
                 Debug.Assert(false, "응 나가");
                 break;
@@ -177,6 +187,7 @@ public class GameManager : MonoBehaviour
         {
             while (true)
             {
+                // 킹태훈이 한거임 훈수 해봐
                 if (IsClear)
                 {
                     if (i != StageFoods.Count)
@@ -244,8 +255,8 @@ public class GameManager : MonoBehaviour
             int num = Random.Range(0, slottr.Count);
 
             food = Instantiate(foods[i], slottr[num]).GetComponent<Food>();
-            food.num = i + 1;
-            food.IsCurrect = (stagenum == food.num);
+            food.num = (i + 1) % 3;
+            food.IsCurrect = (stagenum % 3 == food.num);
 
             slottr.RemoveAt(num);
         }

@@ -2261,6 +2261,22 @@ MonoBehaviour:
   - {fileID: 5289250662046892957, guid: 9948ce644b2072046840fb5fa4d7cac3, type: 3}
   - {fileID: 5289250662046892957, guid: 45c1418de75d50f40b4e5cbf8f1ac798, type: 3}
   - {fileID: 5289250662046892957, guid: 8e09679568ed8784cb30c3170c17fdbf, type: 3}
+  StageLunchBoxs:
+  - {fileID: 5289250662046892957, guid: 50b77de480e3d7f429c20ae4fda94ee4, type: 3}
+  - {fileID: 5289250662046892957, guid: 05f3287569102b047825e5b3750d9a47, type: 3}
+  - {fileID: 5289250662046892957, guid: b5971bba5565a1344bc5d3c39e6e2794, type: 3}
+  Mats:
+  - {fileID: 5289250662046892957, guid: e0290f3ceefe2dd44a50cbee62552ed3, type: 3}
+  - {fileID: 5289250662046892957, guid: d17537fa5c125794694df72f5d03d57f, type: 3}
+  - {fileID: 5289250662046892957, guid: ca74c7f794acc034dad9c85130569129, type: 3}
+  Spoons:
+  - {fileID: 5289250662046892957, guid: 6a73f3997dccafa4f8038300dbbfe7b7, type: 3}
+  - {fileID: 5289250662046892957, guid: d61fc599d5112684e9ff395f645cf363, type: 3}
+  - {fileID: 5289250662046892957, guid: 4edf6277c18bfcf4ba2670972ef48e29, type: 3}
+  Bottles:
+  - {fileID: 5289250662046892957, guid: 341a839b7539fe246aa5a7ad73dfc072, type: 3}
+  - {fileID: 5289250662046892957, guid: 9b0f849b390b74b45b414ee0206257aa, type: 3}
+  - {fileID: 5289250662046892957, guid: c0c8871817ee9db478734908095a5a9b, type: 3}
 --- !u!4 &1021274377
 Transform:
   m_ObjectHideFlags: 0

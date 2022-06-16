@@ -32,11 +32,14 @@ public class Fade : MonoBehaviour
 
             DontDestroyOnLoad(this);
         }
-
     }
-    public void FadeIn() => StartCoroutine(EFadeIn());
-    public void FadeOut(bool reload = false) => StartCoroutine(EFadeOut(reload));
-    private IEnumerator EFadeIn()
+    /// <summary>
+    /// Fade In
+    /// </summary>
+    /// <param name="GotoTItle"> if true go title scene else go stage scene </param>
+    public void FadeIn(bool GotoTItle = false) => StartCoroutine(EFadeIn(GotoTItle));
+    public void FadeOut() => StartCoroutine(EFadeOut());
+    private IEnumerator EFadeIn(bool GotoTItle = false)
     {
 
         lower_left.DOAnchorPos(Vector2.zero, fadeTime);
@@ -48,10 +51,18 @@ public class Fade : MonoBehaviour
 
         yield return waitTime;
 
-        SceneManager.LoadScene("Stage");
+        if (GotoTItle)
+        {
+            SceneManager.LoadScene("1.Title");
+            TitleManager.IsFade = true;
+        }
+        else
+        {
+            SceneManager.LoadScene("2.Stage");
+        }
     }
 
-    private IEnumerator EFadeOut(bool reload = false)
+    private IEnumerator EFadeOut()
     {
         lower_left.DOAnchorPos(new Vector2(-1100, -700), fadeTime);
         lower_right.DOAnchorPos(new Vector2(1100, -700), fadeTime);
@@ -59,8 +70,5 @@ public class Fade : MonoBehaviour
         upper_right.DOAnchorPos(new Vector2(1100, 700), fadeTime);
 
         yield return waitTime;
-
-        if (reload == true)
-            SceneManager.LoadScene("Stage");
     }
 }

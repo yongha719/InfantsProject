@@ -42,7 +42,7 @@ public class GameManager : MonoBehaviour
     /// </summary>
     [SerializeField] private List<GameObject> LunchBoxs;
     /// <summary>
-    /// 도시락 음식들
+    /// 스테이지 오브젝트들 매 스테이지마다 바뀜 SetStage 구현
     /// </summary>
     private List<List<GameObject>> StageFoods = new List<List<GameObject>>();
 
@@ -78,8 +78,8 @@ public class GameManager : MonoBehaviour
     /// </summary>
     [Header("Stage 4 ~ 6============================================================="), Space(10)]
     [SerializeField] private List<GameObject> StageLunchBoxs;
-    [SerializeField] private List<GameObject> Mats;
     [SerializeField] private List<GameObject> Spoons;
+    [SerializeField] private List<GameObject> Mats;
     [SerializeField] private List<GameObject> Bottles;
     #endregion
     #endregion
@@ -131,7 +131,8 @@ public class GameManager : MonoBehaviour
         }
         else if (stagenum <= 6)
         {
-
+            RandomInstantiateFood(StageLunchBoxs);
+            StartCoroutine(ESystemUptoThreeStage());
         }
     }
     /// <summary>
@@ -163,10 +164,10 @@ public class GameManager : MonoBehaviour
             case 4:
             case 5:
             case 6:
-                StageFoods.Add(StageLunchBoxs);
+                print("456");
+                StageFoods.Add(Bottles);
                 StageFoods.Add(Mats);
                 StageFoods.Add(Spoons);
-                StageFoods.Add(Bottles);
                 break;
             default:
                 Debug.Assert(false, "응 나가");
@@ -213,18 +214,18 @@ public class GameManager : MonoBehaviour
     {
         SpeechBubble.SetActive(false);
 
+        Button nextbutton = goToNextStageButtons[stagenum - 1];
+
+        nextbutton.gameObject.SetActive(true);
+        nextbutton.onClick.AddListener(() =>
+        {
+            nextbutton.gameObject.SetActive(false);
+            StageNum++;
+        });
+        nextbutton.transform.DOLocalMoveX(30, 2f);
+
         if (stagenum <= 3)
         {
-            Button nextbutton = goToNextStageButtons[stagenum - 1];
-
-            nextbutton.gameObject.SetActive(true);
-            nextbutton.onClick.AddListener(() =>
-            {
-                nextbutton.gameObject.SetActive(false);
-                StageNum++;
-            });
-            nextbutton.transform.DOLocalMoveX(30, 2f);
-
             finishLunchBoxAnimator.SetBool("IsClear", true);
 
             yield return new WaitForSeconds(2f);

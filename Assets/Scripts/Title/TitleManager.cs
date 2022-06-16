@@ -9,6 +9,7 @@ using DG.Tweening;
 
 public class TitleManager : MonoBehaviour
 {
+    public static bool IsFade;
     [SerializeField] List<Button> LunchBoxsButtons;
     [SerializeField] List<Button> LockButtons;
     [SerializeField] Image WarningImage;
@@ -22,6 +23,10 @@ public class TitleManager : MonoBehaviour
 
     private void SetUI()
     {
+        if(IsFade)
+        {
+            Fade.Instance.FadeOut();
+        }
         foreach (var lbbtn in LunchBoxsButtons)
         {
             lbbtn.onClick.AddListener(() =>

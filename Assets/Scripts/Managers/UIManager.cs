@@ -25,25 +25,25 @@ public class UIManager : MonoBehaviour
         SoundManager.AddButtonClick(findbutton);
 
         print(SceneManager.GetActiveScene().name);
-        if (SceneManager.GetActiveScene().name.Equals("Title") == true)
+        if (SceneManager.GetActiveScene().name.Equals("1.Title") == true)
         {
             BGMSlider.onValueChanged.AddListener((volume) => { SoundManager.Instance.BgmVolume = volume; });
             BGMSlider.value = SoundManager.Instance.BgmVolume;
         }
         else
         {
-            BackButton.onClick.AddListener(() => { SceneManager.LoadScene("Title"); });
+            BackButton.onClick.AddListener(() => { Fade.Instance.FadeIn(true); });
 
             for (int i = 0; i < LunchBox.childCount; i++)
             {
                 lunchBoxChilds.Add(LunchBox.GetChild(i).gameObject);
             }
 
-            int estagestatenum = GameManager.StageNum - 1;
+            int stagenum = GameManager.StageNum - 1;
 
-            Mat.sprite = MatSprites[estagestatenum];
+            Mat.sprite = MatSprites[stagenum];
 
-            SpeechBubbleNum.sprite = SpeechBubbleNumSprites[estagestatenum];
+            SpeechBubbleNum.sprite = SpeechBubbleNumSprites[stagenum];
         }
     }
 }

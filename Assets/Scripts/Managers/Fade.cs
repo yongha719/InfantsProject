@@ -35,10 +35,7 @@ public class Fade : MonoBehaviour
 
     }
     public void FadeIn() => StartCoroutine(EFadeIn());
-    public void FadeOut(bool reload = false)
-    {
-        StartCoroutine(EFadeOut(reload));
-    }
+    public void FadeOut(bool reload = false) => StartCoroutine(EFadeOut(reload));
     private IEnumerator EFadeIn()
     {
 

@@ -2,19 +2,18 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-using UnityEngine.SceneManagement;
-using UnityEngine.EventSystems;
 using DG.Tweening;
 
 
 public class TitleManager : MonoBehaviour
 {
-    public static bool IsFade;
+    public static bool HavetoFade;
+
     [SerializeField] List<Button> LunchBoxsButtons;
     [SerializeField] List<Button> LockButtons;
     [SerializeField] Image WarningImage;
 
-    void Start()
+    private void Start()
     {
         SetResolution();
 
@@ -23,9 +22,10 @@ public class TitleManager : MonoBehaviour
 
     private void SetUI()
     {
-        if(IsFade)
+        if (HavetoFade)
         {
             Fade.Instance.FadeOut();
+            HavetoFade = false;
         }
         foreach (var lbbtn in LunchBoxsButtons)
         {
@@ -44,7 +44,7 @@ public class TitleManager : MonoBehaviour
         }
     }
 
-    IEnumerator ELockWaring()
+    private IEnumerator ELockWaring()
     {
         WarningImage.gameObject.SetActive(true);
         WarningImage.DOFade(0, 1.5f);

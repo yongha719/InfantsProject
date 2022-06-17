@@ -21,33 +21,23 @@ public class GameManager : MonoBehaviour
 
     #region Stage GameObjects 
 
-    /// <summary>
-    /// 슬롯
-    /// </summary>
     [SerializeField] private RectTransform ParentRt;
     private List<Transform> slots = new List<Transform>();
 
-    /// <summary>
-    /// 다음 스테이지로 가는 버튼들
-    /// </summary>
-    [SerializeField] private List<Button> goToNextStageButtons = new List<Button>();
-
-    /// <summary>
-    /// 말풍선
-    /// </summary>
     [SerializeField] private GameObject SpeechBubble;
 
     /// <summary>
     /// 도시락 통들
     /// </summary>
     [SerializeField] private List<GameObject> LunchBoxs;
+
     /// <summary>
-    /// 스테이지 오브젝트들 매 스테이지마다 바뀜 SetStage 구현
+    /// 스테이지 오브젝트들 매 스테이지마다 바뀜 SetGame 구현
     /// </summary>
     private List<List<GameObject>> StageFoods = new List<List<GameObject>>();
 
     /// <summary>
-    /// 1~3스테이지가 끝났을 때 띄울 오브젝트
+    /// 1~6스테이지가 끝났을 때 띄울 오브젝트
     /// </summary>
     [SerializeField] private Transform finishLunchBoxTr;
     private Animator finishLunchBoxAnimator;
@@ -94,7 +84,7 @@ public class GameManager : MonoBehaviour
     }
 
 
-    void Init()
+    private void Init()
     {
         Fade.Instance.FadeOut();
 
@@ -116,29 +106,28 @@ public class GameManager : MonoBehaviour
 
         SpeechBubble.SetActive(true);
 
-        StartStage();
+        StartGame();
     }
 
-    void StartStage()
+    private void StartGame()
     {
-        SetStage();
+        SetGame();
 
         if (stagenum <= 3)
         {
-            print("Startstage");
             RandomInstantiateFood(LunchBoxs);
-            StartCoroutine(ESystemUptoThreeStage());
+            StartCoroutine(ESystemUptoSixStage());
         }
         else if (stagenum <= 6)
         {
             RandomInstantiateFood(StageLunchBoxs);
-            StartCoroutine(ESystemUptoThreeStage());
+            StartCoroutine(ESystemUptoSixStage());
         }
     }
     /// <summary>
-    ///  스테이지 세팅
+    /// Stage에 필요한 오브젝트들을 추가해줌
     /// </summary>
-    void SetStage()
+    private void SetGame()
     {
         switch (stagenum)
         {
@@ -164,7 +153,6 @@ public class GameManager : MonoBehaviour
             case 4:
             case 5:
             case 6:
-                print("456");
                 StageFoods.Add(Bottles);
                 StageFoods.Add(Mats);
                 StageFoods.Add(Spoons);
@@ -178,7 +166,7 @@ public class GameManager : MonoBehaviour
     /// <summary>
     /// 6스테이지까지의 시스템
     /// </summary>
-    IEnumerator ESystemUptoThreeStage()
+    private IEnumerator ESystemUptoSixStage()
     {
         var wait = new WaitForSeconds(0.001f);
 
@@ -210,44 +198,34 @@ public class GameManager : MonoBehaviour
         yield return StartCoroutine(EStageClear());
     }
 
-    IEnumerator EStageClear()
+    private IEnumerator EStageClear()
     {
         SpeechBubble.SetActive(false);
 
-        Button nextbutton = goToNextStageButtons[stagenum - 1];
-
-        nextbutton.gameObject.SetActive(true);
-        nextbutton.onClick.AddListener(() =>
-        {
-            nextbutton.gameObject.SetActive(false);
-            StageNum++;
-        });
-        nextbutton.transform.DOLocalMoveX(30, 2f);
+        UIManager.Instance.SetNextStageButton();
 
         if (stagenum <= 3)
         {
             finishLunchBoxAnimator.SetBool("IsClear", true);
 
             yield return new WaitForSeconds(2f);
-
-            ClearParticle.Play();
         }
         else if (stagenum <= 6)
         {
 
+            //yield return new WaitForSeconds();
         }
+        ClearParticle.Play();
+        //SM.Play( , SoundType.Effect);
 
         yield return null;
     }
     /// <summary>
-    /// 3스테이지까지의 게임들을 셋팅해줌
+    /// 6스테이지까지의 게임들의 오브젝트 랜덤 생성
     /// </summary>
-    void RandomInstantiateFood(List<GameObject> foods)
+    private void RandomInstantiateFood(List<GameObject> foods)
     {
-        var slottr = new List<Transform>();
-
-        foreach (var slot in slots)
-            slottr.Add(slot);
+        var slottr = new List<Transform>(slots);
 
         Food food;
 

@@ -242,14 +242,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c93124f2366d96f4794df5a4fe05cfe4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  BGMSlider: {fileID: 2118575523}
+  EffectSlider: {fileID: 1823475727}
   Mat: {fileID: 0}
   MatSprites: []
   SpeechBubbleNum: {fileID: 0}
   SpeechBubbleNumSprites: []
-  LunchBox: {fileID: 0}
   BackButton: {fileID: 0}
-  BGMSlider: {fileID: 2118575523}
-  EffectSlider: {fileID: 1823475727}
+  goToNextStageButtons: []
 --- !u!1 &22482167
 GameObject:
   m_ObjectHideFlags: 0

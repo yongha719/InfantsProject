@@ -38,7 +38,6 @@ public class Fade : MonoBehaviour
     /// </summary>
     /// <param name="GotoTitle"> if true go title scene else go stage scene </param>
     public void FadeIn(bool GotoTitle = false) => StartCoroutine(EFadeIn(GotoTitle));
-    public void FadeOut() => StartCoroutine(EFadeOut());
     private IEnumerator EFadeIn(bool GotoTItle = false)
     {
 
@@ -51,16 +50,11 @@ public class Fade : MonoBehaviour
 
         yield return waitTime;
 
-        if (GotoTItle)
-        {
-            SceneManager.LoadScene("1.Title");
-            TitleManager.IsFade = true;
-        }
-        else
-        {
-            SceneManager.LoadScene("2.Stage");
-        }
+        SceneManager.LoadScene(GotoTItle == true ? "1.Title" : "2.Stage");
+        TitleManager.HavetoFade = GotoTItle;
     }
+
+    public void FadeOut() => StartCoroutine(EFadeOut());
 
     private IEnumerator EFadeOut()
     {
@@ -71,4 +65,6 @@ public class Fade : MonoBehaviour
 
         yield return waitTime;
     }
+
+
 }

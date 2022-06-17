@@ -45,7 +45,7 @@ public class SoundManager : MonoBehaviour
         }
     }
 
-    void Awake()
+    private void Awake()
     {
         if (Instance == null)
         {
@@ -96,7 +96,6 @@ public class SoundManager : MonoBehaviour
             button.onClick.AddListener(() =>
             {
                 //Instance.Play(SoundName.BUTTONCLICK, SoundType.BUTTON);
-                print("btnclick");
             });
         }
     }
@@ -106,7 +105,7 @@ public class SoundManager : MonoBehaviour
         AudioSource audioSource = audioSources[(int)soundType];
 
         if (audioSource == null)
-            throw new NullReferenceException($"AudioSource is Null!!\n soundtype is {soundType}");
+            throw new NullReferenceException($"AudioSource is Null!!\n name is {name} soundtype is {soundType}");
 
         if (Clips.TryGetValue(name, out AudioClip audioClip) == false)
             throw new KeyNotFoundException($"AudioClip {audioClip.name} is not find!!");
@@ -123,5 +122,6 @@ public class SoundManager : MonoBehaviour
             audioSource.PlayOneShot(audioClip);
         }
 
+        print($"{audioClip.name} Play ");
     }
 }

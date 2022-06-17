@@ -1030,7 +1030,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8399774054903380021, guid: f0942ba5fb4f2d246a0057357f31a05f, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f0942ba5fb4f2d246a0057357f31a05f, type: 3}
@@ -2576,15 +2576,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ParentRt: {fileID: 1907799877}
-  goToNextStageButtons:
-  - {fileID: 320228636}
-  - {fileID: 1802877723}
-  - {fileID: 719059050}
-  - {fileID: 1140198991}
-  - {fileID: 1711158010}
-  - {fileID: 510712429}
-  - {fileID: 1305066646}
-  - {fileID: 262443459}
   SpeechBubble: {fileID: 706446930}
   LunchBoxs:
   - {fileID: 5920923075097274568, guid: 501bb438308bda74b832822eaa9d743c, type: 3}
@@ -5142,6 +5133,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c93124f2366d96f4794df5a4fe05cfe4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  BGMSlider: {fileID: 0}
+  EffectSlider: {fileID: 0}
   Mat: {fileID: 1552820713}
   MatSprites:
   - {fileID: 21300000, guid: 5c6a4d7fb8e0b2b499bab7c60f0c85f0, type: 3}
@@ -5158,9 +5151,16 @@ MonoBehaviour:
   - {fileID: 21300000, guid: ea2fd0db128d0484cbd916155512d551, type: 3}
   - {fileID: 21300000, guid: 74eb762c21825d146a8537f127a5dc27, type: 3}
   - {fileID: 21300000, guid: 37db303462cc65144bdbfc0ba9db2761, type: 3}
-  LunchBox: {fileID: 2040029051}
   BackButton: {fileID: 616403044503183307}
-  BGMSlider: {fileID: 0}
+  goToNextStageButtons:
+  - {fileID: 320228636}
+  - {fileID: 1802877723}
+  - {fileID: 719059050}
+  - {fileID: 1140198991}
+  - {fileID: 1711158010}
+  - {fileID: 510712429}
+  - {fileID: 1305066646}
+  - {fileID: 262443459}
 --- !u!1 &2017889614
 GameObject:
   m_ObjectHideFlags: 0

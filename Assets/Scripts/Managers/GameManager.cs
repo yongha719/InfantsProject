@@ -1,4 +1,5 @@
 ﻿using System.Collections;
+using System.Linq;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -27,7 +28,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] private GameObject SpeechBubble;
 
     /// <summary>
-    /// 도시락 통들
+    /// 1~6 Stage Lunch Boxs
     /// </summary>
     [SerializeField] private List<GameObject> LunchBoxs;
 
@@ -63,11 +64,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] private List<GameObject> Sausages;
     [SerializeField] private List<GameObject> Carrots;
 
-    /// <summary>
-    /// Stage 4~6 LunchBoxs
-    /// </summary>
     [Header("Stage 4 ~ 6============================================================="), Space(10)]
-    [SerializeField] private List<GameObject> StageLunchBoxs;
     [SerializeField] private List<GameObject> Spoons;
     [SerializeField] private List<GameObject> Mats;
     [SerializeField] private List<GameObject> Bottles;
@@ -82,7 +79,6 @@ public class GameManager : MonoBehaviour
 
         Init();
     }
-
 
     private void Init()
     {
@@ -113,16 +109,19 @@ public class GameManager : MonoBehaviour
     {
         SetGame();
 
+        // 만약 3스테이지 이하면 3스테이지까지의 오브젝트만 가져오고 1~3
+        // 6스테이지 이하면 6스테이지까지의 오브젝트만 가져옴 4~6
         if (stagenum <= 3)
         {
-            RandomInstantiateFood(LunchBoxs);
-            StartCoroutine(ESystemUptoSixStage());
+            LunchBoxs.Take(3);
         }
         else if (stagenum <= 6)
         {
-            RandomInstantiateFood(StageLunchBoxs);
-            StartCoroutine(ESystemUptoSixStage());
+            LunchBoxs.Skip(3);
         }
+
+        RandomInstantiateFood(LunchBoxs);
+        StartCoroutine(ESystemUptoSixStage());
     }
     /// <summary>
     /// Stage에 필요한 오브젝트들을 추가해줌
@@ -190,7 +189,7 @@ public class GameManager : MonoBehaviour
                     finishLunchBoxFoods[i].SetActive(true);
                     break;
                 }
-
+                print("looping coroutine");
                 yield return wait;
             }
         }

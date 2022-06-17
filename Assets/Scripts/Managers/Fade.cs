@@ -1,4 +1,4 @@
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -51,7 +51,7 @@ public class Fade : MonoBehaviour
         yield return waitTime;
 
         SceneManager.LoadScene(GotoTItle == true ? "1.Title" : "2.Stage");
-        TitleManager.HavetoFade = GotoTItle;
+        TitleManager.ShouldFade = GotoTItle;
     }
 
     public void FadeOut() => StartCoroutine(EFadeOut());

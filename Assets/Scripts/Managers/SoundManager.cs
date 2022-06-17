@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -15,6 +15,7 @@ public static class SoundName
     public const string APPEAR = "Appear";
     public const string FADE = "Fade";
 }
+
 public class SoundManager : MonoBehaviour
 {
     public static SoundManager Instance { get; private set; } = null;
@@ -51,13 +52,13 @@ public class SoundManager : MonoBehaviour
         {
             Instance = this;
 
-            string[] soundNames = Enum.GetNames(typeof(SoundType));
+            string[] soundnames = Enum.GetNames(typeof(SoundType));
 
             DontDestroyOnLoad(this);
 
-            for (int i = 0; i < soundNames.Length - 1; i++)
+            for (int i = 0; i < soundnames.Length - 1; i++)
             {
-                GameObject playobj = new GameObject { name = soundNames[i] };
+                GameObject playobj = new GameObject { name = soundnames[i] };
                 audioSources[i] = playobj.AddComponent<AudioSource>();
                 playobj.transform.SetParent(transform);
             }
@@ -73,7 +74,7 @@ public class SoundManager : MonoBehaviour
         }
         else
         {
-            Destroy(gameObject);
+            Destroy(this);
         }
     }
     private void Start()
@@ -81,21 +82,14 @@ public class SoundManager : MonoBehaviour
         Play("BGM", SoundType.BGM);
     }
 
-    private void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.S))
-        {
-            print(audioSources[(int)SoundType.BGM].isPlaying);
-        }
-    }
-
-    public static void AddButtonClick(Button[] buttons)
+    public void AddButtonClick(Button[] buttons)
     {
         foreach (var button in buttons)
         {
             button.onClick.AddListener(() =>
             {
-                //Instance.Play(SoundName.BUTTONCLICK, SoundType.BUTTON);
+                //Play(SoundName.BUTTONCLICK, SoundType.BUTTON);
+                print("Button Click");
             });
         }
     }

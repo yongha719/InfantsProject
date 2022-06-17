@@ -940,6 +940,38 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1302052113}
     m_Modifications:
+    - target: {fileID: 6718489912446829782, guid: f0942ba5fb4f2d246a0057357f31a05f, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6718489912446829782, guid: f0942ba5fb4f2d246a0057357f31a05f, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 6718489912446829782, guid: f0942ba5fb4f2d246a0057357f31a05f, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 1021274376}
+    - target: {fileID: 6718489912446829782, guid: f0942ba5fb4f2d246a0057357f31a05f, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6718489912446829782, guid: f0942ba5fb4f2d246a0057357f31a05f, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: set_StageNum
+      objectReference: {fileID: 0}
+    - target: {fileID: 6718489912446829782, guid: f0942ba5fb4f2d246a0057357f31a05f, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: GameManager, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 6718489912446829782, guid: f0942ba5fb4f2d246a0057357f31a05f, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_IntArgument
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 6718489912446829782, guid: f0942ba5fb4f2d246a0057357f31a05f, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
     - target: {fileID: 7694392020156748102, guid: f0942ba5fb4f2d246a0057357f31a05f, type: 3}
       propertyPath: m_Pivot.x
       value: 1
@@ -2581,6 +2613,9 @@ MonoBehaviour:
   - {fileID: 5920923075097274568, guid: 501bb438308bda74b832822eaa9d743c, type: 3}
   - {fileID: 7902058283892392762, guid: dff4b712fbb47d847803f133d830bd7f, type: 3}
   - {fileID: 3999429316023866145, guid: e936fdea919bc2548bcd8452fc68c145, type: 3}
+  - {fileID: 5289250662046892957, guid: 50b77de480e3d7f429c20ae4fda94ee4, type: 3}
+  - {fileID: 5289250662046892957, guid: 05f3287569102b047825e5b3750d9a47, type: 3}
+  - {fileID: 5289250662046892957, guid: b5971bba5565a1344bc5d3c39e6e2794, type: 3}
   finishLunchBoxTr: {fileID: 0}
   ClearParticle: {fileID: 384039416}
   Apples:
@@ -2631,10 +2666,6 @@ MonoBehaviour:
   - {fileID: 5289250662046892957, guid: 9948ce644b2072046840fb5fa4d7cac3, type: 3}
   - {fileID: 5289250662046892957, guid: 45c1418de75d50f40b4e5cbf8f1ac798, type: 3}
   - {fileID: 5289250662046892957, guid: 8e09679568ed8784cb30c3170c17fdbf, type: 3}
-  StageLunchBoxs:
-  - {fileID: 5289250662046892957, guid: 50b77de480e3d7f429c20ae4fda94ee4, type: 3}
-  - {fileID: 5289250662046892957, guid: 05f3287569102b047825e5b3750d9a47, type: 3}
-  - {fileID: 5289250662046892957, guid: b5971bba5565a1344bc5d3c39e6e2794, type: 3}
   Spoons:
   - {fileID: 5289250662046892957, guid: 6a73f3997dccafa4f8038300dbbfe7b7, type: 3}
   - {fileID: 5289250662046892957, guid: d61fc599d5112684e9ff395f645cf363, type: 3}

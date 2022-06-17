@@ -1,4 +1,4 @@
-using UnityEngine;
+ï»¿using UnityEngine;
 using UnityEngine.UI;
 using System.Collections;
 using System.Collections.Generic;
@@ -24,28 +24,33 @@ public class UIManager : MonoBehaviour
     [SerializeField] private Button BackButton;
 
     /// <summary>
-    /// ´ÙÀ½ ½ºÅ×ÀÌÁö·Î °¡´Â ¹öÆ°µé
+    /// ë‹¤ìŒ ìŠ¤í…Œì´ì§€ë¡œ ê°€ëŠ” ë²„íŠ¼ë“¤
     /// </summary>
     [SerializeField] private List<Button> goToNextStageButtons = new List<Button>();
     #endregion
 
+    private SoundManager SM;
 
-    private void Awake() => Instance = this;
+    private void Awake()
+    {
+        Instance = this;
+        SM = SoundManager.Instance;
+    }
     private void OnDestroy() => Instance = null;
 
     private void Start()
     {
-        SoundManager.AddButtonClick(Resources.FindObjectsOfTypeAll<Button>());
+        SM.AddButtonClick(Resources.FindObjectsOfTypeAll<Button>());
 
         if (SceneManager.GetActiveScene().name.Equals("1.Title") == true)
         {
-            BGMSlider.onValueChanged.AddListener((volume) => { SoundManager.Instance.BgmVolume = volume; });
-            BGMSlider.value = SoundManager.Instance.BgmVolume;
+            BGMSlider.onValueChanged.AddListener((volume) => { SM.BgmVolume = volume; });
+            BGMSlider.value = SM.BgmVolume;
 
-            EffectSlider.onValueChanged.AddListener((volume) => { SoundManager.Instance.SoundVolume = volume; });
-            EffectSlider.value = SoundManager.Instance.SoundVolume;
+            EffectSlider.onValueChanged.AddListener((volume) => { SM.SoundVolume = volume; });
+            EffectSlider.value = SM.SoundVolume;
         }
-        else
+        else if (SceneManager.GetActiveScene().name.Equals("2.Stage") == true)
         {
             BackButton.onClick.AddListener(() => Fade.Instance.FadeIn(true));
 
@@ -58,7 +63,7 @@ public class UIManager : MonoBehaviour
     }
 
     /// <summary>
-    /// ´ÙÀ½ ½ºÅ×ÀÌÁö·Î ³Ñ¾î°¡´Â ¹öÆ° »ı¼º ¹× ÀÌº¥Æ® Ãß°¡
+    /// ë‹¤ìŒ ìŠ¤í…Œì´ì§€ë¡œ ë„˜ì–´ê°€ëŠ” ë²„íŠ¼ ìƒì„± ë° ì´ë²¤íŠ¸ ì¶”ê°€
     /// </summary>
     public void SetNextStageButton()
     {

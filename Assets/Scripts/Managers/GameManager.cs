@@ -30,7 +30,7 @@ public class GameManager : MonoBehaviour
     /// <summary>
     /// 1~6 Stage Lunch Boxs
     /// </summary>
-    [SerializeField] private List<GameObject> LunchBoxs;
+    [SerializeField, Space(10)] private List<GameObject> LunchBoxs;
 
     /// <summary>
     /// 스테이지 오브젝트들 매 스테이지마다 바뀜 SetGame 구현
@@ -43,7 +43,10 @@ public class GameManager : MonoBehaviour
     [SerializeField] private Transform finishLunchBoxTr;
     private Animator finishLunchBoxAnimator;
     private List<GameObject> finishLunchBoxFoods = new List<GameObject>();
-    [SerializeField] private ParticleSystem ClearParticle;
+
+    [Header("Particles"),Space(10)]
+    [SerializeField] private ParticleSystem StarParticle;
+    [SerializeField] private ParticleSystem CloudParticle;
 
     #region Foods
     [Header("Stage 1================================================================="), Space(10)]
@@ -112,13 +115,9 @@ public class GameManager : MonoBehaviour
         // 만약 3스테이지 이하면 3스테이지까지의 오브젝트만 가져오고 1~3
         // 6스테이지 이하면 6스테이지까지의 오브젝트만 가져옴 4~6
         if (stagenum <= 3)
-        {
-            LunchBoxs.Take(3);
-        }
+            LunchBoxs = LunchBoxs.Take(3).ToList();
         else if (stagenum <= 6)
-        {
-            LunchBoxs.Skip(3);
-        }
+            LunchBoxs = LunchBoxs.Skip(3).ToList();
 
         RandomInstantiateFood(LunchBoxs);
         StartCoroutine(ESystemUptoSixStage());
@@ -189,15 +188,14 @@ public class GameManager : MonoBehaviour
                     finishLunchBoxFoods[i].SetActive(true);
                     break;
                 }
-                print("looping coroutine");
                 yield return wait;
             }
         }
 
-        yield return StartCoroutine(EStageClear());
+        yield return StartCoroutine(EStageClearEvent());
     }
 
-    private IEnumerator EStageClear()
+    private IEnumerator EStageClearEvent()
     {
         SpeechBubble.SetActive(false);
 
@@ -211,10 +209,21 @@ public class GameManager : MonoBehaviour
         }
         else if (stagenum <= 6)
         {
+            CloudParticle.Play();
 
-            //yield return new WaitForSeconds();
+            foreach (var obj in finishLunchBoxFoods)
+            {
+                obj.GetComponent<Image>().DOFade(0, 1.5f);
+            }
+
+            UIManager.Instance.PlayStageClearEvent();
+
+            yield return new WaitForSeconds(1.5f);
+            CloudParticle.Stop();
+
+            yield return new WaitForSeconds(1.3f);
         }
-        ClearParticle.Play();
+        StarParticle.Play();
         //SM.Play( , SoundType.Effect);
 
         yield return null;

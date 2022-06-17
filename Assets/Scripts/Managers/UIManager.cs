@@ -9,24 +9,33 @@ public class UIManager : MonoBehaviour
     public static UIManager Instance { get; private set; } = null;
 
     #region Title Scene
+    [Header("Audio Volume Sliders")]
     [SerializeField] private Slider BGMSlider;
     [SerializeField] private Slider EffectSlider;
 
     #endregion
 
     #region Stage Scene
-    [SerializeField] private Image Mat;
+    [Header("Mat"), Space(10)]
+    public Image Mat;
     [SerializeField] private List<Sprite> MatSprites = new List<Sprite>();
 
+    [Header("Speech Bubble"), Space(10)]
     [SerializeField] private Image SpeechBubbleNum;
     [SerializeField] private List<Sprite> SpeechBubbleNumSprites = new List<Sprite>();
 
-    [SerializeField] private Button BackButton;
+    [SerializeField, Space(10)] private Button BackButton;
 
     /// <summary>
     /// 다음 스테이지로 가는 버튼들
     /// </summary>
-    [SerializeField] private List<Button> goToNextStageButtons = new List<Button>();
+    [SerializeField, Space(10)] private List<Button> goToNextStageButtons = new List<Button>();
+
+    /// <summary>
+    /// 4 ~ 6 스테이지 끝나고 나오는 보따리
+    /// </summary>
+    [SerializeField, Space(10)] private Image Pack;
+    [SerializeField] private List<Sprite> packsprites = new List<Sprite>();
     #endregion
 
     private SoundManager SM;
@@ -78,16 +87,26 @@ public class UIManager : MonoBehaviour
         nextbutton.transform.DOLocalMoveX(30, 2f);
     }
 
+
     /// <summary>
     /// Stage 4~6 Clear Tweening
     /// </summary>
-    public void PlayStageClearTweening()
+    public void PlayStageClearEvent()
     {
-        StartCoroutine(EPlayStageClearTweening());
+        StartCoroutine(EPlayStageClearEvent());
     }
 
-    private IEnumerator EPlayStageClearTweening()
+
+    private IEnumerator EPlayStageClearEvent()
     {
-        yield return null;
+        Mat.GetComponent<RectTransform>().DOAnchorPosY(-350, 1f);
+
+        Pack.gameObject.SetActive(true);
+        //4부터 들어있기 때문에 4를 빼줌
+        Pack.sprite = packsprites[GameManager.StageNum - 4];
+
+        yield return new WaitForSeconds(1.7f);
+
+        Pack.GetComponent<RectTransform>().DOAnchorPosY(30, 1f);
     }
 }

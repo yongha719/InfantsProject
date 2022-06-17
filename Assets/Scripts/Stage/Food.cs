@@ -1,7 +1,6 @@
+using DG.Tweening;
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 using UnityEngine.EventSystems;
 
 [RequireComponent(typeof(CanvasGroup))]
@@ -10,6 +9,7 @@ public class Food : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHand
     public bool IsCurrect;
     public bool CanDrag = true;
     public int num;
+    private bool isFade;
 
     public Transform OriginParent;
     private Transform Parent;
@@ -31,13 +31,10 @@ public class Food : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHand
         pos = rectTransform.anchoredPosition;
     }
 
-    void Update()
-    {
-
-    }
 
     public void OnBeginDrag(PointerEventData eventData)
     {
+        if (isFade) return;
         transform.SetParent(Parent);
         transform.SetAsLastSibling();
 
@@ -60,7 +57,9 @@ public class Food : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHand
 
         canvasGroup.alpha = 1f;
         canvasGroup.blocksRaycasts = true;
-        rectTransform.anchoredPosition = pos;
+        rectTransform.position = pos;
+        //isFade = true;
+        //StartCoroutine(EGoOriginPos());
 
         if (CanDrag == false)
         {
@@ -71,6 +70,13 @@ public class Food : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHand
             foreach (var food in foods)
                 Destroy(food.gameObject);
         }
+    }
+
+    IEnumerator EGoOriginPos()
+    {
+        rectTransform.DOAnchorPos(pos, 1f);
+        yield return new WaitForSeconds(1f);
+        isFade = false;
     }
 }
 

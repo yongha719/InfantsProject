@@ -57,7 +57,7 @@ public class Food : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHand
 
         canvasGroup.alpha = 1f;
         canvasGroup.blocksRaycasts = true;
-        rectTransform.position = pos;
+        rectTransform.anchoredPosition = pos;
         //isFade = true;
         //StartCoroutine(EGoOriginPos());
 

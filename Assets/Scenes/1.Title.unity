@@ -250,6 +250,8 @@ MonoBehaviour:
   SpeechBubbleNumSprites: []
   BackButton: {fileID: 0}
   goToNextStageButtons: []
+  Pack: {fileID: 0}
+  packsprites: []
 --- !u!1 &22482167
 GameObject:
   m_ObjectHideFlags: 0
@@ -3392,6 +3394,14 @@ PrefabInstance:
     - target: {fileID: 13750354310154167, guid: 09a4a02aa955de24999f75b492fdfd57, type: 3}
       propertyPath: m_ReferenceResolution.y
       value: 1080
+      objectReference: {fileID: 0}
+    - target: {fileID: 1229267261094772576, guid: 09a4a02aa955de24999f75b492fdfd57, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 1190
+      objectReference: {fileID: 0}
+    - target: {fileID: 1229267261094772576, guid: 09a4a02aa955de24999f75b492fdfd57, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -631
       objectReference: {fileID: 0}
     - target: {fileID: 1229267262611761784, guid: 09a4a02aa955de24999f75b492fdfd57, type: 3}
       propertyPath: m_Pivot.x

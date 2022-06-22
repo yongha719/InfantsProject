@@ -44,7 +44,7 @@ public class GameManager : MonoBehaviour
     private Animator finishLunchBoxAnimator;
     private List<GameObject> finishLunchBoxFoods = new List<GameObject>();
 
-    [Header("Particles"),Space(10)]
+    [Header("Particles"), Space(10)]
     [SerializeField] private ParticleSystem StarParticle;
     [SerializeField] private ParticleSystem CloudParticle;
 
@@ -71,6 +71,11 @@ public class GameManager : MonoBehaviour
     [SerializeField] private List<GameObject> Spoons;
     [SerializeField] private List<GameObject> Mats;
     [SerializeField] private List<GameObject> Bottles;
+
+    [Header("Stage 7 ~ 9============================================================="), Space(10)]
+    [SerializeField] private List<GameObject> Donuts;
+    [SerializeField] private List<GameObject> Baguettes;
+    [SerializeField] private List<GameObject> Milks;
     #endregion
     #endregion
 
@@ -110,7 +115,7 @@ public class GameManager : MonoBehaviour
 
     private void StartGame()
     {
-        SetGame();
+        AddStageObjects();
 
         // 만약 3스테이지 이하면 3스테이지까지의 오브젝트만 가져오고 1~3
         // 6스테이지 이하면 6스테이지까지의 오브젝트만 가져옴 4~6
@@ -125,7 +130,7 @@ public class GameManager : MonoBehaviour
     /// <summary>
     /// Stage에 필요한 오브젝트들을 추가해줌
     /// </summary>
-    private void SetGame()
+    private void AddStageObjects()
     {
         switch (stagenum)
         {
@@ -154,6 +159,13 @@ public class GameManager : MonoBehaviour
                 StageFoods.Add(Bottles);
                 StageFoods.Add(Mats);
                 StageFoods.Add(Spoons);
+                break;
+            case 7:
+            case 8:
+            case 9:
+                StageFoods.Add(Donuts);
+                StageFoods.Add(Baguettes);
+                StageFoods.Add(Milks);
                 break;
             default:
                 Debug.Assert(false, "응 나가");
@@ -224,7 +236,7 @@ public class GameManager : MonoBehaviour
             yield return new WaitForSeconds(1.3f);
         }
         StarParticle.Play();
-        //SM.Play( , SoundType.Effect);
+        //SoundManager.Play( , SoundType.Effect);
 
         yield return null;
     }
@@ -234,7 +246,7 @@ public class GameManager : MonoBehaviour
     private void RandomInstantiateFood(List<GameObject> foods)
     {
         var slottr = new List<Transform>(slots);
-
+        List<RectTransform> foodRtList = new List<RectTransform>();
         Food food;
 
         for (int i = 0; i < slots.Count; i++)
@@ -244,8 +256,14 @@ public class GameManager : MonoBehaviour
             food = Instantiate(foods[i], slottr[num]).GetComponent<Food>();
             food.num = (i + 1) % 3;
             food.IsCurrect = (stagenum % 3 == food.num);
+            foodRtList.Add(food.transform as RectTransform);
 
             slottr.RemoveAt(num);
+        }
+
+        foreach (var foodrt in foodRtList)
+        {
+            //foodrt.DOAnchorPosY();
         }
     }
 }

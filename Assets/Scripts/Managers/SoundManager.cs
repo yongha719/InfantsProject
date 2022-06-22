@@ -8,6 +8,7 @@ public enum SoundType
 {
     BGM, EFFECT, BUTTON, END
 }
+
 public static class SoundName
 {
     public const string BUTTONCLICK = "ButtonClick";
@@ -79,10 +80,10 @@ public class SoundManager : MonoBehaviour
     }
     private void Start()
     {
-        Play("BGM", SoundType.BGM);
+        play("BGM", SoundType.BGM);
     }
 
-    public void AddButtonClick(Button[] buttons)
+    public static void AddButtonClick(Button[] buttons)
     {
         foreach (var button in buttons)
         {
@@ -93,8 +94,8 @@ public class SoundManager : MonoBehaviour
             });
         }
     }
-
-    public void Play(string name, SoundType soundType = SoundType.EFFECT)
+    public static void Play(string name, SoundType soundType = SoundType.EFFECT) => Instance.play(name, soundType);
+    private void play(string name, SoundType soundType = SoundType.EFFECT)
     {
         AudioSource audioSource = audioSources[(int)soundType];
 

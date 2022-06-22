@@ -49,7 +49,7 @@ public class UIManager : MonoBehaviour
 
     private void Start()
     {
-        SM.AddButtonClick(Resources.FindObjectsOfTypeAll<Button>());
+        SoundManager.AddButtonClick(Resources.FindObjectsOfTypeAll<Button>());
 
         if (SceneManager.GetActiveScene().name.Equals("1.Title") == true)
         {
@@ -61,6 +61,15 @@ public class UIManager : MonoBehaviour
         }
         else if (SceneManager.GetActiveScene().name.Equals("2.Stage") == true)
         {
+            foreach (var button in goToNextStageButtons)
+            {
+                button.onClick.AddListener(() =>
+                {
+                    button.gameObject.SetActive(false);
+                    GameManager.StageNum++;
+                });
+            }
+
             BackButton.onClick.AddListener(() => Fade.Instance.FadeIn(true));
 
             int stagenum = GameManager.StageNum - 1;
@@ -76,20 +85,15 @@ public class UIManager : MonoBehaviour
     /// </summary>
     public void SetNextStageButton()
     {
-        Button nextbutton = goToNextStageButtons[GameManager.StageNum - 1];
-
-        nextbutton.gameObject.SetActive(true);
-        nextbutton.onClick.AddListener(() =>
-        {
-            nextbutton.gameObject.SetActive(false);
-            GameManager.StageNum++;
-        });
-        nextbutton.transform.DOLocalMoveX(30, 2f);
+        Button button = goToNextStageButtons[GameManager.StageNum - 1];
+        
+        button.gameObject.SetActive(true);
+        button.transform.DOLocalMoveX(30, 2f);
     }
 
 
     /// <summary>
-    /// Stage 4~6 Clear Tweening
+    /// Stage 4~6 Clear Coroutine
     /// </summary>
     public void PlayStageClearEvent()
     {

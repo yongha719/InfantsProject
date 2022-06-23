@@ -11,7 +11,7 @@ public enum SoundType
 
 public static class SoundName
 {
-    public const string BUTTONCLICK = "ButtonClick";
+    public const string BUTTON_CLICK = "ButtonClick";
     public const string MISTAKE = "Mistake";
     public const string APPEAR = "Appear";
     public const string FADE = "Fade";
@@ -89,7 +89,7 @@ public class SoundManager : MonoBehaviour
         {
             button.onClick.AddListener(() =>
             {
-                //Play(SoundName.BUTTONCLICK, SoundType.BUTTON);
+                //Play(SoundName.BUTTON_CLICK, SoundType.BUTTON);
                 print("Button Click");
             });
         }

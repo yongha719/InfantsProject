@@ -73,9 +73,10 @@ public class GameManager : MonoBehaviour
     [SerializeField] private List<GameObject> Bottles;
 
     [Header("Stage 7 ~ 9============================================================="), Space(10)]
+    [SerializeField] private List<GameObject> Milks;
     [SerializeField] private List<GameObject> Donuts;
     [SerializeField] private List<GameObject> Baguettes;
-    [SerializeField] private List<GameObject> Milks;
+    [SerializeField] private List<GameObject> Grapes;
     #endregion
     #endregion
 
@@ -163,9 +164,10 @@ public class GameManager : MonoBehaviour
             case 7:
             case 8:
             case 9:
+                StageFoods.Add(Milks);
                 StageFoods.Add(Donuts);
                 StageFoods.Add(Baguettes);
-                StageFoods.Add(Milks);
+                StageFoods.Add(Grapes);
                 break;
             default:
                 Debug.Assert(false, "응 나가");
@@ -213,8 +215,12 @@ public class GameManager : MonoBehaviour
 
         UIManager.Instance.SetNextStageButton();
 
+        //TODO: 매직넘버?
         if (stagenum <= 3)
         {
+            // TODO: 아 이렇게 하는거 아닌데 ㅋ 
+            // 220623 - 안승준
+            // OR: 닷트윈?
             finishLunchBoxAnimator.SetBool("IsClear", true);
 
             yield return new WaitForSeconds(2f);
@@ -225,7 +231,7 @@ public class GameManager : MonoBehaviour
 
             foreach (var obj in finishLunchBoxFoods)
             {
-                obj.GetComponent<Image>().DOFade(0, 1.5f);
+                obj.GetComponent<Image>().DOFade(0, 1.5f).Complete();
             }
 
             UIManager.Instance.PlayStageClearEvent();
@@ -246,7 +252,9 @@ public class GameManager : MonoBehaviour
     private void RandomInstantiateFood(List<GameObject> foods)
     {
         var slottr = new List<Transform>(slots);
-        List<RectTransform> foodRtList = new List<RectTransform>();
+
+        var foodRtList = new List<RectTransform>();
+
         Food food;
 
         for (int i = 0; i < slots.Count; i++)

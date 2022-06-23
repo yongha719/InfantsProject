@@ -6,6 +6,7 @@ using UnityEngine.SceneManagement;
 using DG.Tweening;
 public class UIManager : MonoBehaviour
 {
+    //TODO: 디폴트가 null으므로 명시할 필요 없음
     public static UIManager Instance { get; private set; } = null;
 
     #region Title Scene
@@ -51,7 +52,9 @@ public class UIManager : MonoBehaviour
     {
         SoundManager.AddButtonClick(Resources.FindObjectsOfTypeAll<Button>());
 
-        if (SceneManager.GetActiveScene().name.Equals("1.Title") == true)
+        //TODO: 구조체 쓰라고 야발럼아
+        //안승준 2022-06-23
+        if (SceneManager.GetActiveScene().name.Equals("1.Title"))
         {
             BGMSlider.onValueChanged.AddListener((volume) => { SM.BgmVolume = volume; });
             BGMSlider.value = SM.BgmVolume;
@@ -79,9 +82,8 @@ public class UIManager : MonoBehaviour
             SpeechBubbleNum.sprite = SpeechBubbleNumSprites[stagenum];
         }
     }
-
     /// <summary>
-    /// 다음 스테이지로 넘어가는 버튼 생성 및 이벤트 추가
+    /// 다음 스테이지로 넘어가는 버튼 이벤트 
     /// </summary>
     public void SetNextStageButton()
     {

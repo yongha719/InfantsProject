@@ -6,11 +6,12 @@ using UnityEngine.SceneManagement;
 using DG.Tweening;
 public class UIManager : MonoBehaviour
 {
-    //TODO: 디폴트가 null으므로 명시할 필요 없음
-    public static UIManager Instance { get; private set; } = null;
+    public static UIManager Instance { get; private set; }
+
 
     #region Title Scene
-    [Header("Audio Volume Sliders")]
+    [Header("Audio Volume Sliders"),Space(10)]
+    [Header("Title==============================================")]
     [SerializeField] private Slider BGMSlider;
     [SerializeField] private Slider EffectSlider;
 
@@ -18,6 +19,7 @@ public class UIManager : MonoBehaviour
 
     #region Stage Scene
     [Header("Mat"), Space(10)]
+    [Header("Stage==============================================="),Space(20)]
     public Image Mat;
     [SerializeField] private List<Sprite> MatSprites = new List<Sprite>();
 
@@ -52,9 +54,7 @@ public class UIManager : MonoBehaviour
     {
         SoundManager.AddButtonClick(Resources.FindObjectsOfTypeAll<Button>());
 
-        //TODO: 구조체 쓰라고 야발럼아
-        //안승준 2022-06-23
-        if (SceneManager.GetActiveScene().name.Equals("1.Title"))
+        if (EqualSceneName(Scenename.TITLESCENE))
         {
             BGMSlider.onValueChanged.AddListener((volume) => { SM.BgmVolume = volume; });
             BGMSlider.value = SM.BgmVolume;
@@ -62,7 +62,7 @@ public class UIManager : MonoBehaviour
             EffectSlider.onValueChanged.AddListener((volume) => { SM.SoundVolume = volume; });
             EffectSlider.value = SM.SoundVolume;
         }
-        else if (SceneManager.GetActiveScene().name.Equals("2.Stage") == true)
+        else if (EqualSceneName(Scenename.STAGESCENE))
         {
             foreach (var button in goToNextStageButtons)
             {
@@ -82,6 +82,9 @@ public class UIManager : MonoBehaviour
             SpeechBubbleNum.sprite = SpeechBubbleNumSprites[stagenum];
         }
     }
+
+    bool EqualSceneName(string scenename) => SceneManager.GetActiveScene().name.Equals(scenename);
+
     /// <summary>
     /// 다음 스테이지로 넘어가는 버튼 이벤트 
     /// </summary>
@@ -115,4 +118,10 @@ public class UIManager : MonoBehaviour
 
         Pack.GetComponent<RectTransform>().DOAnchorPosY(30, 1f);
     }
+}
+
+public struct Scenename
+{
+    public const string TITLESCENE = "1.Title";
+    public const string STAGESCENE = "2.Stage";
 }

@@ -215,7 +215,6 @@ public class GameManager : MonoBehaviour
 
         UIManager.Instance.SetNextStageButton();
 
-        //TODO: 매직넘버?
         if (stagenum <= 3)
         {
             // TODO: 아 이렇게 하는거 아닌데 ㅋ 
@@ -231,7 +230,7 @@ public class GameManager : MonoBehaviour
 
             foreach (var obj in finishLunchBoxFoods)
             {
-                obj.GetComponent<Image>().DOFade(0, 1.5f).Complete();
+                obj.GetComponent<Image>().DOFade(0, 1.5f);
             }
 
             UIManager.Instance.PlayStageClearEvent();

@@ -9,7 +9,7 @@ public enum SoundType
     BGM, EFFECT, BUTTON, END
 }
 
-public static class SoundName
+public struct SoundName
 {
     public const string BUTTON_CLICK = "ButtonClick";
     public const string MISTAKE = "Mistake";
@@ -19,7 +19,7 @@ public static class SoundName
 
 public class SoundManager : MonoBehaviour
 {
-    public static SoundManager Instance { get; private set; } = null;
+    public static SoundManager Instance { get; private set; }
 
     AudioSource[] audioSources = new AudioSource[(int)SoundType.END];
     Dictionary<string, AudioClip> Clips = new Dictionary<string, AudioClip>();

@@ -1,4 +1,5 @@
 ﻿using System.Collections;
+using System.Linq;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -18,6 +19,11 @@ public class TitleManager : MonoBehaviour
         SetResolution();
 
         SetUI();
+    }
+    private void Update()
+    {
+        if(Input.GetKeyDown(KeyCode.X))
+            Unlocking();
     }
 
     private void SetUI()
@@ -48,12 +54,26 @@ public class TitleManager : MonoBehaviour
     private IEnumerator ELockWaring()
     {
         WarningImage.gameObject.SetActive(true);
-        WarningImage.DOFade(0, 1.5f);
-        yield return new WaitForSeconds(1.5f);
+        yield return WarningImage.DOFade(0, 1f).WaitForCompletion();
         WarningImage.gameObject.SetActive(false);
         yield return null;
     }
 
+    void Unlocking()
+    {
+        //7번째부터 잠겨있어서 7번째부터 요소를 가져옴
+        var stagebtns = LunchBoxsButtons.Skip(6);
+
+        foreach (var stagebtn in stagebtns)
+        {
+            stagebtn.interactable = true;
+        }
+
+        foreach(var lockbtn in LockButtons)
+        {
+            lockbtn.gameObject.SetActive(false);
+        }
+    }
     private void SetResolution()
     {
         int setWidth = 1920; // 사용자 설정 너비

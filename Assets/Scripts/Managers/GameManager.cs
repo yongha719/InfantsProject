@@ -244,7 +244,7 @@ public class GameManager : MonoBehaviour
             yield return new WaitForSeconds(1.3f);
         }
         StarParticle.Play();
-        //SoundManager.Play( , SoundType.Effect);
+        //SoundManager.Play( , SoundType.SE);
 
         yield return null;
     }

@@ -13,7 +13,7 @@ public class UIManager : MonoBehaviour
     [Header("Audio Volume Sliders"),Space(10)]
     [Header("Title==============================================")]
     [SerializeField] private Slider BGMSlider;
-    [SerializeField] private Slider EffectSlider;
+    [SerializeField] private Slider SESlider;
 
     #endregion
 
@@ -48,8 +48,6 @@ public class UIManager : MonoBehaviour
         Instance = this;
         SM = SoundManager.Instance;
     }
-    private void OnDestroy() => Instance = null;
-
     private void Start()
     {
         SoundManager.AddButtonClick(Resources.FindObjectsOfTypeAll<Button>());
@@ -59,8 +57,8 @@ public class UIManager : MonoBehaviour
             BGMSlider.onValueChanged.AddListener((volume) => { SM.BgmVolume = volume; });
             BGMSlider.value = SM.BgmVolume;
 
-            EffectSlider.onValueChanged.AddListener((volume) => { SM.SoundVolume = volume; });
-            EffectSlider.value = SM.SoundVolume;
+            SESlider.onValueChanged.AddListener((volume) => { SM.SEVolume = volume; });
+            SESlider.value = SM.SEVolume;
         }
         else if (EqualSceneName(Scenename.STAGESCENE))
         {
@@ -118,8 +116,23 @@ public class UIManager : MonoBehaviour
 
         Pack.GetComponent<RectTransform>().DOAnchorPosY(30, 1f);
     }
-}
+    private void OnDestroy()
+    {
+        Instance = null;
 
+        if (EqualSceneName(Scenename.TITLESCENE))
+        {
+
+            PlayerPrefs.SetFloat(PlayerPrefsName.BGM_VOLUME, SM.BgmVolume);
+            PlayerPrefs.SetFloat(PlayerPrefsName.SE_VOLUME, SM.SEVolume);
+        }
+    }
+}
+public struct PlayerPrefsName
+{
+    public const string BGM_VOLUME = "BGMVolume";
+    public const string SE_VOLUME = "SEVolume";
+}
 public struct Scenename
 {
     public const string TITLESCENE = "1.Title";

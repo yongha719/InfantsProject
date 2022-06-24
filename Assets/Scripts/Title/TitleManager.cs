@@ -96,4 +96,5 @@ public class TitleManager : MonoBehaviour
             Camera.main.rect = new Rect(0f, (1f - newHeight) / 2f, 1f, newHeight); // 새로운 Rect 적용
         }
     }
+
 }

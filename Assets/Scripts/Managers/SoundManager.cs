@@ -6,7 +6,7 @@ using UnityEngine.UI;
 
 public enum SoundType
 {
-    BGM, EFFECT, BUTTON, END
+    BGM, SE, BUTTON, END
 }
 
 public struct SoundName
@@ -36,13 +36,13 @@ public class SoundManager : MonoBehaviour
     }
 
     private float soundvolume = 0.5f;
-    public float SoundVolume
+    public float SEVolume
     {
         get => soundvolume;
         set
         {
             soundvolume = value;
-            audioSources[(int)SoundType.EFFECT].volume = soundvolume;
+            audioSources[(int)SoundType.SE].volume = soundvolume;
             audioSources[(int)SoundType.BUTTON].volume = soundvolume;
         }
     }
@@ -94,8 +94,8 @@ public class SoundManager : MonoBehaviour
             });
         }
     }
-    public static void Play(string name, SoundType soundType = SoundType.EFFECT) => Instance.play(name, soundType);
-    private void play(string name, SoundType soundType = SoundType.EFFECT)
+    public static void Play(string name, SoundType soundType = SoundType.SE) => Instance.play(name, soundType);
+    private void play(string name, SoundType soundType = SoundType.SE)
     {
         AudioSource audioSource = audioSources[(int)soundType];
 

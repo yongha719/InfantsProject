@@ -20,6 +20,7 @@ public class TitleManager : MonoBehaviour
 
         SetUI();
     }
+
     private void Update()
     {
         if(Input.GetKeyDown(KeyCode.X))
@@ -42,16 +43,16 @@ public class TitleManager : MonoBehaviour
             });
         }
 
-        foreach (var btn in LockButtons)
+        foreach (var lockbtn in LockButtons)
         {
-            btn.onClick.AddListener(() =>
+            lockbtn.onClick.AddListener(() =>
             {
-                StartCoroutine(ELockWaring());
+                StartCoroutine(CLockWaring());
             });
         }
     }
 
-    private IEnumerator ELockWaring()
+    private IEnumerator CLockWaring()
     {
         WarningImage.gameObject.SetActive(true);
         yield return WarningImage.DOFade(0, 1f).WaitForCompletion();
@@ -59,7 +60,7 @@ public class TitleManager : MonoBehaviour
         yield return null;
     }
 
-    void Unlocking()
+    private void Unlocking()
     {
         //7번째부터 잠겨있어서 7번째부터 요소를 가져옴
         var stagebtns = LunchBoxsButtons.Skip(6);

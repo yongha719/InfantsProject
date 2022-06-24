@@ -102,11 +102,11 @@ public class UIManager : MonoBehaviour
     /// </summary>
     public void PlayStageClearEvent()
     {
-        StartCoroutine(EPlayStageClearEvent());
+        StartCoroutine(CPlayStageClearEvent());
     }
 
 
-    private IEnumerator EPlayStageClearEvent()
+    private IEnumerator CPlayStageClearEvent()
     {
         Mat.GetComponent<RectTransform>().DOAnchorPosY(-350, 1f);
 

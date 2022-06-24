@@ -125,8 +125,11 @@ public class GameManager : MonoBehaviour
         else if (stagenum <= 6)
             LunchBoxs = LunchBoxs.Skip(3).ToList();
 
-        RandomInstantiateFood(LunchBoxs);
-        StartCoroutine(ESystemUptoSixStage());
+        if (stagenum <= 6)
+        {
+            RandomInstantiateFood(LunchBoxs);
+        }
+        StartCoroutine(CStageSystem());
     }
     /// <summary>
     /// Stage에 필요한 오브젝트들을 추가해줌
@@ -178,7 +181,7 @@ public class GameManager : MonoBehaviour
     /// <summary>
     /// 6스테이지까지의 시스템
     /// </summary>
-    private IEnumerator ESystemUptoSixStage()
+    private IEnumerator CStageSystem()
     {
         var wait = new WaitForSeconds(0.001f);
 
@@ -206,10 +209,10 @@ public class GameManager : MonoBehaviour
             }
         }
 
-        yield return StartCoroutine(EStageClearEvent());
+        yield return StartCoroutine(CStageClearEvent());
     }
 
-    private IEnumerator EStageClearEvent()
+    private IEnumerator CStageClearEvent()
     {
         SpeechBubble.SetActive(false);
 
@@ -263,14 +266,19 @@ public class GameManager : MonoBehaviour
             food = Instantiate(foods[i], slottr[num]).GetComponent<Food>();
             food.num = (i + 1) % 3;
             food.IsCurrect = (stagenum % 3 == food.num);
+
             foodRtList.Add(food.transform as RectTransform);
 
             slottr.RemoveAt(num);
         }
 
+        Vector2 originpos;
+
         foreach (var foodrt in foodRtList)
         {
-            //foodrt.DOAnchorPosY();
+            originpos = foodrt.anchoredPosition;
+            foodrt.anchoredPosition = new Vector2(0, foodrt.anchoredPosition.y + 500);
+            foodrt.DOAnchorPos(originpos, 1f);
         }
     }
 }

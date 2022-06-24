@@ -37,8 +37,8 @@ public class Fade : MonoBehaviour
     /// Fade In
     /// </summary>
     /// <param name="GotoTitle"> if true go title scene else go stage scene </param>
-    public void FadeIn(bool GotoTitle = false) => StartCoroutine(EFadeIn(GotoTitle));
-    private IEnumerator EFadeIn(bool GotoTItle = false)
+    public void FadeIn(bool GotoTitle = false) => StartCoroutine(CFadeIn(GotoTitle));
+    private IEnumerator CFadeIn(bool GotoTItle = false)
     {
 
         lower_left.DOAnchorPos(Vector2.zero, fadeTime);
@@ -54,9 +54,9 @@ public class Fade : MonoBehaviour
         TitleManager.ShouldFade = GotoTItle;
     }
 
-    public void FadeOut() => StartCoroutine(EFadeOut());
+    public void FadeOut() => StartCoroutine(CFadeOut());
 
-    private IEnumerator EFadeOut()
+    private IEnumerator CFadeOut()
     {
         lower_left.DOAnchorPos(new Vector2(-1100, -700), fadeTime);
         lower_right.DOAnchorPos(new Vector2(1100, -700), fadeTime);

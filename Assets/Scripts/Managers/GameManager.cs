@@ -272,13 +272,11 @@ public class GameManager : MonoBehaviour
             slottr.RemoveAt(num);
         }
 
-        Vector2 originpos;
-
         foreach (var foodrt in foodRtList)
         {
-            originpos = foodrt.anchoredPosition;
+            foodrt.GetComponent<Food>().pos = foodrt.anchoredPosition;
             foodrt.anchoredPosition = new Vector2(0, foodrt.anchoredPosition.y + 500);
-            foodrt.DOAnchorPos(originpos, 1f);
+            foodrt.DOAnchorPos(foodrt.GetComponent<Food>().pos, 1f);
         }
     }
 }

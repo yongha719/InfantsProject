@@ -10,16 +10,18 @@ public class UIManager : MonoBehaviour
 
 
     #region Title Scene
-    [Header("Audio Volume Sliders"),Space(10)]
+    [Header("Audio Volume Sliders"), Space(10)]
     [Header("Title==============================================")]
     [SerializeField] private Slider BGMSlider;
+    [SerializeField] private Toggle BGMToggle;
     [SerializeField] private Slider SESlider;
+    [SerializeField] private Toggle SEToggle;
 
     #endregion
 
     #region Stage Scene
     [Header("Mat"), Space(10)]
-    [Header("Stage==============================================="),Space(20)]
+    [Header("Stage==============================================="), Space(20)]
     public Image Mat;
     [SerializeField] private List<Sprite> MatSprites = new List<Sprite>();
 
@@ -54,11 +56,15 @@ public class UIManager : MonoBehaviour
 
         if (EqualSceneName(Scenename.TITLESCENE))
         {
-            BGMSlider.onValueChanged.AddListener((volume) => { SM.BgmVolume = volume; });
-            BGMSlider.value = SM.BgmVolume;
+            BGMSlider.onValueChanged.AddListener((volume) => { SM.BGM_Volume = volume; });
+            BGMSlider.value = SM.BGM_Volume;
+            BGMToggle.onValueChanged.AddListener((ison) => { SM.BGM_Mute = ison; SoundManager.Play(SoundName.BUTTON_CLICK); });
+            BGMToggle.isOn = SM.BGM_Mute;
 
             SESlider.onValueChanged.AddListener((volume) => { SM.SEVolume = volume; });
             SESlider.value = SM.SEVolume;
+            SEToggle.onValueChanged.AddListener((ison) => { SM.SEMute = ison; SoundManager.Play(SoundName.BUTTON_CLICK); });
+            BGMToggle.isOn = SM.SEMute;
         }
         else if (EqualSceneName(Scenename.STAGESCENE))
         {
@@ -89,7 +95,7 @@ public class UIManager : MonoBehaviour
     public void SetNextStageButton()
     {
         Button button = goToNextStageButtons[GameManager.StageNum - 1];
-        
+
         button.gameObject.SetActive(true);
         button.transform.DOLocalMoveX(30, 2f);
     }
@@ -122,17 +128,24 @@ public class UIManager : MonoBehaviour
 
         if (EqualSceneName(Scenename.TITLESCENE))
         {
+            PlayerPrefs.SetFloat(PlayerPrefsInfo.BGM_VOLUME, BGMSlider.value);
+            PlayerPrefs.SetInt(PlayerPrefsInfo.BGM_MUTE, BGMToggle.isOn ? PlayerPrefsInfo.True : PlayerPrefsInfo.False);
 
-            PlayerPrefs.SetFloat(PlayerPrefsName.BGM_VOLUME, SM.BgmVolume);
-            PlayerPrefs.SetFloat(PlayerPrefsName.SE_VOLUME, SM.SEVolume);
+            PlayerPrefs.SetFloat(PlayerPrefsInfo.SE_VOLUME, SESlider.value);
+            PlayerPrefs.SetInt(PlayerPrefsInfo.SE_MUTE, SEToggle.isOn ? PlayerPrefsInfo.True : PlayerPrefsInfo.False);
         }
     }
 }
-public struct PlayerPrefsName
+public struct PlayerPrefsInfo
 {
-    public const string BGM_VOLUME = "BGMVolume";
-    public const string SE_VOLUME = "SEVolume";
+    public const int True = 1;
+    public const int False = 0;
+    public const string BGM_VOLUME = "BGM_Volume";
+    public const string SE_VOLUME = "SE_Volume";
+    public const string BGM_MUTE = "BGM_Mute";
+    public const string SE_MUTE = "SE_Mute";
 }
+
 public struct Scenename
 {
     public const string TITLESCENE = "1.Title";

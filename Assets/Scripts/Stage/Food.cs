@@ -9,7 +9,7 @@ public class Food : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHand
     public bool IsCurrect;
     public bool CanDrag = true;
     public int num;
-    private bool isFade;
+    private bool isTweening;
 
     public Transform OriginParent;
     private Transform Parent;
@@ -27,14 +27,12 @@ public class Food : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHand
         OriginParent = transform.parent;
 
         CanDrag = true;
-
-        pos = rectTransform.anchoredPosition;
     }
 
 
     public void OnBeginDrag(PointerEventData eventData)
     {
-        if (isFade) return;
+        if (isTweening) return;
         transform.SetParent(Parent);
         transform.SetAsLastSibling();
 
@@ -52,31 +50,29 @@ public class Food : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHand
         if (transform.parent == Parent)
         {
             transform.SetParent(OriginParent);
-            rectTransform.position = OriginParent.GetComponent<RectTransform>().position;
+            //rectTransform.position = OriginParent.GetComponent<RectTransform>().position;
+            isTweening = true;
+            StartCoroutine(CGoOriginPos());
         }
 
         canvasGroup.alpha = 1f;
         canvasGroup.blocksRaycasts = true;
-        rectTransform.anchoredPosition = pos;
-        //isFade = true;
-        //StartCoroutine(EGoOriginPos());
+        //rectTransform.anchoredPosition = pos;
 
         if (CanDrag == false)
         {
             var foods = FindObjectsOfType<Food>();
-
-            GameManager.IsClear = true;
 
             foreach (var food in foods)
                 Destroy(food.gameObject);
         }
     }
 
-    IEnumerator EGoOriginPos()
+    IEnumerator CGoOriginPos()
     {
         rectTransform.DOAnchorPos(pos, 1f);
         yield return new WaitForSeconds(1f);
-        isFade = false;
+        isTweening = false;
     }
 }
 

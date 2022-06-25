@@ -23,6 +23,7 @@ public class Slot : MonoBehaviour, IDropHandler
             {
                 ingredient.OriginParent = transform;
                 ingredient.CanDrag = false;
+                GameManager.IsClear = true;
 
                 dragingobj.transform.SetParent(transform);
                 dragingobj.GetComponent<RectTransform>().localPosition = Vector2.zero;

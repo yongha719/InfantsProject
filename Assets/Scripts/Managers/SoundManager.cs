@@ -24,26 +24,46 @@ public class SoundManager : MonoBehaviour
     AudioSource[] audioSources = new AudioSource[(int)SoundType.END];
     Dictionary<string, AudioClip> Clips = new Dictionary<string, AudioClip>();
 
-    private float bgm_volume = 0.5f;
-    public float BgmVolume
+    private float bgmVolume = 0.5f;
+    public float BGM_Volume
     {
-        get => bgm_volume;
+        get => bgmVolume;
         set
         {
-            bgm_volume = value;
-            audioSources[((int)SoundType.BGM)].volume = BgmVolume;
+            bgmVolume = value;
+            audioSources[((int)SoundType.BGM)].volume = BGM_Volume;
         }
     }
-
-    private float soundvolume = 0.5f;
-    public float SEVolume
+    private bool bgmMute = false;
+    public bool BGM_Mute
     {
-        get => soundvolume;
+        get => bgmMute;
         set
         {
-            soundvolume = value;
-            audioSources[(int)SoundType.SE].volume = soundvolume;
-            audioSources[(int)SoundType.BUTTON].volume = soundvolume;
+            bgmMute = value;
+            audioSources[((int)SoundType.BGM)].mute = bgmMute;
+        }
+    }
+    private float seVolume = 0.5f;
+    public float SEVolume
+    {
+        get => seVolume;
+        set
+        {
+            seVolume = value;
+            audioSources[(int)SoundType.SE].volume = seVolume;
+            audioSources[(int)SoundType.BUTTON].volume = seVolume;
+        }
+    }
+    private bool seMute = false;
+    public bool SEMute
+    {
+        get => seMute;
+        set
+        {
+            seMute = value;
+            audioSources[((int)SoundType.SE)].mute = seMute;
+            audioSources[((int)SoundType.BUTTON)].mute = seMute;
         }
     }
 
@@ -80,6 +100,14 @@ public class SoundManager : MonoBehaviour
     }
     private void Start()
     {
+        BGM_Volume = PlayerPrefs.HasKey(PlayerPrefsInfo.BGM_VOLUME) ? PlayerPrefs.GetFloat(PlayerPrefsInfo.BGM_VOLUME) : bgmVolume;
+        if (PlayerPrefs.HasKey(PlayerPrefsInfo.BGM_MUTE))
+            BGM_Mute = PlayerPrefs.GetInt(PlayerPrefsInfo.BGM_MUTE) == PlayerPrefsInfo.True ? true : false;
+
+        SEVolume = PlayerPrefs.HasKey(PlayerPrefsInfo.SE_VOLUME) ? PlayerPrefs.GetFloat(PlayerPrefsInfo.SE_VOLUME) : SEVolume;
+        if (PlayerPrefs.HasKey(PlayerPrefsInfo.SE_MUTE))
+            SEMute = PlayerPrefs.GetInt(PlayerPrefsInfo.SE_MUTE) == PlayerPrefsInfo.True ? true : false;
+
         play("BGM", SoundType.BGM);
     }
 
@@ -100,23 +128,26 @@ public class SoundManager : MonoBehaviour
         AudioSource audioSource = audioSources[(int)soundType];
 
         if (audioSource == null)
-            throw new NullReferenceException($"AudioSource is Null!!\n name is {name} soundtype is {soundType}");
+            Debug.Assert(false, $"AudioSource is Null\nSoundType is {soundType}");
 
-        if (Clips.TryGetValue(name, out AudioClip audioClip) == false)
-            throw new KeyNotFoundException($"AudioClip {audioClip.name} is not find!!");
-
-        if (soundType == SoundType.BGM)
+        if (Clips.TryGetValue(name, out AudioClip audioClip))
         {
-            if (audioSource.isPlaying)
-                return;
-            audioSource.clip = audioClip;
-            audioSource.Play();
+            if (soundType == SoundType.BGM)
+            {
+                if (audioSource.isPlaying)
+                    return;
+                audioSource.clip = audioClip;
+                audioSource.Play();
+            }
+            else
+            {
+                audioSource.PlayOneShot(audioClip);
+            }
         }
         else
-        {
-            audioSource.PlayOneShot(audioClip);
-        }
+            Debug.Assert(false, $"AudioClip {name} is not find");
 
-        print($"{audioClip.name} Play ");
+
+        print($"{name} Play ");
     }
 }

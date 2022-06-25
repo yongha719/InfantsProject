@@ -21,9 +21,6 @@ public class SoundManager : MonoBehaviour
 {
     public static SoundManager Instance { get; private set; }
 
-    AudioSource[] audioSources = new AudioSource[(int)SoundType.END];
-    Dictionary<string, AudioClip> Clips = new Dictionary<string, AudioClip>();
-
     private float bgmVolume = 0.5f;
     public float BGM_Volume
     {
@@ -67,6 +64,8 @@ public class SoundManager : MonoBehaviour
         }
     }
 
+    AudioSource[] audioSources = new AudioSource[(int)SoundType.END];
+    Dictionary<string, AudioClip> Clips = new Dictionary<string, AudioClip>();
     private void Awake()
     {
         if (Instance == null)

@@ -81,9 +81,14 @@ public class UIManager : MonoBehaviour
 
             int stagenum = GameManager.StageNum - 1;
 
-            Mat.sprite = MatSprites[stagenum];
-
             SpeechBubbleNum.sprite = SpeechBubbleNumSprites[stagenum];
+
+            if (GameManager.StageNum >= 7)
+            {
+                Mat.gameObject.SetActive(false);
+            }
+            else
+                Mat.sprite = MatSprites[stagenum];
         }
     }
 

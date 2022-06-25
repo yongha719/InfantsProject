@@ -129,7 +129,9 @@ public class GameManager : MonoBehaviour
         {
             RandomInstantiateFood(LunchBoxs);
         }
-        StartCoroutine(CStageSystem());
+        else if (stagenum == 7)
+            RandomInstantiateFood(Milks);
+            StartCoroutine(CStageSystem());
     }
     /// <summary>
     /// Stage에 필요한 오브젝트들을 추가해줌
@@ -165,12 +167,13 @@ public class GameManager : MonoBehaviour
                 StageFoods.Add(Spoons);
                 break;
             case 7:
-            case 8:
-            case 9:
-                StageFoods.Add(Milks);
-                StageFoods.Add(Donuts);
                 StageFoods.Add(Baguettes);
+                StageFoods.Add(Donuts);
                 StageFoods.Add(Grapes);
+                break;
+            case 8:
+                break;
+            case 9:
                 break;
             default:
                 Debug.Assert(false, "응 나가");

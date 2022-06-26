@@ -11,8 +11,8 @@ GameObject:
   - component: {fileID: 8143154678968707482}
   - component: {fileID: 1478766577018754798}
   - component: {fileID: 4702793534884480287}
-  - component: {fileID: 4443545524689914550}
   - component: {fileID: -6068934525083319540}
+  - component: {fileID: 2781635802007196427}
   m_Layer: 5
   m_Name: RiceRoll1
   m_TagString: Untagged
@@ -77,23 +77,6 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
---- !u!114 &4443545524689914550
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3999429316023866145}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ebfca161713664a4eb7d71c4c11d1b4c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  IsCurrect: 0
-  CanDrag: 0
-  num: 0
-  OriginParent: {fileID: 0}
-  pos: {x: 0, y: 0}
 --- !u!225 &-6068934525083319540
 CanvasGroup:
   m_ObjectHideFlags: 0
@@ -106,3 +89,20 @@ CanvasGroup:
   m_Interactable: 1
   m_BlocksRaycasts: 1
   m_IgnoreParentGroups: 0
+--- !u!114 &2781635802007196427
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3999429316023866145}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 05a6a222b0d53b74687c68aa10bb342d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  IsCurrect: 0
+  CanDrag: 1
+  num: 0
+  OriginParent: {fileID: 0}
+  pos: {x: 0, y: 0}

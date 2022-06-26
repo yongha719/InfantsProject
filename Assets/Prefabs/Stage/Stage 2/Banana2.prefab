@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 1374463830809324099}
   - component: {fileID: 1374463830809324098}
   - component: {fileID: 8171131139223291909}
-  - component: {fileID: -3513508897889610318}
+  - component: {fileID: 2058046173803969500}
   m_Layer: 5
   m_Name: Banana2
   m_TagString: Untagged
@@ -89,7 +89,7 @@ CanvasGroup:
   m_Interactable: 1
   m_BlocksRaycasts: 1
   m_IgnoreParentGroups: 0
---- !u!114 &-3513508897889610318
+--- !u!114 &2058046173803969500
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -98,7 +98,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1374463830809324111}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ebfca161713664a4eb7d71c4c11d1b4c, type: 3}
+  m_Script: {fileID: 11500000, guid: 05a6a222b0d53b74687c68aa10bb342d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   IsCurrect: 0

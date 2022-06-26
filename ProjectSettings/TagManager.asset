@@ -6,8 +6,8 @@ TagManager:
   tags:
   - Parent
   - Canvas
-  - LunchBox
   - Fade
+  - StageObj
   layers:
   - Default
   - TransparentFX

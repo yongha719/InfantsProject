@@ -17,7 +17,7 @@ public class Slot : MonoBehaviour, IDropHandler
         if (eventData.pointerDrag != null)
         {
             GameObject dragingobj = eventData.pointerDrag;
-            Food ingredient = dragingobj.GetComponent<Food>();
+            StageObject ingredient = dragingobj.GetComponent<StageObject>();
 
             if (ingredient.IsCurrect == true)
             {

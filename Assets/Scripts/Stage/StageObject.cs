@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 
 [RequireComponent(typeof(CanvasGroup))]
-public class Food : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler
+public class StageObject : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler
 {
     public bool IsCurrect;
     public bool CanDrag = true;
@@ -27,6 +27,10 @@ public class Food : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHand
         OriginParent = transform.parent;
 
         CanDrag = true;
+
+        pos = rectTransform.anchoredPosition;
+        rectTransform.anchoredPosition = new Vector2(0, pos.y + 500);
+        rectTransform.DOAnchorPos(pos, 1f);
     }
 
 
@@ -61,10 +65,10 @@ public class Food : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHand
 
         if (CanDrag == false)
         {
-            var foods = FindObjectsOfType<Food>();
+            var stageobjs = FindObjectsOfType<StageObject>();
 
-            foreach (var food in foods)
-                Destroy(food.gameObject);
+            foreach (var stageobj in stageobjs)
+                Destroy(stageobj.gameObject);
         }
     }
 

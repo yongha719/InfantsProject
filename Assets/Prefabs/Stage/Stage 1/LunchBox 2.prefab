@@ -11,8 +11,8 @@ GameObject:
   - component: {fileID: 2747518664159107825}
   - component: {fileID: 3157044362151504577}
   - component: {fileID: 4736658997274163805}
-  - component: {fileID: -15581490419874997}
   - component: {fileID: 242550888037804941}
+  - component: {fileID: 6212518175463829949}
   m_Layer: 5
   m_Name: LunchBox 2
   m_TagString: Untagged
@@ -77,22 +77,6 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
---- !u!114 &-15581490419874997
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7902058283892392762}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ebfca161713664a4eb7d71c4c11d1b4c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  IsCurrect: 0
-  CanDrag: 0
-  num: 0
-  OriginParent: {fileID: 0}
 --- !u!225 &242550888037804941
 CanvasGroup:
   m_ObjectHideFlags: 0
@@ -105,3 +89,20 @@ CanvasGroup:
   m_Interactable: 1
   m_BlocksRaycasts: 1
   m_IgnoreParentGroups: 0
+--- !u!114 &6212518175463829949
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7902058283892392762}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 05a6a222b0d53b74687c68aa10bb342d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  IsCurrect: 0
+  CanDrag: 1
+  num: 0
+  OriginParent: {fileID: 0}
+  pos: {x: 0, y: 0}

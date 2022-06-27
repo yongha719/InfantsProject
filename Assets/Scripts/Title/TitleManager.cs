@@ -10,9 +10,10 @@ public class TitleManager : MonoBehaviour
 {
     public static bool ShouldFade;
 
-    [SerializeField] List<Button> LunchBoxsButtons;
+    [SerializeField] List<Button> StageButtons;
     [SerializeField] List<Button> LockButtons;
-    [SerializeField] Image WarningImage;
+    [SerializeField] GameObject WarningPopUp;
+    [SerializeField] Button PurchaseButton;
 
     private void Start()
     {
@@ -23,7 +24,7 @@ public class TitleManager : MonoBehaviour
 
     private void Update()
     {
-        if(Input.GetKeyDown(KeyCode.X))
+        if (Input.GetKeyDown(KeyCode.X))
             Unlocking();
     }
 
@@ -35,45 +36,27 @@ public class TitleManager : MonoBehaviour
             ShouldFade = false;
         }
 
-        foreach (var lbbtn in LunchBoxsButtons)
-        {
-            lbbtn.onClick.AddListener(() =>
-            {
-                GameManager.StageNum = int.Parse(lbbtn.name);
-            });
-        }
+        PurchaseButton.onClick.AddListener(()=> { Unlocking(); WarningPopUp.SetActive(false); });
+
+        foreach (var stbtn in StageButtons)
+            stbtn.onClick.AddListener(() => { GameManager.StageNum = int.Parse(stbtn.name); });
 
         foreach (var lockbtn in LockButtons)
-        {
-            lockbtn.onClick.AddListener(() =>
-            {
-                StartCoroutine(CLockWaring());
-            });
-        }
-    }
-
-    private IEnumerator CLockWaring()
-    {
-        WarningImage.gameObject.SetActive(true);
-        yield return WarningImage.DOFade(0, 1f).WaitForCompletion();
-        WarningImage.gameObject.SetActive(false);
-        yield return null;
+            lockbtn.onClick.AddListener(() => WarningPopUp.SetActive(true));
     }
 
     private void Unlocking()
     {
         //7번째부터 잠겨있어서 7번째부터 요소를 가져옴
-        var stagebtns = LunchBoxsButtons.Skip(6);
+        var stagebtns = StageButtons.Skip(6);
 
         foreach (var stagebtn in stagebtns)
-        {
             stagebtn.interactable = true;
-        }
 
-        foreach(var lockbtn in LockButtons)
-        {
+        foreach (var lockbtn in LockButtons)
             lockbtn.gameObject.SetActive(false);
-        }
+
+        print("구매 성공!!");
     }
     private void SetResolution()
     {

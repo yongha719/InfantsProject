@@ -19,6 +19,7 @@ public class GameManager : MonoBehaviour
         }
     }
     public static bool isDragging;
+
     #region Stage GameObjects 
 
     [SerializeField] private RectTransform ParentRt;
@@ -80,7 +81,6 @@ public class GameManager : MonoBehaviour
     #endregion
     #endregion
 
-    private bool isInstantiate;
     private SoundManager SM;
 
     void Start()
@@ -127,6 +127,7 @@ public class GameManager : MonoBehaviour
         }
         else if (stagenum == 7)
             RandomInstantiateObject(Milks);
+
         StartCoroutine(CStageSystem());
     }
 
@@ -193,7 +194,7 @@ public class GameManager : MonoBehaviour
             {
                 // 킹태훈이 한거임 훈수 해봐
                 if (IsClear)
-                {                    
+                {
                     if (i != StageObjects.Count)
                     {
                         RandomInstantiateObject(StageObjects[i]);
@@ -259,7 +260,7 @@ public class GameManager : MonoBehaviour
                 yield return new WaitForSeconds(1f);
                 break;
             default:
-                Debug.Assert(false,"Clear Coroutine Switch default");
+                Debug.Assert(false, "Clear Coroutine Switch default");
                 break;
         }
         StarParticle.Play();

@@ -9,13 +9,7 @@ public enum SoundType
     BGM, SE, BUTTON, END
 }
 
-public struct SoundName
-{
-    public const string BUTTON_CLICK = "ButtonClick";
-    public const string MISTAKE = "Mistake";
-    public const string APPEAR = "Appear";
-    public const string FADE = "Fade";
-}
+
 
 public class SoundManager : MonoBehaviour
 {
@@ -99,13 +93,13 @@ public class SoundManager : MonoBehaviour
     }
     private void Start()
     {
-        BGM_Volume = PlayerPrefs.HasKey(PlayerPrefsInfo.BGM_VOLUME) ? PlayerPrefs.GetFloat(PlayerPrefsInfo.BGM_VOLUME) : bgmVolume;
-        if (PlayerPrefs.HasKey(PlayerPrefsInfo.BGM_MUTE))
-            BGM_Mute = PlayerPrefs.GetInt(PlayerPrefsInfo.BGM_MUTE) == PlayerPrefsInfo.True ? true : false;
+        BGM_Volume = PlayerPrefs.HasKey(SPrefsKey.BGM_VOLUME) ? PlayerPrefs.GetFloat(SPrefsKey.BGM_VOLUME) : bgmVolume;
+        if (PlayerPrefs.HasKey(SPrefsKey.BGM_MUTE))
+            BGM_Mute = PlayerPrefs.GetInt(SPrefsKey.BGM_MUTE) == SPrefsKey.True ? true : false;
 
-        SEVolume = PlayerPrefs.HasKey(PlayerPrefsInfo.SE_VOLUME) ? PlayerPrefs.GetFloat(PlayerPrefsInfo.SE_VOLUME) : SEVolume;
-        if (PlayerPrefs.HasKey(PlayerPrefsInfo.SE_MUTE))
-            SEMute = PlayerPrefs.GetInt(PlayerPrefsInfo.SE_MUTE) == PlayerPrefsInfo.True ? true : false;
+        SEVolume = PlayerPrefs.HasKey(SPrefsKey.SE_VOLUME) ? PlayerPrefs.GetFloat(SPrefsKey.SE_VOLUME) : SEVolume;
+        if (PlayerPrefs.HasKey(SPrefsKey.SE_MUTE))
+            SEMute = PlayerPrefs.GetInt(SPrefsKey.SE_MUTE) == SPrefsKey.True ? true : false;
 
         play("BGM", SoundType.BGM);
     }

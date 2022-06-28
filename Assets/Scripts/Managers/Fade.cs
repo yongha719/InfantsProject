@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using DG.Tweening;
 public class Fade : MonoBehaviour
@@ -30,7 +31,7 @@ public class Fade : MonoBehaviour
             upper_left = Clouds.GetChild(2) as RectTransform;
             upper_right = Clouds.GetChild(3) as RectTransform;
 
-            DontDestroyOnLoad(this);
+            DontDestroyOnLoad(this.gameObject);
         }
     }
     /// <summary>
@@ -50,8 +51,8 @@ public class Fade : MonoBehaviour
 
         yield return waitTime;
 
-        SceneManager.LoadScene(GotoTItle == true ? "1.Title" : "2.Stage");
-        TitleManager.ShouldFade = GotoTItle;
+        SceneManager.LoadScene(GotoTItle == true ? SsceneName.TITLESCENE : SsceneName.STAGESCENE);
+        UIManager.ShouldFade = GotoTItle;
     }
 
     public void FadeOut() => StartCoroutine(CFadeOut());

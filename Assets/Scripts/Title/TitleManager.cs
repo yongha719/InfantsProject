@@ -8,12 +8,7 @@ using DG.Tweening;
 
 public class TitleManager : MonoBehaviour
 {
-    public static bool ShouldFade;
-
     [SerializeField] List<Button> StageButtons;
-    [SerializeField] List<Button> LockButtons;
-    [SerializeField] GameObject WarningPopUp;
-    [SerializeField] Button PurchaseButton;
 
     private void Start()
     {
@@ -22,42 +17,12 @@ public class TitleManager : MonoBehaviour
         SetUI();
     }
 
-    private void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.X))
-            Unlocking();
-    }
-
     private void SetUI()
     {
-        if (ShouldFade)
-        {
-            Fade.Instance.FadeOut();
-            ShouldFade = false;
-        }
-
-        PurchaseButton.onClick.AddListener(()=> { Unlocking(); WarningPopUp.SetActive(false); });
-
         foreach (var stbtn in StageButtons)
             stbtn.onClick.AddListener(() => { GameManager.StageNum = int.Parse(stbtn.name); });
-
-        foreach (var lockbtn in LockButtons)
-            lockbtn.onClick.AddListener(() => WarningPopUp.SetActive(true));
     }
 
-    private void Unlocking()
-    {
-        //7번째부터 잠겨있어서 7번째부터 요소를 가져옴
-        var stagebtns = StageButtons.Skip(6);
-
-        foreach (var stagebtn in stagebtns)
-            stagebtn.interactable = true;
-
-        foreach (var lockbtn in LockButtons)
-            lockbtn.gameObject.SetActive(false);
-
-        print("구매 성공!!");
-    }
     private void SetResolution()
     {
         int setWidth = 1920; // 사용자 설정 너비
@@ -79,5 +44,4 @@ public class TitleManager : MonoBehaviour
             Camera.main.rect = new Rect(0f, (1f - newHeight) / 2f, 1f, newHeight); // 새로운 Rect 적용
         }
     }
-
 }

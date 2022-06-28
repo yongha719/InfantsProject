@@ -775,7 +775,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8399774054903380021, guid: 2df69ee7c0e23b145a6101e3cc462e1e, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2df69ee7c0e23b145a6101e3cc462e1e, type: 3}
@@ -1030,7 +1030,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8399774054903380021, guid: f0942ba5fb4f2d246a0057357f31a05f, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f0942ba5fb4f2d246a0057357f31a05f, type: 3}
@@ -1240,7 +1240,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8399774054903380021, guid: a3972bc0967a68e4a93835e5eb4a5e3a, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a3972bc0967a68e4a93835e5eb4a5e3a, type: 3}
@@ -2001,7 +2001,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8399774054903380021, guid: 5b1df1b77199b87429d266c47e86e947, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 5b1df1b77199b87429d266c47e86e947, type: 3}
@@ -3120,7 +3120,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8399774054903380021, guid: e044419b6e6bde7439d4022edf9913d6, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e044419b6e6bde7439d4022edf9913d6, type: 3}
@@ -3438,7 +3438,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8399774054903380021, guid: 9297d299e2168444c866321f723b5632, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9297d299e2168444c866321f723b5632, type: 3}
@@ -4258,7 +4258,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8399774054903380021, guid: 0aaa9356c63df6a4cbc0e27490212032, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0aaa9356c63df6a4cbc0e27490212032, type: 3}
@@ -4573,7 +4573,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8399774054903380021, guid: d20784a462cbfc1408c765401c976cff, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d20784a462cbfc1408c765401c976cff, type: 3}
@@ -5211,6 +5211,7 @@ MonoBehaviour:
   BGMToggle: {fileID: 0}
   SESlider: {fileID: 0}
   SEToggle: {fileID: 0}
+  TitleLockButtons: []
   Mat: {fileID: 1552820713}
   MatSprites:
   - {fileID: 21300000, guid: 5c6a4d7fb8e0b2b499bab7c60f0c85f0, type: 3}
@@ -5232,7 +5233,7 @@ MonoBehaviour:
   - {fileID: 21300000, guid: dcfc994b70b02264b85016c00bc9c3b8, type: 3}
   - {fileID: 21300000, guid: b52f7ca489f3f6c469caaa799a533d8d, type: 3}
   BackButton: {fileID: 616403044503183307}
-  goToNextStageButtons:
+  NextStageButtons:
   - {fileID: 320228636}
   - {fileID: 1802877723}
   - {fileID: 719059050}

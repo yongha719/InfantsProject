@@ -55,6 +55,8 @@ public class UIManager : MonoBehaviour
 
     private void Start()
     {
+        isLock = false;
+
         SoundManager.AddButtonClick(Resources.FindObjectsOfTypeAll<Button>());
 
         purchase = FindObjectOfType<PurChase>();
@@ -67,10 +69,13 @@ public class UIManager : MonoBehaviour
 
         if (EqualSceneName(SsceneName.TITLESCENE))
         {
-
             if (isLock)
             {
                 Unlocking(TitleLockButtons);
+            }
+            else
+            {
+                PurchaseButton.onClick.AddListener(() => { Unlocking(TitleLockButtons); isLock = true; });
             }
 
             if (ShouldFade)
@@ -78,8 +83,13 @@ public class UIManager : MonoBehaviour
                 Fade.Instance.FadeOut();
                 ShouldFade = false;
             }
-
-            PurchaseButton.onClick.AddListener(() => { Unlocking(TitleLockButtons); isLock = true; });
+            foreach (var lockbutton in TitleLockButtons)
+            {
+                lockbutton.onClick.AddListener(() =>
+                {
+                    PurchasePopUp.SetActive(true);
+                });
+            }
 
             BGMSlider.onValueChanged.AddListener((volume) => { SM.BGM_Volume = volume; });
             BGMSlider.value = SM.BGM_Volume;
@@ -97,7 +107,7 @@ public class UIManager : MonoBehaviour
             {
                 foreach (var lockbutton in NextStageLockButtons)
                 {
-                    lockbutton.onClick.AddListener(() => PurchasePopUp.gameObject.SetActive(true));
+                    lockbutton.onClick.AddListener(() => PurchasePopUp.SetActive(true));
                 }
 
                 PurchaseButton.onClick.AddListener(() => { Unlocking(NextStageLockButtons); isLock = true; });

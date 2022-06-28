@@ -9,8 +9,6 @@ public enum SoundType
     BGM, SE, BUTTON, END
 }
 
-
-
 public class SoundManager : MonoBehaviour
 {
     public static SoundManager Instance { get; private set; }
@@ -110,7 +108,7 @@ public class SoundManager : MonoBehaviour
         {
             button.onClick.AddListener(() =>
             {
-                //Play(SoundName.BUTTON_CLICK, SoundType.BUTTON);
+                Play(SsoundName.BUTTON_CLICK, SoundType.BUTTON);
                 print("Button Click");
             });
         }

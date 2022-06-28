@@ -157,7 +157,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 30}
+  m_AnchoredPosition: {x: 0, y: 270}
   m_SizeDelta: {x: 620, y: 537.7556}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &63727820
@@ -586,9 +586,9 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 0}
+  m_Sprite: {fileID: 21300000, guid: 46dd599a50702674b9b2471c81394f5f, type: 3}
   m_Type: 0
-  m_PreserveAspect: 0
+  m_PreserveAspect: 1
   m_FillCenter: 1
   m_FillMethod: 4
   m_FillAmount: 1
@@ -1818,6 +1818,18 @@ PrefabInstance:
       value: ClearParticle
       objectReference: {fileID: 0}
     - target: {fileID: 2818275803141509851, guid: c0fc108ec4b6d3b4f8a25a9589a20a41, type: 3}
+      propertyPath: ColorModule.gradient.maxGradient.atime1
+      value: 3855
+      objectReference: {fileID: 0}
+    - target: {fileID: 2818275803141509851, guid: c0fc108ec4b6d3b4f8a25a9589a20a41, type: 3}
+      propertyPath: ColorModule.gradient.maxGradient.atime2
+      value: 62451
+      objectReference: {fileID: 0}
+    - target: {fileID: 2818275803141509851, guid: c0fc108ec4b6d3b4f8a25a9589a20a41, type: 3}
+      propertyPath: ColorModule.gradient.maxGradient.ctime1
+      value: 63993
+      objectReference: {fileID: 0}
+    - target: {fileID: 2818275803141509851, guid: c0fc108ec4b6d3b4f8a25a9589a20a41, type: 3}
       propertyPath: ColorModule.gradient.maxGradient.key0.b
       value: 0
       objectReference: {fileID: 0}
@@ -1827,6 +1839,18 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2818275803141509851, guid: c0fc108ec4b6d3b4f8a25a9589a20a41, type: 3}
       propertyPath: ColorModule.gradient.maxGradient.key0.r
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2818275803141509851, guid: c0fc108ec4b6d3b4f8a25a9589a20a41, type: 3}
+      propertyPath: ColorModule.gradient.maxGradient.key1.b
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2818275803141509851, guid: c0fc108ec4b6d3b4f8a25a9589a20a41, type: 3}
+      propertyPath: ColorModule.gradient.maxGradient.key1.g
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2818275803141509851, guid: c0fc108ec4b6d3b4f8a25a9589a20a41, type: 3}
+      propertyPath: ColorModule.gradient.maxGradient.key1.r
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2818275803141509852, guid: c0fc108ec4b6d3b4f8a25a9589a20a41, type: 3}
@@ -2031,7 +2055,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -56, y: 52}
+  m_AnchoredPosition: {x: 0, y: 270}
   m_SizeDelta: {x: 620, y: 537.7556}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &734384967
@@ -2747,7 +2771,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1050700437
 RectTransform:
   m_ObjectHideFlags: 0
@@ -3647,9 +3671,9 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 0}
+  m_Sprite: {fileID: 21300000, guid: bb3ecb2ecfc27054da0640f323b10821, type: 3}
   m_Type: 0
-  m_PreserveAspect: 0
+  m_PreserveAspect: 1
   m_FillCenter: 1
   m_FillMethod: 4
   m_FillAmount: 1
@@ -4409,9 +4433,9 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 0}
+  m_Sprite: {fileID: 21300000, guid: 73a50c876176bc44f8f0a70a8242bc7b, type: 3}
   m_Type: 0
-  m_PreserveAspect: 0
+  m_PreserveAspect: 1
   m_FillCenter: 1
   m_FillMethod: 4
   m_FillAmount: 1
@@ -5217,11 +5241,6 @@ MonoBehaviour:
   - {fileID: 510712429}
   - {fileID: 1305066646}
   - {fileID: 262443459}
-  Pack: {fileID: 0}
-  packsprites:
-  - {fileID: 21300000, guid: 46dd599a50702674b9b2471c81394f5f, type: 3}
-  - {fileID: 21300000, guid: 73a50c876176bc44f8f0a70a8242bc7b, type: 3}
-  - {fileID: 21300000, guid: bb3ecb2ecfc27054da0640f323b10821, type: 3}
 --- !u!1 &2017889614
 GameObject:
   m_ObjectHideFlags: 0

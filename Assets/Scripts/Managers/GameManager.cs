@@ -18,7 +18,7 @@ public class GameManager : MonoBehaviour
             Fade.Instance.FadeIn();
         }
     }
-
+    public static bool isDragging;
     #region Stage GameObjects 
 
     [SerializeField] private RectTransform ParentRt;
@@ -80,6 +80,7 @@ public class GameManager : MonoBehaviour
     #endregion
     #endregion
 
+    private bool isInstantiate;
     private SoundManager SM;
 
     void Start()
@@ -100,7 +101,6 @@ public class GameManager : MonoBehaviour
 
         StageObjParentTr = GameObject.FindGameObjectWithTag("StageObj").transform.Find($"Stage{stagenum}");
         StageObjParentTr.gameObject.SetActive(true);
-        //finishLunchBoxAnimator = finishLunchBoxTr.GetComponent<Animator>();
 
         for (int i = 0; i < StageObjParentTr.childCount; i++)
             StageObjs.Add(StageObjParentTr.GetChild(i).gameObject);
@@ -129,6 +129,7 @@ public class GameManager : MonoBehaviour
             RandomInstantiateObject(Milks);
         StartCoroutine(CStageSystem());
     }
+
     /// <summary>
     /// Stage에 필요한 오브젝트들을 추가해줌
     /// </summary>
@@ -192,7 +193,7 @@ public class GameManager : MonoBehaviour
             {
                 // 킹태훈이 한거임 훈수 해봐
                 if (IsClear)
-                {
+                {                    
                     if (i != StageObjects.Count)
                     {
                         RandomInstantiateObject(StageObjects[i]);
@@ -238,16 +239,15 @@ public class GameManager : MonoBehaviour
                 CloudParticle.Play();
 
                 foreach (var obj in StageObjs)
-                {
                     obj.GetComponent<Image>().DOFade(0, 1.5f);
-                }
 
-                UIManager.Instance.PlayStageClearEvent();
+                UIManager.Instance.PlayStageClearEvent(StageObjParentTr as RectTransform);
 
                 yield return new WaitForSeconds(1.5f);
                 CloudParticle.Stop();
 
                 yield return new WaitForSeconds(1.3f);
+
                 break;
             case 7:
                 StageObjParentTr.GetComponent<Image>().color = Color.white;
@@ -259,15 +259,16 @@ public class GameManager : MonoBehaviour
                 yield return new WaitForSeconds(1f);
                 break;
             default:
-                Debug.Assert(false);
+                Debug.Assert(false,"Clear Coroutine Switch default");
                 break;
         }
         StarParticle.Play();
 
         yield return null;
     }
+
     /// <summary>
-    /// 6스테이지까지의 게임들의 오브젝트 랜덤 생성
+    /// 스테이지 오브젝트를 슬롯에 랜덤으로 생성하는 함수
     /// </summary>
     private void RandomInstantiateObject(List<GameObject> stageobjs)
     {

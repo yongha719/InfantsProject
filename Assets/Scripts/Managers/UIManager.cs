@@ -14,7 +14,7 @@ public class UIManager : MonoBehaviour
     [Header("Title==============================================")]
     [SerializeField] private Slider BGMSlider;
     [SerializeField] private Toggle BGMToggle;
-    [SerializeField] private Slider SESlider;
+    [SerializeField, Space(5)] private Slider SESlider;
     [SerializeField] private Toggle SEToggle;
 
     #endregion
@@ -35,12 +35,6 @@ public class UIManager : MonoBehaviour
     /// 다음 스테이지로 가는 버튼들
     /// </summary>
     [SerializeField, Space(10)] private List<Button> goToNextStageButtons = new List<Button>();
-
-    /// <summary>
-    /// 4 ~ 6 스테이지 끝나고 나오는 보따리
-    /// </summary>
-    [SerializeField, Space(10)] private Image Pack;
-    [SerializeField] private List<Sprite> packsprites = new List<Sprite>();
     #endregion
 
     private SoundManager SM;
@@ -84,9 +78,7 @@ public class UIManager : MonoBehaviour
             SpeechBubbleNum.sprite = SpeechBubbleNumSprites[stagenum];
 
             if (GameManager.StageNum >= 7)
-            {
                 Mat.gameObject.SetActive(false);
-            }
             else
                 Mat.sprite = MatSprites[stagenum];
         }
@@ -109,23 +101,22 @@ public class UIManager : MonoBehaviour
     /// <summary>
     /// Stage 4~6 Clear Coroutine
     /// </summary>
-    public void PlayStageClearEvent()
+    public void PlayStageClearEvent(RectTransform StageObjParent)
     {
-        StartCoroutine(CPlayStageClearEvent());
+        StartCoroutine(CPlayStageClearEvent(StageObjParent));
     }
 
 
-    private IEnumerator CPlayStageClearEvent()
+    private IEnumerator CPlayStageClearEvent(RectTransform StageObjParent)
     {
         Mat.GetComponent<RectTransform>().DOAnchorPosY(-350, 1f);
 
-        Pack.gameObject.SetActive(true);
-        //4부터 들어있기 때문에 4를 빼줌
-        Pack.sprite = packsprites[GameManager.StageNum - 4];
+        // color alpha set 1
+        StageObjParent.GetComponent<Image>().color = Color.white;
 
         yield return new WaitForSeconds(1.7f);
 
-        Pack.GetComponent<RectTransform>().DOAnchorPosY(30, 1f);
+        StageObjParent.DOAnchorPosY(350, 1f);
     }
     private void OnDestroy()
     {

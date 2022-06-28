@@ -9,14 +9,14 @@ public class StageObject : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndD
     public bool IsCurrect;
     public bool CanDrag = true;
     public int num;
-    private bool isTweening;
-
+    public Vector2 pos;
     public Transform OriginParent;
+
+    private bool isTweening;
     private Transform Parent;
     private RectTransform rectTransform;
     private CanvasGroup canvasGroup;
 
-    public Vector2 pos;
     void Start()
     {
         rectTransform = GetComponent<RectTransform>();
@@ -33,19 +33,24 @@ public class StageObject : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndD
         rectTransform.DOAnchorPos(pos, 1f);
     }
 
-
     public void OnBeginDrag(PointerEventData eventData)
     {
         if (isTweening) return;
-        transform.SetParent(Parent);
+        GameManager.isDragging = true;
+
+        transform.SetParent(Parent, true);
         transform.SetAsLastSibling();
+        rectTransform.position = eventData.position;
 
         canvasGroup.alpha = 0.6f;
         canvasGroup.blocksRaycasts = false;
+
+        print("Begin");
     }
 
     public void OnDrag(PointerEventData eventData)
     {
+        if (GameManager.isDragging == false) return;
         rectTransform.position = eventData.position;
     }
 
@@ -54,14 +59,13 @@ public class StageObject : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndD
         if (transform.parent == Parent)
         {
             transform.SetParent(OriginParent);
-            //rectTransform.position = OriginParent.GetComponent<RectTransform>().position;
             isTweening = true;
             StartCoroutine(CGoOriginPos());
-        }
+        }       
 
         canvasGroup.alpha = 1f;
         canvasGroup.blocksRaycasts = true;
-        //rectTransform.anchoredPosition = pos;
+        rectTransform.anchoredPosition = pos;
 
         if (CanDrag == false)
         {
@@ -70,12 +74,18 @@ public class StageObject : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndD
             foreach (var stageobj in stageobjs)
                 Destroy(stageobj.gameObject);
         }
+
+        GameManager.isDragging = false;
     }
 
     IEnumerator CGoOriginPos()
     {
-        rectTransform.DOAnchorPos(pos, 1f);
-        yield return new WaitForSeconds(1f);
+        print("GO");
+        print(rectTransform.anchoredPosition);
+        print(pos);
+        rectTransform.DOAnchorPos(pos, 0.8f);
+
+        yield return new WaitForSeconds(0.7f);
         isTweening = false;
     }
 }

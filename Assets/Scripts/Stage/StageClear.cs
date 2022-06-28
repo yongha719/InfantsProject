@@ -15,6 +15,5 @@ public class StageClear : MonoBehaviour
     {
         Lid.SetBool("IsClear", true);
     }
-
      
 }

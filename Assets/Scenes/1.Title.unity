@@ -3700,6 +3700,22 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: -700
       objectReference: {fileID: 0}
+    - target: {fileID: 1229267261094772577, guid: 09a4a02aa955de24999f75b492fdfd57, type: 3}
+      propertyPath: m_PreserveAspect
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1229267261727361589, guid: 09a4a02aa955de24999f75b492fdfd57, type: 3}
+      propertyPath: m_PreserveAspect
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1229267262210214743, guid: 09a4a02aa955de24999f75b492fdfd57, type: 3}
+      propertyPath: m_PreserveAspect
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1229267262265791388, guid: 09a4a02aa955de24999f75b492fdfd57, type: 3}
+      propertyPath: m_PreserveAspect
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 1229267262611761784, guid: 09a4a02aa955de24999f75b492fdfd57, type: 3}
       propertyPath: m_Pivot.x
       value: 0

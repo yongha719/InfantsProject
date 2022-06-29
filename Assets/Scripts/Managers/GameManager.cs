@@ -7,7 +7,11 @@ using DG.Tweening;
 
 public class GameManager : MonoBehaviour
 {
-    public static bool IsClear;
+    /// <summary>
+    /// 게임이 아닌 드래그하는 오브젝트 한단계가 끝나는것
+    /// </summary>
+    public static bool IsStepClear;
+    public static bool IsGameClear;
     private static int stagenum = 1;
     public static int StageNum
     {
@@ -18,7 +22,6 @@ public class GameManager : MonoBehaviour
             Fade.Instance.FadeIn();
         }
     }
-    public static bool isDragging;
 
     #region Stage GameObjects 
 
@@ -41,7 +44,6 @@ public class GameManager : MonoBehaviour
     /// 스테이지가 끝났을 때 띄울 오브젝트
     /// </summary>
     [SerializeField] private Transform StageObjParentTr;
-    private Animator finishLunchBoxAnimator;
     private List<GameObject> StageObjs = new List<GameObject>();
 
     [Header("Particles"), Space(10)]
@@ -94,7 +96,7 @@ public class GameManager : MonoBehaviour
     {
         Fade.Instance.FadeOut();
 
-        IsClear = false;
+        IsStepClear = false;
 
         for (int i = 0; i < ParentRt.childCount; i++)
             slots.Add(ParentRt.GetChild(i));
@@ -193,13 +195,13 @@ public class GameManager : MonoBehaviour
             while (true)
             {
                 // 킹태훈이 한거임 훈수 해봐
-                if (IsClear)
+                if (IsStepClear)
                 {
                     if (i != StageObjects.Count)
                     {
                         RandomInstantiateObject(StageObjects[i]);
                         StageObjs[i].SetActive(true);
-                        IsClear = false;
+                        IsStepClear = false;
                         break;
                     }
 
@@ -227,10 +229,10 @@ public class GameManager : MonoBehaviour
                 StageObjParentTr.GetComponent<RectTransform>().DOAnchorPosY(200, 1f);
                 yield return new WaitForSeconds(1f);
 
+                //뚜껑
                 RectTransform Lidrt = StageObjParentTr.GetChild(StageObjParentTr.childCount - 1).GetComponent<RectTransform>();
                 Lidrt.GetComponent<Image>().DOFade(1, 1f);
                 Lidrt.DOAnchorPosY(30, 1f);
-                //finishLunchBoxAnimator.SetBool("IsClear", true);
 
                 yield return new WaitForSeconds(2f);
                 break;

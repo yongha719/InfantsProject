@@ -2614,6 +2614,81 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Lid: {fileID: 0}
+--- !u!1 &1013389686
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1013389687}
+  - component: {fileID: 1013389689}
+  - component: {fileID: 1013389688}
+  m_Layer: 5
+  m_Name: Guide
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
+--- !u!224 &1013389687
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1013389686}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 2011063834}
+  m_RootOrder: 8
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 150, y: 150}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &1013389688
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1013389686}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Sprite: {fileID: 21300000, guid: 82e82bd58ffe7a1458ce9184ce2642b2, type: 3}
+  m_Type: 0
+  m_PreserveAspect: 1
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+  m_UseSpriteMesh: 0
+  m_PixelsPerUnitMultiplier: 1
+--- !u!222 &1013389689
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1013389686}
+  m_CullTransparentMesh: 1
 --- !u!1 &1021274375
 GameObject:
   m_ObjectHideFlags: 0
@@ -4862,6 +4937,32 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 9197408905557799617, guid: 8118264924212534b9c58b1694eefaf6, type: 3}
   m_PrefabInstance: {fileID: 1907799876}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1907799878 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2656333506012396233, guid: 8118264924212534b9c58b1694eefaf6, type: 3}
+  m_PrefabInstance: {fileID: 1907799876}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &1907799879 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8057800969670531828, guid: 8118264924212534b9c58b1694eefaf6, type: 3}
+  m_PrefabInstance: {fileID: 1907799876}
+  m_PrefabAsset: {fileID: 0}
+--- !u!222 &1907799880
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1907799878}
+  m_CullTransparentMesh: 1
+--- !u!222 &1907799881
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1907799879}
+  m_CullTransparentMesh: 1
 --- !u!1 &1908323753
 GameObject:
   m_ObjectHideFlags: 0
@@ -5187,6 +5288,7 @@ RectTransform:
   - {fileID: 706446931}
   - {fileID: 1302052113}
   - {fileID: 808027707}
+  - {fileID: 1013389687}
   m_Father: {fileID: 0}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -5207,10 +5309,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c93124f2366d96f4794df5a4fe05cfe4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isDragging: 0
+  CurrectObjPos: {x: 0, y: 0}
+  guideCur: 0
   BGMSlider: {fileID: 0}
   BGMToggle: {fileID: 0}
+  BGMMuteImages: []
   SESlider: {fileID: 0}
   SEToggle: {fileID: 0}
+  SEMuteImages: []
   TitleLockButtons: []
   Mat: {fileID: 1552820713}
   MatSprites:
@@ -5242,6 +5349,7 @@ MonoBehaviour:
   - {fileID: 510712429}
   - {fileID: 1305066646}
   - {fileID: 262443459}
+  GuideRt: {fileID: 1013389687}
 --- !u!1 &2017889614
 GameObject:
   m_ObjectHideFlags: 0

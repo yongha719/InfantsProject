@@ -242,10 +242,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c93124f2366d96f4794df5a4fe05cfe4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isDragging: 0
+  CurrectObjPos: {x: 0, y: 0}
+  guideCur: 0
   BGMSlider: {fileID: 2118575523}
   BGMToggle: {fileID: 1011683065}
+  BGMMuteImages:
+  - {fileID: 21300000, guid: e65dce1df8bd7344c862250c31d215df, type: 3}
+  - {fileID: 21300000, guid: 32b174caadc02d242a7f71d5c7713e78, type: 3}
   SESlider: {fileID: 1823475727}
   SEToggle: {fileID: 1941895203}
+  SEMuteImages:
+  - {fileID: 21300000, guid: bb32306fb6494f24f8bb409de39e3dd8, type: 3}
+  - {fileID: 21300000, guid: bd6797acf54749f4aa1331f7c9879e40, type: 3}
   TitleLockButtons:
   - {fileID: 1513195677}
   - {fileID: 468938819}
@@ -256,6 +265,7 @@ MonoBehaviour:
   SpeechBubbleNumSprites: []
   BackButton: {fileID: 0}
   NextStageButtons: []
+  GuideRt: {fileID: 0}
 --- !u!1 &22482167
 GameObject:
   m_ObjectHideFlags: 0
@@ -1700,7 +1710,7 @@ MonoBehaviour:
     m_DisabledTrigger: Disabled
   m_Interactable: 1
   m_TargetGraphic: {fileID: 1011683066}
-  toggleTransition: 0
+  toggleTransition: 1
   graphic: {fileID: 0}
   m_Group: {fileID: 0}
   onValueChanged:

@@ -17,8 +17,12 @@ public class StageObject : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndD
     private RectTransform rectTransform;
     private CanvasGroup canvasGroup;
 
+    private UIManager UM;
+
     void Start()
     {
+        UM = UIManager.Instance;
+
         rectTransform = GetComponent<RectTransform>();
         canvasGroup = GetComponent<CanvasGroup>();
 
@@ -28,15 +32,25 @@ public class StageObject : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndD
 
         CanDrag = true;
 
+
         pos = rectTransform.anchoredPosition;
         rectTransform.anchoredPosition = new Vector2(0, pos.y + 500);
         rectTransform.DOAnchorPos(pos, 1f);
+
+        if (IsCurrect)
+            UM.CurrectObj = this;
+
+    }
+
+    public Vector2 GetLocalPos()
+    {
+        return OriginParent.GetComponent<RectTransform>().anchoredPosition + OriginParent.parent.GetComponent<RectTransform>().anchoredPosition;
     }
 
     public void OnBeginDrag(PointerEventData eventData)
     {
         if (isTweening) return;
-        GameManager.isDragging = true;
+        UM.isDragging = true;
 
         transform.SetParent(Parent, true);
         transform.SetAsLastSibling();
@@ -50,7 +64,7 @@ public class StageObject : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndD
 
     public void OnDrag(PointerEventData eventData)
     {
-        if (GameManager.isDragging == false) return;
+        if (UM.isDragging == false) return;
         rectTransform.position = eventData.position;
     }
 
@@ -61,11 +75,10 @@ public class StageObject : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndD
             transform.SetParent(OriginParent);
             isTweening = true;
             StartCoroutine(CGoOriginPos());
-        }       
+        }
 
         canvasGroup.alpha = 1f;
         canvasGroup.blocksRaycasts = true;
-        rectTransform.anchoredPosition = pos;
 
         if (CanDrag == false)
         {
@@ -75,7 +88,7 @@ public class StageObject : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndD
                 Destroy(stageobj.gameObject);
         }
 
-        GameManager.isDragging = false;
+        UM.isDragging = false;
     }
 
     IEnumerator CGoOriginPos()
@@ -83,7 +96,7 @@ public class StageObject : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndD
         print("GO");
         print(rectTransform.anchoredPosition);
         print(pos);
-        rectTransform.DOAnchorPos(pos, 0.8f);
+        rectTransform.DOAnchorPos(pos, 1f);
 
         yield return new WaitForSeconds(0.7f);
         isTweening = false;

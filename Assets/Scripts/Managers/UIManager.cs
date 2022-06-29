@@ -9,16 +9,28 @@ public class UIManager : MonoBehaviour
 {
     public static UIManager Instance { get; private set; }
     public static bool ShouldFade;
-    public static bool isLock;
+    private bool isLock;
+    public bool isDragging;
 
+    #region Drag Guide
+    private bool isGameClear;
+    public StageObject CurrectObj;
+    private Vector2 SlotPos = new Vector2(0, -350);
+    private const float GUIDE_DELAY = 5f;
+    public float guideCur;
+    private bool endGuideCoroutine = true;
+    Coroutine GuideCoroutine;
+    #endregion
 
     #region Title Scene
     [Header("Audio Volume Sliders"), Space(10)]
     [Header("Title==============================================")]
     [SerializeField] private Slider BGMSlider;
     [SerializeField] private Toggle BGMToggle;
+    [SerializeField] private Sprite[] BGMMuteImages;
     [SerializeField, Space(5)] private Slider SESlider;
     [SerializeField] private Toggle SEToggle;
+    [SerializeField] private Sprite[] SEMuteImages;
 
     [SerializeField] private List<Button> TitleLockButtons;
     #endregion
@@ -40,26 +52,27 @@ public class UIManager : MonoBehaviour
     /// </summary>
     [SerializeField, Space(10)] private List<Button> NextStageButtons = new List<Button>();
     private List<Button> NextStageLockButtons = new List<Button>();
+
+    [SerializeField] RectTransform GuideRt;
     #endregion
 
     private GameObject PurchasePopUp;
     private Button PurchaseButton;
+    PurChase purchase;
 
     private SoundManager SM;
-    PurChase purchase;
+
     private void Awake()
     {
         Instance = this;
         SM = SoundManager.Instance;
+        purchase = FindObjectOfType<PurChase>();
     }
 
     private void Start()
     {
-        isLock = false;
-
         SoundManager.AddButtonClick(Resources.FindObjectsOfTypeAll<Button>());
 
-        purchase = FindObjectOfType<PurChase>();
         PurchasePopUp = purchase.PurchasePopUp;
         PurchaseButton = purchase.PurchaseButton;
         PurchaseButton.onClick.AddListener(() => { PurchasePopUp.SetActive(false); });
@@ -83,6 +96,7 @@ public class UIManager : MonoBehaviour
                 Fade.Instance.FadeOut();
                 ShouldFade = false;
             }
+
             foreach (var lockbutton in TitleLockButtons)
             {
                 lockbutton.onClick.AddListener(() =>
@@ -93,13 +107,24 @@ public class UIManager : MonoBehaviour
 
             BGMSlider.onValueChanged.AddListener((volume) => { SM.BGM_Volume = volume; });
             BGMSlider.value = SM.BGM_Volume;
-            BGMToggle.onValueChanged.AddListener((ison) => { SM.BGM_Mute = ison; SoundManager.Play(SsoundName.BUTTON_CLICK); });
+            BGMToggle.onValueChanged.AddListener((ison) =>
+            {
+                SM.BGM_Mute = ison; SoundManager.Play(SsoundName.BUTTON_CLICK);
+                BGMToggle.GetComponent<Image>().sprite = BGMMuteImages[ison == false ? 0 : 1];
+            });
             BGMToggle.isOn = SM.BGM_Mute;
+            BGMToggle.GetComponent<Image>().sprite = BGMMuteImages[BGMToggle.isOn == false ? 0 : 1];
 
             SESlider.onValueChanged.AddListener((volume) => { SM.SEVolume = volume; });
             SESlider.value = SM.SEVolume;
-            SEToggle.onValueChanged.AddListener((ison) => { SM.SEMute = ison; SoundManager.Play(SsoundName.BUTTON_CLICK); });
-            BGMToggle.isOn = SM.SEMute;
+            SEToggle.onValueChanged.AddListener((ison) =>
+            {
+                SM.SEMute = ison; SoundManager.Play(SsoundName.BUTTON_CLICK);
+                SEToggle.GetComponent<Image>().sprite = SEMuteImages[ison == false ? 0 : 1];
+            });
+            SEToggle.isOn = SM.SEMute;
+            SEToggle.GetComponent<Image>().sprite = SEMuteImages[SEToggle.isOn == false ? 0 : 1];
+
         }
         else if (EqualSceneName(SsceneName.STAGESCENE))
         {
@@ -134,30 +159,75 @@ public class UIManager : MonoBehaviour
 
             BackButton.onClick.AddListener(() => Fade.Instance.FadeIn(true));
 
-            int stagenum = GameManager.StageNum - 1;
+            int stagenumindex = GameManager.StageNum - 1;
 
-            SpeechBubbleNum.sprite = SpeechBubbleNumSprites[stagenum];
+            SpeechBubbleNum.sprite = SpeechBubbleNumSprites[stagenumindex];
 
             if (GameManager.StageNum >= 7)
                 Mat.gameObject.SetActive(false);
             else
-                Mat.sprite = MatSprites[stagenum];
+                Mat.sprite = MatSprites[stagenumindex];
 
         }
+    }
+
+    private void Update()
+    {
+        if (EqualSceneName(SsceneName.STAGESCENE) && isGameClear == false)
+        {
+            if (isDragging == false)
+            {
+                if (guideCur <= GUIDE_DELAY)
+                {
+                    guideCur += Time.deltaTime;
+                }
+                else if (endGuideCoroutine)
+                {
+                    endGuideCoroutine = false;
+                    GuideCoroutine = StartCoroutine(CShowGuide());
+                }
+            }
+            else if (GuideCoroutine != null)
+            {
+                guideCur = 0;
+                endGuideCoroutine = true;
+                GuideRt.gameObject.SetActive(false);
+                StopCoroutine(GuideCoroutine);
+            }
+        }
+    }
+    IEnumerator CShowGuide()
+    {
+        GuideRt.gameObject.SetActive(true);
+
+        Vector2 currectObjPos = CurrectObj.GetLocalPos();
+        for (int i = 0; i < 3; i++)
+        {
+            GuideRt.localPosition = currectObjPos;
+            GuideRt.DOLocalMove(SlotPos, 1.5f);
+            yield return new WaitForSeconds(1.8f);
+        }
+        GuideRt.gameObject.SetActive(false);
+        guideCur = 0;
+        endGuideCoroutine = true;
+        yield return null;
     }
 
     bool EqualSceneName(string scenename) => SceneManager.GetActiveScene().name.Equals(scenename);
 
     /// <summary>
     /// 다음 스테이지로 넘어가는 버튼 이벤트 
+    /// 이게 호출된다는 것은 스테이지가 끝났다는 뜻
     /// </summary>
     public void SetNextStageButton()
     {
+        isGameClear = true;
         Button button = NextStageButtons[GameManager.StageNum - 1];
 
         button.gameObject.SetActive(true);
-        //Lock 버튼 해제
-        if (isLock)
+
+        //Lock 버튼 해제 lock 버튼은 자식으로 있기 때문에 조건으로 검사
+        if (isLock && button.transform.childCount != 0)
         {
             button.interactable = true;
             button.transform.GetChild(0).gameObject.SetActive(false);
@@ -178,7 +248,7 @@ public class UIManager : MonoBehaviour
     }
 
     /// <summary>
-    /// Stage 4~6 Clear Coroutine
+    /// Stage Clear Coroutine Call Method
     /// </summary>
     public void PlayStageClearEvent(RectTransform StageObjParent)
     {
@@ -211,6 +281,10 @@ public class UIManager : MonoBehaviour
             PlayerPrefs.SetFloat(SPrefsKey.SE_VOLUME, SESlider.value);
             PlayerPrefs.SetInt(SPrefsKey.SE_MUTE, SEToggle.isOn ? SPrefsKey.True : SPrefsKey.False);
         }
+    }
+    private void OnApplicationQuit()
+    {
+        // PlayerPrefs.SetInt(SPrefsKey.UNLOCK, 0);
     }
 }
 

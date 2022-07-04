@@ -17,7 +17,7 @@ public class UIManager : MonoBehaviour
     public StageObject CurrectObj;
     private Vector2 SlotPos = new Vector2(0, -350);
     private const float GUIDE_DELAY = 5f;
-    public float guideCur;
+    private float guideCur;
     private bool endGuideCoroutine = true;
     Coroutine GuideCoroutine;
     #endregion
@@ -200,13 +200,17 @@ public class UIManager : MonoBehaviour
     {
         GuideRt.gameObject.SetActive(true);
 
-        Vector2 currectObjPos = CurrectObj.GetLocalPos();
+        Vector2 currectObjPos = CurrectObj.GetObjectAnchoredPos();
+        GuideRt.localPosition = currectObjPos;
+
         for (int i = 0; i < 3; i++)
         {
-            GuideRt.localPosition = currectObjPos;
+            GuideRt.DOLocalMove(currectObjPos, 0.5f);
+            yield return new WaitForSeconds(0.5f);
             GuideRt.DOLocalMove(SlotPos, 1.5f);
             yield return new WaitForSeconds(1.8f);
         }
+
         GuideRt.gameObject.SetActive(false);
         guideCur = 0;
         endGuideCoroutine = true;

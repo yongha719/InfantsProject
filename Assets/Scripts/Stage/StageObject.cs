@@ -9,11 +9,11 @@ public class StageObject : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndD
     public bool IsCurrect;
     public bool CanDrag = true;
     public int num;
-    public Vector2 pos;
+    public Vector2 AnchoredPos;
     public Transform OriginParent;
 
     private bool isTweening;
-    private Transform Parent;
+    private Transform CanvasTr;
     private RectTransform rectTransform;
     private CanvasGroup canvasGroup;
 
@@ -26,23 +26,27 @@ public class StageObject : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndD
         rectTransform = GetComponent<RectTransform>();
         canvasGroup = GetComponent<CanvasGroup>();
 
-        Parent = GameObject.FindGameObjectWithTag("Canvas").transform;
+        CanvasTr = GameObject.FindGameObjectWithTag("Canvas").transform;
 
         OriginParent = transform.parent;
 
         CanDrag = true;
 
 
-        pos = rectTransform.anchoredPosition;
-        rectTransform.anchoredPosition = new Vector2(0, pos.y + 500);
-        rectTransform.DOAnchorPos(pos, 1f);
+        AnchoredPos = rectTransform.anchoredPosition;
+        rectTransform.anchoredPosition = new Vector2(0, AnchoredPos.y + 500);
+        rectTransform.DOAnchorPos(AnchoredPos, 1f);
 
         if (IsCurrect)
+        {
             UM.CurrectObj = this;
+        }
 
     }
-
-    public Vector2 GetLocalPos()
+    /// <summary>
+    /// 积己等 第 谅钎啊 崔扼咙
+    /// </summary>
+    public Vector2 GetObjectAnchoredPos()
     {
         return OriginParent.GetComponent<RectTransform>().anchoredPosition + OriginParent.parent.GetComponent<RectTransform>().anchoredPosition;
     }
@@ -52,7 +56,7 @@ public class StageObject : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndD
         if (isTweening) return;
         UM.isDragging = true;
 
-        transform.SetParent(Parent, true);
+        transform.SetParent(CanvasTr, true);
         transform.SetAsLastSibling();
         rectTransform.position = eventData.position;
 
@@ -70,7 +74,7 @@ public class StageObject : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndD
 
     public void OnEndDrag(PointerEventData eventData)
     {
-        if (transform.parent == Parent)
+        if (transform.parent == CanvasTr)
         {
             transform.SetParent(OriginParent);
             isTweening = true;
@@ -95,8 +99,8 @@ public class StageObject : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndD
     {
         print("GO");
         print(rectTransform.anchoredPosition);
-        print(pos);
-        rectTransform.DOAnchorPos(pos, 1f);
+        print(AnchoredPos);
+        rectTransform.DOAnchorPos(AnchoredPos, 1f);
 
         yield return new WaitForSeconds(0.7f);
         isTweening = false;

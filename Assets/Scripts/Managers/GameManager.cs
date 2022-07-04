@@ -7,11 +7,7 @@ using DG.Tweening;
 
 public class GameManager : MonoBehaviour
 {
-    /// <summary>
-    /// 게임이 아닌 드래그하는 오브젝트 한단계가 끝나는것
-    /// </summary>
     public static bool IsStepClear;
-    public static bool IsGameClear;
     private static int stagenum = 1;
     public static int StageNum
     {
@@ -30,20 +26,11 @@ public class GameManager : MonoBehaviour
 
     [SerializeField] private GameObject SpeechBubble;
 
-    /// <summary>
-    /// 1~6 Stage Lunch Boxs
-    /// </summary>
     [SerializeField, Space(10)] private List<GameObject> LunchBoxs;
 
-    /// <summary>
-    /// 스테이지 오브젝트들 매 스테이지마다 바뀜 SetGame 구현
-    /// </summary>
     private List<List<GameObject>> StageObjects = new List<List<GameObject>>();
 
-    /// <summary>
-    /// 스테이지가 끝났을 때 띄울 오브젝트
-    /// </summary>
-    [SerializeField] private Transform StageObjParentTr;
+    private Transform StageObjParentTr;
     private List<GameObject> StageObjs = new List<GameObject>();
 
     [Header("Particles"), Space(10)]
@@ -79,7 +66,12 @@ public class GameManager : MonoBehaviour
     [SerializeField] private List<GameObject> Donuts;
     [SerializeField] private List<GameObject> Baguettes;
     [SerializeField] private List<GameObject> Grapes;
-    [SerializeField] private Sprite Stage7FinishImage;
+
+    [Header("Stage 8================================================================"), Space(10)]
+    [SerializeField] private List<GameObject> Juices;
+    [SerializeField] private List<GameObject> HotCakes;
+    [SerializeField] private List<GameObject> Pears;
+    [SerializeField] private List<GameObject> Cookies;
     #endregion
     #endregion
 
@@ -112,35 +104,13 @@ public class GameManager : MonoBehaviour
         StartGame();
     }
 
-    private void StartGame()
-    {
-        AddStageObjects();
-
-        // 만약 3스테이지 이하면 3스테이지까지의 오브젝트만 가져오고 1~3
-        // 6스테이지 이하면 6스테이지까지의 오브젝트만 가져옴 4~6
-        if (stagenum <= 3)
-            LunchBoxs = LunchBoxs.Take(3).ToList();
-        else if (stagenum <= 6)
-            LunchBoxs = LunchBoxs.Skip(3).ToList();
-
-        if (stagenum <= 6)
-        {
-            RandomInstantiateObject(LunchBoxs);
-        }
-        else if (stagenum == 7)
-            RandomInstantiateObject(Milks);
-
-        StartCoroutine(CStageSystem());
-    }
-
     /// <summary>
     /// Stage에 필요한 오브젝트들을 추가해줌
     /// </summary>
-    private void AddStageObjects()
+    private void AppendStageObjects()
     {
         switch (stagenum)
         {
-
             case 1:
                 StageObjects.Add(Rice_Roll);
                 StageObjects.Add(Breads);
@@ -172,6 +142,9 @@ public class GameManager : MonoBehaviour
                 StageObjects.Add(Grapes);
                 break;
             case 8:
+                StageObjects.Add(HotCakes);
+                StageObjects.Add(Pears);
+                StageObjects.Add(Cookies);
                 break;
             case 9:
                 break;
@@ -181,93 +154,79 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    /// <summary>
-    /// 6스테이지까지의 시스템
-    /// </summary>
-    private IEnumerator CStageSystem()
+
+    private void StartGame()
     {
-        var wait = new WaitForSeconds(0.001f);
+        AppendStageObjects();
 
-        int count = StageObjects.Count;
-
-        for (int i = 0; i <= count; i++)
-        {
-            while (true)
-            {
-                // 킹태훈이 한거임 훈수 해봐
-                if (IsStepClear)
-                {
-                    if (i != StageObjects.Count)
-                    {
-                        RandomInstantiateObject(StageObjects[i]);
-                        StageObjs[i].SetActive(true);
-                        IsStepClear = false;
-                        break;
-                    }
-
-                    StageObjs[i].SetActive(true);
-                    break;
-                }
-                yield return wait;
-            }
-        }
-
-        yield return StartCoroutine(CStageClearEvent());
-    }
-
-    private IEnumerator CStageClearEvent()
-    {
-        SpeechBubble.SetActive(false);
-
-        UIManager.Instance.SetNextStageButton();
+        // 만약 3스테이지 이하면 3스테이지까지의 오브젝트만 가져오고 1~3
+        // 6스테이지 이하면 6스테이지까지의 오브젝트만 가져옴 4~6
+        LunchBoxs = (stagenum <= 3 ? LunchBoxs.Take(3).ToList() : LunchBoxs.Skip(3).ToList());
 
         switch (stagenum)
         {
             case 1:
             case 2:
             case 3:
-                StageObjParentTr.GetComponent<RectTransform>().DOAnchorPosY(200, 1f);
-                yield return new WaitForSeconds(1f);
-
-                //뚜껑
-                RectTransform Lidrt = StageObjParentTr.GetChild(StageObjParentTr.childCount - 1).GetComponent<RectTransform>();
-                Lidrt.GetComponent<Image>().DOFade(1, 1f);
-                Lidrt.DOAnchorPosY(30, 1f);
-
-                yield return new WaitForSeconds(2f);
-                break;
             case 4:
             case 5:
             case 6:
-                CloudParticle.Play();
-
-                foreach (var obj in StageObjs)
-                    obj.GetComponent<Image>().DOFade(0, 1.5f);
-
-                UIManager.Instance.PlayStageClearEvent(StageObjParentTr as RectTransform);
-
-                yield return new WaitForSeconds(1.5f);
-                CloudParticle.Stop();
-
-                yield return new WaitForSeconds(1.3f);
-
+                RandomInstantiateObject(LunchBoxs);
                 break;
             case 7:
-                StageObjParentTr.GetComponent<Image>().color = Color.white;
-                StageObjParentTr.GetComponent<RectTransform>().DOAnchorPosY(200, 1f);
-
-                for (int i = 0; i < StageObjParentTr.childCount; i++)
-                    StageObjParentTr.GetChild(i).gameObject.SetActive(false);
-
-                yield return new WaitForSeconds(1f);
+                RandomInstantiateObject(Milks);
+                break;
+            case 8:
+                RandomInstantiateObject(Juices);
+                break;
+            case 9:
+                //RandomInstantiateObject();
+                break;
+            case 10:
                 break;
             default:
-                Debug.Assert(false, "Clear Coroutine Switch default");
+                Debug.Assert(false, $"StartGame switch default\n Stage Number is {stagenum}");
                 break;
         }
-        StarParticle.Play();
 
-        yield return null;
+        StartCoroutine(CStageSystem());
+    }
+
+    /// <summary>
+    /// 게임 시스템
+    /// </summary>
+    private IEnumerator CStageSystem()
+    {
+        int count = StageObjects.Count;
+
+        for (int i = 0; i <= count; i++)
+            yield return StartCoroutine(CWaitStepClear(i));
+
+        yield return StartCoroutine(CStageClearEvent());
+    }
+
+    private IEnumerator CWaitStepClear(int index)
+    {
+        var wait = new WaitForSeconds(0.001f);
+
+        while (true)
+        {
+            // 킹태훈이 한거임 훈수 해봐
+            if (IsStepClear)
+            {
+                if (index != StageObjects.Count)
+                {
+                    RandomInstantiateObject(StageObjects[index]);
+                    StageObjs[index].SetActive(true);
+                    IsStepClear = false;
+                    break;
+                }
+
+                StageObjs[index].SetActive(true);
+                break;
+            }
+            yield return wait;
+        }
     }
 
     /// <summary>
@@ -275,6 +234,12 @@ public class GameManager : MonoBehaviour
     /// </summary>
     private void RandomInstantiateObject(List<GameObject> stageobjs)
     {
+        if (stageobjs == null)
+        {
+            Debug.Assert(false, "Stage Objects is Null");
+            return;
+        }
+
         var slottr = new List<Transform>(slots);
 
         StageObject stageobj;
@@ -289,5 +254,83 @@ public class GameManager : MonoBehaviour
 
             slottr.RemoveAt(num);
         }
+
+        stageobj = null;
     }
+
+
+    #region Stage Clear
+    private IEnumerator CStageClearEvent()
+    {
+        SpeechBubble.SetActive(false);
+
+        UIManager.Instance.SetNextStageButton();
+
+        switch (stagenum)
+        {
+            case 1:
+            case 2:
+            case 3:
+                yield return StartCoroutine(COneToThreeStageClear());
+                break;
+            case 4:
+            case 5:
+            case 6:
+                yield return StartCoroutine(CFourToSixStageClear());
+                break;
+            case 7:
+            case 8:
+            case 9:
+                yield return StartCoroutine(CSevenToNineStageClear());
+                break;
+            default:
+                Debug.Assert(false, "Clear Coroutine Switch default");
+                break;
+        }
+        StarParticle.Play();
+
+        yield return null;
+    }
+
+    private IEnumerator COneToThreeStageClear()
+    {
+        StageObjParentTr.GetComponent<RectTransform>().DOAnchorPosY(200, 1f);
+        yield return new WaitForSeconds(1f);
+
+        //뚜껑
+        RectTransform Lidrt = StageObjParentTr.GetChild(StageObjParentTr.childCount - 1).GetComponent<RectTransform>();
+        Lidrt.GetComponent<Image>().DOFade(1, 1f);
+        Lidrt.DOAnchorPosY(30, 1f);
+
+        yield return new WaitForSeconds(2f);
+    }
+
+    private IEnumerator CFourToSixStageClear()
+    {
+        CloudParticle.Play();
+
+        foreach (var obj in StageObjs)
+            obj.GetComponent<Image>().DOFade(0, 1.5f);
+
+        UIManager.Instance.PlayStageClearEvent(StageObjParentTr as RectTransform);
+
+        yield return new WaitForSeconds(1.5f);
+        CloudParticle.Stop();
+
+        yield return new WaitForSeconds(1.3f);
+    }
+
+    private IEnumerator CSevenToNineStageClear()
+    {
+        StageObjParentTr.GetComponent<Image>().color = Color.white;
+        StageObjParentTr.GetComponent<RectTransform>().DOAnchorPosY(200, 1f);
+
+        for (int i = 0; i < StageObjParentTr.childCount; i++)
+            StageObjParentTr.GetChild(i).gameObject.SetActive(false);
+
+        yield return new WaitForSeconds(1f);
+    }
+
+    #endregion
+
 }

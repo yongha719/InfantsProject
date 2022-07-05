@@ -29,7 +29,10 @@ public class Slot : MonoBehaviour, IDropHandler
                 dragingobj.GetComponent<RectTransform>().localPosition = Vector2.zero;
             }
             else
+            {
                 SoundManager.Play(SsoundName.MISTAKE);
+                UIManager.Instance.CurFalseCount++;
+            }
         }
     }
 }

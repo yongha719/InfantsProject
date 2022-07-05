@@ -43,13 +43,8 @@ public class StageObject : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndD
         }
 
     }
-    /// <summary>
-    /// 积己等 第 谅钎啊 崔扼咙
-    /// </summary>
-    public Vector2 GetObjectAnchoredPos()
-    {
-        return OriginParent.GetComponent<RectTransform>().anchoredPosition + OriginParent.parent.GetComponent<RectTransform>().anchoredPosition;
-    }
+
+    public Vector2 GetObjectAnchoredPos() => OriginParent.GetComponent<RectTransform>().anchoredPosition + OriginParent.parent.GetComponent<RectTransform>().anchoredPosition;
 
     public void OnBeginDrag(PointerEventData eventData)
     {

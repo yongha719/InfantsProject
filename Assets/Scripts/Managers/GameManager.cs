@@ -72,6 +72,12 @@ public class GameManager : MonoBehaviour
     [SerializeField] private List<GameObject> HotCakes;
     [SerializeField] private List<GameObject> Pears;
     [SerializeField] private List<GameObject> Cookies;
+
+    [Header("Stage 9================================================================"), Space(10)]
+    [SerializeField] private List<GameObject> Chocolates;
+    [SerializeField] private List<GameObject> Churros;
+    [SerializeField] private List<GameObject> HotDogs;
+    [SerializeField] private List<GameObject> Peachs;
     #endregion
     #endregion
 
@@ -234,7 +240,7 @@ public class GameManager : MonoBehaviour
     /// </summary>
     private void RandomInstantiateObject(List<GameObject> stageobjs)
     {
-        if (stageobjs == null)
+        if (stageobjs.Count == 0)
         {
             Debug.Assert(false, "Stage Objects is Null");
             return;

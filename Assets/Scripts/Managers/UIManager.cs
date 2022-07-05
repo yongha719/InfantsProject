@@ -14,6 +14,8 @@ public class UIManager : MonoBehaviour
 
     #region Drag Guide
     private bool isGameClear;
+    public float CurFalseCount = 0;
+    private const float FALSECOUNT = 5;
     public StageObject CurrectObj;
     private Vector2 SlotPos = new Vector2(0, -350);
     private const float GUIDE_DELAY = 5f;
@@ -173,15 +175,16 @@ public class UIManager : MonoBehaviour
 
     private void Update()
     {
-        if (EqualSceneName(SsceneName.STAGESCENE) && isGameClear == false)
+        if (EqualSceneName(SsceneName.STAGESCENE))
+            DragGuide();
+    }
+    void DragGuide()
+    {
+        if (isGameClear == false)
         {
             if (isDragging == false)
             {
-                if (guideCur <= GUIDE_DELAY)
-                {
-                    guideCur += Time.deltaTime;
-                }
-                else if (endGuideCoroutine)
+                if (CurFalseCount >= FALSECOUNT && endGuideCoroutine)
                 {
                     endGuideCoroutine = false;
                     GuideCoroutine = StartCoroutine(CShowGuide());
@@ -189,11 +192,14 @@ public class UIManager : MonoBehaviour
             }
             else if (GuideCoroutine != null)
             {
-                guideCur = 0;
                 endGuideCoroutine = true;
                 GuideRt.gameObject.SetActive(false);
                 StopCoroutine(GuideCoroutine);
             }
+        }
+        else
+        {
+            GuideRt.gameObject.SetActive(false);
         }
     }
     IEnumerator CShowGuide()
@@ -212,7 +218,7 @@ public class UIManager : MonoBehaviour
         }
 
         GuideRt.gameObject.SetActive(false);
-        guideCur = 0;
+        CurFalseCount = 0;
         endGuideCoroutine = true;
         yield return null;
     }
@@ -271,10 +277,9 @@ public class UIManager : MonoBehaviour
 
         StageObjParent.DOAnchorPosY(350, 1f);
     }
-    private void OnDestroy()
-    {
-        Instance = null;
 
+    void PlayerPrefsSave()
+    {
         PlayerPrefs.SetInt(SPrefsKey.UNLOCK, (isLock ? SPrefsKey.True : SPrefsKey.False));
 
         if (EqualSceneName(SsceneName.TITLESCENE))
@@ -286,9 +291,16 @@ public class UIManager : MonoBehaviour
             PlayerPrefs.SetInt(SPrefsKey.SE_MUTE, SEToggle.isOn ? SPrefsKey.True : SPrefsKey.False);
         }
     }
+
+    private void OnDestroy()
+    {
+        Instance = null;
+
+        PlayerPrefsSave();
+    }
     private void OnApplicationQuit()
     {
-        // PlayerPrefs.SetInt(SPrefsKey.UNLOCK, 0);
+        PlayerPrefsSave();
     }
 }
 

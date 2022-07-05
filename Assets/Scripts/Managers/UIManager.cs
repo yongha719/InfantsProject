@@ -9,7 +9,7 @@ public class UIManager : MonoBehaviour
 {
     public static UIManager Instance { get; private set; }
     public static bool ShouldFade;
-    private bool isLock;
+    private static bool isLock;
     public bool isDragging;
 
     #region Drag Guide
@@ -68,20 +68,25 @@ public class UIManager : MonoBehaviour
     {
         Instance = this;
         SM = SoundManager.Instance;
-        purchase = FindObjectOfType<PurChase>();
     }
 
     private void Start()
     {
         SoundManager.AddButtonClick(Resources.FindObjectsOfTypeAll<Button>());
 
+        purchase = FindObjectOfType<PurChase>();
         PurchasePopUp = purchase.PurchasePopUp;
         PurchaseButton = purchase.PurchaseButton;
-        PurchaseButton.onClick.AddListener(() => { PurchasePopUp.SetActive(false); });
+        PurchaseButton.onClick.AddListener(() => { PurchasePopUp.SetActive(true); });
 
         if (PlayerPrefs.HasKey(SPrefsKey.UNLOCK))
             isLock = (PlayerPrefs.GetInt(SPrefsKey.UNLOCK) == SPrefsKey.True ? true : false);
 
+        Init();
+    }
+
+    private void Init()
+    {
         if (EqualSceneName(SsceneName.TITLESCENE))
         {
             if (isLock)
@@ -130,6 +135,12 @@ public class UIManager : MonoBehaviour
         }
         else if (EqualSceneName(SsceneName.STAGESCENE))
         {
+            foreach (var nextstagebtn in NextStageButtons)
+            {
+                if (nextstagebtn.transform.childCount != 0)
+                    NextStageLockButtons.Add(nextstagebtn.transform.GetChild(0).GetComponent<Button>());
+            }
+
             if (isLock == false)
             {
                 foreach (var lockbutton in NextStageLockButtons)
@@ -152,11 +163,6 @@ public class UIManager : MonoBehaviour
                 button.gameObject.SetActive(false);
             }
 
-            foreach (var nextstagebtn in NextStageButtons)
-            {
-                if (nextstagebtn.transform.childCount != 0)
-                    NextStageLockButtons.Add(nextstagebtn.transform.GetChild(0).GetComponent<Button>());
-            }
 
 
             BackButton.onClick.AddListener(() => Fade.Instance.FadeIn(true));
@@ -172,7 +178,6 @@ public class UIManager : MonoBehaviour
 
         }
     }
-
     private void Update()
     {
         if (EqualSceneName(SsceneName.STAGESCENE))
@@ -182,19 +187,22 @@ public class UIManager : MonoBehaviour
     {
         if (isGameClear == false)
         {
-            if (isDragging == false)
+            if (CurFalseCount >= FALSECOUNT && endGuideCoroutine)
             {
-                if (CurFalseCount >= FALSECOUNT && endGuideCoroutine)
-                {
-                    endGuideCoroutine = false;
-                    GuideCoroutine = StartCoroutine(CShowGuide());
-                }
+                endGuideCoroutine = false;
+                GuideCoroutine = StartCoroutine(CShowGuide());
             }
-            else if (GuideCoroutine != null)
+
+            if (isDragging == false && GuideCoroutine != null)
             {
                 endGuideCoroutine = true;
                 GuideRt.gameObject.SetActive(false);
                 StopCoroutine(GuideCoroutine);
+            }
+            else
+            {
+                CurFalseCount = 0;
+                GuideRt.gameObject.SetActive(false);
             }
         }
         else
@@ -257,15 +265,6 @@ public class UIManager : MonoBehaviour
         print("구매 성공!!");
     }
 
-    /// <summary>
-    /// Stage Clear Coroutine Call Method
-    /// </summary>
-    public void PlayStageClearEvent(RectTransform StageObjParent)
-    {
-        StartCoroutine(CPlayStageClearEvent(StageObjParent));
-    }
-
-
     private IEnumerator CPlayStageClearEvent(RectTransform StageObjParent)
     {
         Mat.GetComponent<RectTransform>().DOAnchorPosY(-350, 1f);
@@ -278,7 +277,16 @@ public class UIManager : MonoBehaviour
         StageObjParent.DOAnchorPosY(350, 1f);
     }
 
-    void PlayerPrefsSave()
+    /// <summary>
+    /// Stage Clear Coroutine Call Method
+    /// </summary>
+    public void PlayStageClearEvent(RectTransform StageObjParent)
+    {
+        StartCoroutine(CPlayStageClearEvent(StageObjParent));
+    }
+
+
+    void PrefsSave()
     {
         PlayerPrefs.SetInt(SPrefsKey.UNLOCK, (isLock ? SPrefsKey.True : SPrefsKey.False));
 
@@ -296,11 +304,7 @@ public class UIManager : MonoBehaviour
     {
         Instance = null;
 
-        PlayerPrefsSave();
-    }
-    private void OnApplicationQuit()
-    {
-        PlayerPrefsSave();
+        PrefsSave();
     }
 }
 

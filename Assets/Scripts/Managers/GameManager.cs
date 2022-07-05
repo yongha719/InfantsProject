@@ -94,7 +94,7 @@ public class GameManager : MonoBehaviour
     {
         Fade.Instance.FadeOut();
 
-        IsStepClear = false;
+        IsStepClear = true;
 
         for (int i = 0; i < ParentRt.childCount; i++)
             slots.Add(ParentRt.GetChild(i));
@@ -107,7 +107,9 @@ public class GameManager : MonoBehaviour
 
         SpeechBubble.SetActive(true);
 
-        StartGame();
+        AppendStageObjects();
+
+        StartCoroutine(CStageSystem());
     }
 
     /// <summary>
@@ -115,6 +117,13 @@ public class GameManager : MonoBehaviour
     /// </summary>
     private void AppendStageObjects()
     {
+        // 만약 3스테이지 이하면 3스테이지까지의 오브젝트만 가져오고 1~3
+        // 6스테이지 이하면 6스테이지까지의 오브젝트만 가져옴 4~6
+        LunchBoxs = (stagenum <= 3 ? LunchBoxs.Take(3).ToList() : LunchBoxs.Skip(3).ToList());
+
+        if (stagenum <= 6)
+            StageObjects.Add(LunchBoxs);
+
         switch (stagenum)
         {
             case 1:
@@ -143,11 +152,13 @@ public class GameManager : MonoBehaviour
                 StageObjects.Add(Spoons);
                 break;
             case 7:
+                StageObjects.Add(Milks);
                 StageObjects.Add(Baguettes);
                 StageObjects.Add(Donuts);
                 StageObjects.Add(Grapes);
                 break;
             case 8:
+                StageObjects.Add(Juices);
                 StageObjects.Add(HotCakes);
                 StageObjects.Add(Pears);
                 StageObjects.Add(Cookies);
@@ -163,39 +174,7 @@ public class GameManager : MonoBehaviour
 
     private void StartGame()
     {
-        AppendStageObjects();
 
-        // 만약 3스테이지 이하면 3스테이지까지의 오브젝트만 가져오고 1~3
-        // 6스테이지 이하면 6스테이지까지의 오브젝트만 가져옴 4~6
-        LunchBoxs = (stagenum <= 3 ? LunchBoxs.Take(3).ToList() : LunchBoxs.Skip(3).ToList());
-
-        switch (stagenum)
-        {
-            case 1:
-            case 2:
-            case 3:
-            case 4:
-            case 5:
-            case 6:
-                RandomInstantiateObject(LunchBoxs);
-                break;
-            case 7:
-                RandomInstantiateObject(Milks);
-                break;
-            case 8:
-                RandomInstantiateObject(Juices);
-                break;
-            case 9:
-                //RandomInstantiateObject();
-                break;
-            case 10:
-                break;
-            default:
-                Debug.Assert(false, $"StartGame switch default\n Stage Number is {stagenum}");
-                break;
-        }
-
-        StartCoroutine(CStageSystem());
     }
 
     /// <summary>
@@ -218,17 +197,19 @@ public class GameManager : MonoBehaviour
         while (true)
         {
             // 킹태훈이 한거임 훈수 해봐
+            // 
             if (IsStepClear)
             {
                 if (index != StageObjects.Count)
                 {
                     RandomInstantiateObject(StageObjects[index]);
-                    StageObjs[index].SetActive(true);
                     IsStepClear = false;
+                    if (index != 0)
+                        StageObjs[index - 1].SetActive(true);
                     break;
                 }
 
-                StageObjs[index].SetActive(true);
+                StageObjs[index - 1].SetActive(true);
                 break;
             }
             yield return wait;

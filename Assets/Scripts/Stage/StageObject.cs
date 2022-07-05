@@ -57,8 +57,6 @@ public class StageObject : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndD
 
         canvasGroup.alpha = 0.6f;
         canvasGroup.blocksRaycasts = false;
-
-        print("Begin");
     }
 
     public void OnDrag(PointerEventData eventData)
@@ -92,12 +90,9 @@ public class StageObject : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndD
 
     IEnumerator CGoOriginPos()
     {
-        print("GO");
-        print(rectTransform.anchoredPosition);
-        print(AnchoredPos);
         rectTransform.DOAnchorPos(AnchoredPos, 1f);
 
-        yield return new WaitForSeconds(0.7f);
+        yield return new WaitForSeconds(1.1f);
         isTweening = false;
     }
 }

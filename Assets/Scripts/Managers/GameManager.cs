@@ -171,12 +171,6 @@ public class GameManager : MonoBehaviour
         }
     }
 
-
-    private void StartGame()
-    {
-
-    }
-
     /// <summary>
     /// 게임 시스템
     /// </summary>

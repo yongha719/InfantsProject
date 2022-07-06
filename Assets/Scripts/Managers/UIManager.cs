@@ -274,7 +274,7 @@ public class UIManager : MonoBehaviour
 
         yield return new WaitForSeconds(1.7f);
 
-        StageObjParent.DOAnchorPosY(350, 1f);
+        StageObjParent.DOAnchorPosY(500, 1f);
     }
 
     /// <summary>

@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: -4120379360845811974}
   - component: {fileID: 7584076586135265889}
   m_Layer: 5
-  m_Name: Base 1
+  m_Name: Churros 8
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -67,7 +67,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 0}
+  m_Sprite: {fileID: 21300000, guid: 6343b4f421182f0439a46f267e0eea87, type: 3}
   m_Type: 0
   m_PreserveAspect: 1
   m_FillCenter: 1

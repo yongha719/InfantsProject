@@ -102,7 +102,7 @@ public class SoundManager : MonoBehaviour
         play("BGM", SoundType.BGM);
     }
 
-    public static void AddButtonClick(Button[] buttons)
+    public static void AddButtonClickSound(Button[] buttons)
     {
         foreach (var button in buttons)
         {

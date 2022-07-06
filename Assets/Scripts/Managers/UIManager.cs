@@ -72,7 +72,7 @@ public class UIManager : MonoBehaviour
 
     private void Start()
     {
-        SoundManager.AddButtonClick(Resources.FindObjectsOfTypeAll<Button>());
+        SoundManager.AddButtonClickSound(Resources.FindObjectsOfTypeAll<Button>());
 
         purchase = FindObjectOfType<PurChase>();
         PurchasePopUp = purchase.PurchasePopUp;
@@ -90,13 +90,9 @@ public class UIManager : MonoBehaviour
         if (EqualSceneName(SsceneName.TITLESCENE))
         {
             if (isLock)
-            {
                 Unlocking(TitleLockButtons);
-            }
             else
-            {
                 PurchaseButton.onClick.AddListener(() => { Unlocking(TitleLockButtons); isLock = true; });
-            }
 
             if (ShouldFade)
             {
@@ -105,48 +101,20 @@ public class UIManager : MonoBehaviour
             }
 
             foreach (var lockbutton in TitleLockButtons)
-            {
-                lockbutton.onClick.AddListener(() =>
-                {
-                    PurchasePopUp.SetActive(true);
-                });
-            }
+                lockbutton.onClick.AddListener(() => PurchasePopUp.SetActive(true));
 
-            BGMSlider.onValueChanged.AddListener((volume) => { SM.BGM_Volume = volume; });
-            BGMSlider.value = SM.BGM_Volume;
-            BGMToggle.onValueChanged.AddListener((ison) =>
-            {
-                SM.BGM_Mute = ison; SoundManager.Play(SsoundName.BUTTON_CLICK);
-                BGMToggle.GetComponent<Image>().sprite = BGMMuteImages[ison == false ? 0 : 1];
-            });
-            BGMToggle.isOn = SM.BGM_Mute;
-            BGMToggle.GetComponent<Image>().sprite = BGMMuteImages[BGMToggle.isOn == false ? 0 : 1];
-
-            SESlider.onValueChanged.AddListener((volume) => { SM.SEVolume = volume; });
-            SESlider.value = SM.SEVolume;
-            SEToggle.onValueChanged.AddListener((ison) =>
-            {
-                SM.SEMute = ison; SoundManager.Play(SsoundName.BUTTON_CLICK);
-                SEToggle.GetComponent<Image>().sprite = SEMuteImages[ison == false ? 0 : 1];
-            });
-            SEToggle.isOn = SM.SEMute;
-            SEToggle.GetComponent<Image>().sprite = SEMuteImages[SEToggle.isOn == false ? 0 : 1];
-
+            SoundSetting();
         }
         else if (EqualSceneName(SsceneName.STAGESCENE))
         {
             foreach (var nextstagebtn in NextStageButtons)
-            {
                 if (nextstagebtn.transform.childCount != 0)
                     NextStageLockButtons.Add(nextstagebtn.transform.GetChild(0).GetComponent<Button>());
-            }
 
             if (isLock == false)
             {
                 foreach (var lockbutton in NextStageLockButtons)
-                {
                     lockbutton.onClick.AddListener(() => PurchasePopUp.SetActive(true));
-                }
 
                 PurchaseButton.onClick.AddListener(() => { Unlocking(NextStageLockButtons); isLock = true; });
             }
@@ -160,10 +128,9 @@ public class UIManager : MonoBehaviour
                     button.gameObject.SetActive(false);
                     GameManager.StageNum++;
                 });
+
                 button.gameObject.SetActive(false);
             }
-
-
 
             BackButton.onClick.AddListener(() => Fade.Instance.FadeIn(true));
 
@@ -178,37 +145,83 @@ public class UIManager : MonoBehaviour
 
         }
     }
+    void SoundSetting()
+    {
+        BGMSlider.onValueChanged.AddListener((volume) => { SM.BGM_Volume = volume; });
+        BGMSlider.value = SM.BGM_Volume;
+        BGMToggle.onValueChanged.AddListener((ison) =>
+        {
+            SM.BGM_Mute = ison; SoundManager.Play(SsoundName.BUTTON_CLICK);
+            BGMToggle.GetComponent<Image>().sprite = BGMMuteImages[ison == false ? 0 : 1];
+        });
+        BGMToggle.isOn = SM.BGM_Mute;
+        BGMToggle.GetComponent<Image>().sprite = BGMMuteImages[BGMToggle.isOn == false ? 0 : 1];
+
+        SESlider.onValueChanged.AddListener((volume) => { SM.SEVolume = volume; });
+        SESlider.value = SM.SEVolume;
+        SEToggle.onValueChanged.AddListener((ison) =>
+        {
+            SM.SEMute = ison; SoundManager.Play(SsoundName.BUTTON_CLICK);
+            SEToggle.GetComponent<Image>().sprite = SEMuteImages[ison == false ? 0 : 1];
+        });
+        SEToggle.isOn = SM.SEMute;
+        SEToggle.GetComponent<Image>().sprite = SEMuteImages[SEToggle.isOn == false ? 0 : 1];
+    }
+
     private void Update()
     {
         if (EqualSceneName(SsceneName.STAGESCENE))
             DragGuide();
     }
+
     void DragGuide()
     {
-        if (isGameClear == false)
-        {
-            if (CurFalseCount >= FALSECOUNT && endGuideCoroutine)
-            {
-                endGuideCoroutine = false;
-                GuideCoroutine = StartCoroutine(CShowGuide());
-            }
-
-            if (isDragging == false && GuideCoroutine != null)
-            {
-                endGuideCoroutine = true;
-                GuideRt.gameObject.SetActive(false);
-                StopCoroutine(GuideCoroutine);
-            }
-            else
-            {
-                CurFalseCount = 0;
-                GuideRt.gameObject.SetActive(false);
-            }
-        }
-        else
+        if (isGameClear)
         {
             GuideRt.gameObject.SetActive(false);
+            return;
         }
+
+
+        if (guideCur <= GUIDE_DELAY)
+        {
+            guideCur += Time.deltaTime;
+        }
+        else if (endGuideCoroutine)
+        {
+            endGuideCoroutine = false;
+            GuideCoroutine = StartCoroutine(CShowGuide());
+        }
+
+        if (isDragging && GuideCoroutine != null)
+        {
+            guideCur = 0;
+            endGuideCoroutine = true;
+            GuideRt.gameObject.SetActive(false);
+            StopCoroutine(GuideCoroutine);
+        }
+
+
+        //if (CurFalseCount >= FALSECOUNT && endGuideCoroutine)
+        //{
+        //    endGuideCoroutine = false;
+        //    GuideCoroutine = StartCoroutine(CShowGuide());
+        //}
+
+        //if (isDragging == true && GuideCoroutine != null)
+        //{
+        //    endGuideCoroutine = true;
+        //    GuideRt.gameObject.SetActive(false);
+        //    StopCoroutine(GuideCoroutine);
+        //}
+        //else
+        //{
+        //    CurFalseCount = 0;
+        //    GuideRt.gameObject.SetActive(false);
+        //}
+
+
+
     }
     IEnumerator CShowGuide()
     {
@@ -305,6 +318,7 @@ public class UIManager : MonoBehaviour
         Instance = null;
 
         PrefsSave();
+        print("save");
     }
 }
 

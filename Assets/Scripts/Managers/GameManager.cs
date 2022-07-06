@@ -74,9 +74,9 @@ public class GameManager : MonoBehaviour
     [SerializeField] private List<GameObject> Cookies;
 
     [Header("Stage 9================================================================"), Space(10)]
-    [SerializeField] private List<GameObject> Chocolates;
     [SerializeField] private List<GameObject> Churros;
     [SerializeField] private List<GameObject> HotDogs;
+    [SerializeField] private List<GameObject> Chocolates;
     [SerializeField] private List<GameObject> Peachs;
     #endregion
     #endregion
@@ -112,9 +112,6 @@ public class GameManager : MonoBehaviour
         StartCoroutine(CStageSystem());
     }
 
-    /// <summary>
-    /// Stage에 필요한 오브젝트들을 추가해줌
-    /// </summary>
     private void AppendStageObjects()
     {
         // 만약 3스테이지 이하면 3스테이지까지의 오브젝트만 가져오고 1~3
@@ -164,6 +161,10 @@ public class GameManager : MonoBehaviour
                 StageObjects.Add(Cookies);
                 break;
             case 9:
+                StageObjects.Add(Churros);
+                StageObjects.Add(HotDogs);
+                StageObjects.Add(Peachs);
+                StageObjects.Add(Chocolates);
                 break;
             default:
                 Debug.Assert(false, "응 나가");
@@ -171,9 +172,6 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    /// <summary>
-    /// 게임 시스템
-    /// </summary>
     private IEnumerator CStageSystem()
     {
         int count = StageObjects.Count;
@@ -283,7 +281,7 @@ public class GameManager : MonoBehaviour
         Lidrt.GetComponent<Image>().DOFade(1, 1f);
         Lidrt.DOAnchorPosY(30, 1f);
 
-        yield return new WaitForSeconds(2f);
+        yield return new WaitForSeconds(1.8f);
     }
 
     private IEnumerator CFourToSixStageClear()

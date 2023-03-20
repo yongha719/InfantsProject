@@ -20,7 +20,7 @@ public class SoundManager : MonoBehaviour
         set
         {
             bgmVolume = value;
-            audioSources[((int)SoundType.BGM)].volume = BGM_Volume;
+            audioSources[(int)SoundType.BGM].volume = BGM_Volume;
         }
     }
     private bool bgmMute = false;
@@ -30,7 +30,7 @@ public class SoundManager : MonoBehaviour
         set
         {
             bgmMute = value;
-            audioSources[((int)SoundType.BGM)].mute = bgmMute;
+            audioSources[(int)SoundType.BGM].mute = bgmMute;
         }
     }
     private float seVolume = 0.5f;
@@ -63,10 +63,9 @@ public class SoundManager : MonoBehaviour
         if (Instance == null)
         {
             Instance = this;
+            DontDestroyOnLoad(this);
 
             string[] soundnames = Enum.GetNames(typeof(SoundType));
-
-            DontDestroyOnLoad(this);
 
             for (int i = 0; i < soundnames.Length - 1; i++)
             {
@@ -77,9 +76,7 @@ public class SoundManager : MonoBehaviour
 
             audioSources[(int)SoundType.BGM].loop = true;
 
-            AudioClip[] audioClip = Resources.LoadAll<AudioClip>("Sound");
-
-            foreach (var clip in audioClip)
+            foreach (var clip in Resources.LoadAll<AudioClip>("Sound"))
             {
                 Clips[clip.name] = clip;
             }
@@ -93,11 +90,11 @@ public class SoundManager : MonoBehaviour
     {
         BGM_Volume = PlayerPrefs.HasKey(SPrefsKey.BGM_VOLUME) ? PlayerPrefs.GetFloat(SPrefsKey.BGM_VOLUME) : bgmVolume;
         if (PlayerPrefs.HasKey(SPrefsKey.BGM_MUTE))
-            BGM_Mute = PlayerPrefs.GetInt(SPrefsKey.BGM_MUTE) == SPrefsKey.True ? true : false;
+            BGM_Mute = PlayerPrefs.GetInt(SPrefsKey.BGM_MUTE) == 1;
 
         SEVolume = PlayerPrefs.HasKey(SPrefsKey.SE_VOLUME) ? PlayerPrefs.GetFloat(SPrefsKey.SE_VOLUME) : SEVolume;
         if (PlayerPrefs.HasKey(SPrefsKey.SE_MUTE))
-            SEMute = PlayerPrefs.GetInt(SPrefsKey.SE_MUTE) == SPrefsKey.True ? true : false;
+            SEMute = PlayerPrefs.GetInt(SPrefsKey.SE_MUTE) == 1;
 
         play("BGM", SoundType.BGM);
     }

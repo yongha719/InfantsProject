@@ -16,17 +16,16 @@ public class Slot : MonoBehaviour, IDropHandler
 
         if (eventData.pointerDrag != null)
         {
-            GameObject dragingobj = eventData.pointerDrag;
-            StageObject ingredient = dragingobj.GetComponent<StageObject>();
+            StageObject obj = eventData.pointerDrag.GetComponent<StageObject>();
 
-            if (ingredient.IsCurrect == true)
+            if (obj.IsCurrect == true)
             {
-                ingredient.OriginParent = transform;
-                ingredient.CanDrag = false;
+                obj.OriginParent = (RectTransform)transform;
+                obj.CanDrag = false;
                 GameManager.IsStepClear = true;
 
-                dragingobj.transform.SetParent(transform);
-                dragingobj.GetComponent<RectTransform>().localPosition = Vector2.zero;
+                obj.transform.SetParent(transform);
+                obj.rect.localPosition = Vector2.zero;
             }
             else
             {

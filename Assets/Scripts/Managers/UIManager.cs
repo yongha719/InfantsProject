@@ -29,9 +29,11 @@ public class UIManager : MonoBehaviour
     [Header("Title==============================================")]
     [SerializeField] private Slider BGMSlider;
     [SerializeField] private Toggle BGMToggle;
+    private Image BGMToggleImage;
     [SerializeField] private Sprite[] BGMMuteImages;
     [SerializeField, Space(5)] private Slider SESlider;
     [SerializeField] private Toggle SEToggle;
+    private Image SEToggleImage;
     [SerializeField] private Sprite[] SEMuteImages;
 
     [SerializeField] private List<Button> TitleLockButtons;
@@ -77,10 +79,9 @@ public class UIManager : MonoBehaviour
         purchase = FindObjectOfType<PurChase>();
         PurchasePopUp = purchase.PurchasePopUp;
         PurchaseButton = purchase.PurchaseButton;
-        PurchaseButton.onClick.AddListener(() => { PurchasePopUp.SetActive(true); });
 
         if (PlayerPrefs.HasKey(SPrefsKey.UNLOCK))
-            isLock = (PlayerPrefs.GetInt(SPrefsKey.UNLOCK) == SPrefsKey.True ? true : false);
+            isLock = PlayerPrefs.GetInt(SPrefsKey.UNLOCK) == 1;
 
         Init();
     }
@@ -90,9 +91,9 @@ public class UIManager : MonoBehaviour
         if (EqualSceneName(SsceneName.TITLESCENE))
         {
             if (isLock)
-                Unlocking(TitleLockButtons);
+                PurchaseButton.onClick.AddListener(() => { Unlocking(TitleLockButtons); isLock = false; });
             else
-                PurchaseButton.onClick.AddListener(() => { Unlocking(TitleLockButtons); isLock = true; });
+                Unlocking(TitleLockButtons);
 
             if (ShouldFade)
             {
@@ -103,26 +104,18 @@ public class UIManager : MonoBehaviour
             foreach (var lockbutton in TitleLockButtons)
                 lockbutton.onClick.AddListener(() => PurchasePopUp.SetActive(true));
 
+            BGMToggleImage = BGMToggle.GetComponent<Image>();
+            SEToggleImage = SEToggle.GetComponent<Image>();
+
             SoundSetting();
         }
         else if (EqualSceneName(SsceneName.STAGESCENE))
         {
-            foreach (var nextstagebtn in NextStageButtons)
-                if (nextstagebtn.transform.childCount != 0)
-                    NextStageLockButtons.Add(nextstagebtn.transform.GetChild(0).GetComponent<Button>());
-
-            if (isLock == false)
-            {
-                foreach (var lockbutton in NextStageLockButtons)
-                    lockbutton.onClick.AddListener(() => PurchasePopUp.SetActive(true));
-
-                PurchaseButton.onClick.AddListener(() => { Unlocking(NextStageLockButtons); isLock = true; });
-            }
-            else
-                Unlocking(NextStageLockButtons);
 
             foreach (var button in NextStageButtons)
             {
+                NextStageLockButtons.Add(button.transform.GetChild(0).GetComponent<Button>());
+
                 button.onClick.AddListener(() =>
                 {
                     button.gameObject.SetActive(false);
@@ -132,7 +125,22 @@ public class UIManager : MonoBehaviour
                 button.gameObject.SetActive(false);
             }
 
-            BackButton.onClick.AddListener(() => Fade.Instance.FadeIn(true));
+            if (isLock)
+            {
+                foreach (var lockbutton in NextStageLockButtons)
+                    lockbutton.onClick.AddListener(() => PurchasePopUp.SetActive(true));
+
+                PurchaseButton.onClick.AddListener(() => { Unlocking(NextStageLockButtons); isLock = false; });
+            }
+            else
+                Unlocking(NextStageLockButtons);
+
+
+            BackButton.onClick.AddListener(() =>
+            {
+                Fade.Instance.FadeIn(GotoTitle: true);
+                print("back");
+            });
 
             int stagenumindex = GameManager.StageNum - 1;
 
@@ -142,30 +150,32 @@ public class UIManager : MonoBehaviour
                 Mat.gameObject.SetActive(false);
             else
                 Mat.sprite = MatSprites[stagenumindex];
-
         }
     }
+
     void SoundSetting()
     {
         BGMSlider.onValueChanged.AddListener((volume) => { SM.BGM_Volume = volume; });
         BGMSlider.value = SM.BGM_Volume;
         BGMToggle.onValueChanged.AddListener((ison) =>
         {
-            SM.BGM_Mute = ison; SoundManager.Play(SsoundName.BUTTON_CLICK);
-            BGMToggle.GetComponent<Image>().sprite = BGMMuteImages[ison == false ? 0 : 1];
+            SM.BGM_Mute = ison;
+            SoundManager.Play(SsoundName.BUTTON_CLICK);
+            BGMToggleImage.sprite = BGMMuteImages[ison == false ? 0 : 1];
         });
         BGMToggle.isOn = SM.BGM_Mute;
-        BGMToggle.GetComponent<Image>().sprite = BGMMuteImages[BGMToggle.isOn == false ? 0 : 1];
+        BGMToggleImage.sprite = BGMMuteImages[BGMToggle.isOn == false ? 0 : 1];
 
         SESlider.onValueChanged.AddListener((volume) => { SM.SEVolume = volume; });
         SESlider.value = SM.SEVolume;
         SEToggle.onValueChanged.AddListener((ison) =>
         {
-            SM.SEMute = ison; SoundManager.Play(SsoundName.BUTTON_CLICK);
-            SEToggle.GetComponent<Image>().sprite = SEMuteImages[ison == false ? 0 : 1];
+            SM.SEMute = ison;
+            SoundManager.Play(SsoundName.BUTTON_CLICK);
+            SEToggleImage.sprite = SEMuteImages[ison == false ? 0 : 1];
         });
         SEToggle.isOn = SM.SEMute;
-        SEToggle.GetComponent<Image>().sprite = SEMuteImages[SEToggle.isOn == false ? 0 : 1];
+        SEToggleImage.sprite = SEMuteImages[SEToggle.isOn == false ? 0 : 1];
     }
 
     private void Update()

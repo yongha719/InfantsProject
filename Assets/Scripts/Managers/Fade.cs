@@ -12,24 +12,18 @@ public class Fade : MonoBehaviour
     WaitForSeconds waitTime = new WaitForSeconds(fadeTime);
 
     RectTransform Clouds;
-
-    RectTransform lower_left;
-    RectTransform lower_right;
-    RectTransform upper_left;
-    RectTransform upper_right;
+    [SerializeField] private RectTransform lower_left;
+    [SerializeField] private RectTransform lower_right;
+    [SerializeField] private RectTransform upper_left;
+    [SerializeField] private RectTransform upper_right;
 
     private void Awake()
     {
+        Clouds = GetComponent<RectTransform>();
+
         if (Instance == null)
         {
             Instance = this;
-
-            Clouds = GetComponent<RectTransform>();
-
-            lower_left = Clouds.GetChild(0) as RectTransform;
-            lower_right = Clouds.GetChild(1) as RectTransform;
-            upper_left = Clouds.GetChild(2) as RectTransform;
-            upper_right = Clouds.GetChild(3) as RectTransform;
 
             DontDestroyOnLoad(this.gameObject);
         }
@@ -39,9 +33,8 @@ public class Fade : MonoBehaviour
     /// </summary>
     /// <param name="GotoTitle"> if true go title scene else go stage scene </param>
     public void FadeIn(bool GotoTitle = false) => StartCoroutine(CFadeIn(GotoTitle));
-    private IEnumerator CFadeIn(bool GotoTItle = false)
+    private IEnumerator CFadeIn(bool goToTItle = false)
     {
-
         lower_left.DOAnchorPos(Vector2.zero, fadeTime);
         lower_right.DOAnchorPos(Vector2.zero, fadeTime);
         upper_left.DOAnchorPos(Vector2.zero, fadeTime);
@@ -51,8 +44,8 @@ public class Fade : MonoBehaviour
 
         yield return waitTime;
 
-        SceneManager.LoadScene(GotoTItle == true ? SsceneName.TITLESCENE : SsceneName.STAGESCENE);
-        UIManager.ShouldFade = GotoTItle;
+        SceneManager.LoadScene(goToTItle == true ? SsceneName.TITLESCENE : SsceneName.STAGESCENE);
+        UIManager.ShouldFade = goToTItle;
     }
 
     public void FadeOut() => StartCoroutine(CFadeOut());

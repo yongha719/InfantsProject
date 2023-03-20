@@ -4,9 +4,18 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using DG.Tweening;
+using System;
+using Random = UnityEngine.Random;
+
+[Serializable]
+public class SerializeList<T>
+{
+    public List<T> list;
+}
 
 public class GameManager : MonoBehaviour
 {
+
     public static bool IsStepClear;
     private static int stagenum = 1;
     public static int StageNum
@@ -37,7 +46,12 @@ public class GameManager : MonoBehaviour
     [SerializeField] private ParticleSystem StarParticle;
     [SerializeField] private ParticleSystem CloudParticle;
 
+    #endregion
+
     #region Stage Objects
+    [SerializeField]
+    private List<SerializeList<GameObject>> dad = new List<SerializeList<GameObject>>();
+
     [Header("Stage 1================================================================="), Space(10)]
     [SerializeField] private List<GameObject> Apples;
     [SerializeField] private List<GameObject> Breads;
@@ -78,7 +92,6 @@ public class GameManager : MonoBehaviour
     [SerializeField] private List<GameObject> HotDogs;
     [SerializeField] private List<GameObject> Chocolates;
     [SerializeField] private List<GameObject> Peachs;
-    #endregion
     #endregion
 
     private SoundManager SM;

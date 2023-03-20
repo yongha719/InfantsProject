@@ -717,8 +717,8 @@ GameObject:
   - component: {fileID: 5166621430821316582}
   - component: {fileID: 13750354310154167}
   - component: {fileID: 689811372401825923}
-  - component: {fileID: 9209114214279627782}
   - component: {fileID: 1974736853}
+  - component: {fileID: 337798721666204661}
   m_Layer: 5
   m_Name: Fade
   m_TagString: Untagged
@@ -806,22 +806,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 324b00a4d80775141a8f00d832584660, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  PurchasePopUp: {fileID: 1334420238}
-  PurchaseButton: {fileID: 2032102673}
---- !u!114 &9209114214279627782
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1229267262611761788}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b700a310ded48ff4e8d53331b577f023, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  PurchasePopUp: {fileID: 0}
-  PurchaseButton: {fileID: 0}
+  lower_left: {fileID: 1229267262265791379}
+  lower_right: {fileID: 1229267261094772576}
+  upper_left: {fileID: 1229267262210214742}
+  upper_right: {fileID: 1229267261727361588}
 --- !u!114 &1974736853
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -839,3 +827,17 @@ MonoBehaviour:
   m_BlockingMask:
     serializedVersion: 2
     m_Bits: 4294967295
+--- !u!114 &337798721666204661
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1229267262611761788}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b700a310ded48ff4e8d53331b577f023, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  PurchasePopUp: {fileID: 1334420238}
+  PurchaseButton: {fileID: 2032102673}

@@ -16,7 +16,7 @@ public class UIManager : MonoBehaviour
     private bool isGameClear;
     public float CurFalseCount = 0;
     private const float FALSECOUNT = 5;
-    public StageObject CurrectObj;
+    public PicnicIngredients CurrectObj;
     private Vector2 SlotPos = new Vector2(0, -350);
     private const float GUIDE_DELAY = 5f;
     private float guideCur;

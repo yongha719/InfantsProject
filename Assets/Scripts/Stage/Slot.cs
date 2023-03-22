@@ -16,7 +16,7 @@ public class Slot : MonoBehaviour, IDropHandler
 
         if (eventData.pointerDrag != null)
         {
-            StageObject obj = eventData.pointerDrag.GetComponent<StageObject>();
+            PicnicIngredients obj = eventData.pointerDrag.GetComponent<PicnicIngredients>();
 
             if (obj.IsCurrect == true)
             {

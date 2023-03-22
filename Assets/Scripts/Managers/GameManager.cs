@@ -8,9 +8,15 @@ using System;
 using Random = UnityEngine.Random;
 
 [Serializable]
-public class SerializeList<T>
+public class Serialize2DList<T>
 {
-    public List<T> list;
+    public List<MyList<T>> list;
+
+    [Serializable]
+    public class MyList<TValue>
+    {
+        public List<TValue> list;
+    }
 }
 
 public class GameManager : MonoBehaviour
@@ -37,7 +43,7 @@ public class GameManager : MonoBehaviour
 
     [SerializeField, Space(10)] private List<GameObject> LunchBoxs;
 
-    private List<List<GameObject>> StageObjects = new List<List<GameObject>>();
+    private List<List<GameObject>> picnicIgredients = new List<List<GameObject>>();
 
     private Transform StageObjParentTr;
     private List<GameObject> StageObjs = new List<GameObject>();
@@ -48,50 +54,9 @@ public class GameManager : MonoBehaviour
 
     #endregion
 
-    #region Stage Objects
-    [SerializeField]
-    private List<SerializeList<GameObject>> dad = new List<SerializeList<GameObject>>();
 
-    [Header("Stage 1================================================================="), Space(10)]
-    [SerializeField] private List<GameObject> Apples;
-    [SerializeField] private List<GameObject> Breads;
-    [SerializeField] private List<GameObject> Oranges;
-    [SerializeField] private List<GameObject> Rice_Roll;
-
-    [Header("Stage 2================================================================="), Space(10)]
-    [SerializeField] private List<GameObject> Sandwichs;
-    [SerializeField] private List<GameObject> Bananas;
-    [SerializeField] private List<GameObject> Tomatos;
-    [SerializeField] private List<GameObject> CupCakes;
-
-    [Header("Stage 3================================================================="), Space(10)]
-    [SerializeField] private List<GameObject> RiceBalls;
-    [SerializeField] private List<GameObject> WaterMelons;
-    [SerializeField] private List<GameObject> Sausages;
-    [SerializeField] private List<GameObject> Carrots;
-
-    [Header("Stage 4 ~ 6============================================================="), Space(10)]
-    [SerializeField] private List<GameObject> Spoons;
-    [SerializeField] private List<GameObject> Mats;
-    [SerializeField] private List<GameObject> Bottles;
-
-    [Header("Stage 7================================================================="), Space(10)]
-    [SerializeField] private List<GameObject> Milks;
-    [SerializeField] private List<GameObject> Donuts;
-    [SerializeField] private List<GameObject> Baguettes;
-    [SerializeField] private List<GameObject> Grapes;
-
-    [Header("Stage 8================================================================"), Space(10)]
-    [SerializeField] private List<GameObject> Juices;
-    [SerializeField] private List<GameObject> HotCakes;
-    [SerializeField] private List<GameObject> Pears;
-    [SerializeField] private List<GameObject> Cookies;
-
-    [Header("Stage 9================================================================"), Space(10)]
-    [SerializeField] private List<GameObject> Churros;
-    [SerializeField] private List<GameObject> HotDogs;
-    [SerializeField] private List<GameObject> Chocolates;
-    [SerializeField] private List<GameObject> Peachs;
+    #region Picnic Igredients
+    public List<Serialize2DList<GameObject>> picnicIgredient;
     #endregion
 
     private SoundManager SM;
@@ -132,62 +97,13 @@ public class GameManager : MonoBehaviour
         LunchBoxs = (stagenum <= 3 ? LunchBoxs.Take(3).ToList() : LunchBoxs.Skip(3).ToList());
 
         if (stagenum <= 6)
-            StageObjects.Add(LunchBoxs);
-
-        switch (stagenum)
-        {
-            case 1:
-                StageObjects.Add(Rice_Roll);
-                StageObjects.Add(Breads);
-                StageObjects.Add(Apples);
-                StageObjects.Add(Oranges);
-                break;
-            case 2:
-                StageObjects.Add(Sandwichs);
-                StageObjects.Add(Bananas);
-                StageObjects.Add(Tomatos);
-                StageObjects.Add(CupCakes);
-                break;
-            case 3:
-                StageObjects.Add(RiceBalls);
-                StageObjects.Add(WaterMelons);
-                StageObjects.Add(Sausages);
-                StageObjects.Add(Carrots);
-                break;
-            case 4:
-            case 5:
-            case 6:
-                StageObjects.Add(Bottles);
-                StageObjects.Add(Mats);
-                StageObjects.Add(Spoons);
-                break;
-            case 7:
-                StageObjects.Add(Milks);
-                StageObjects.Add(Baguettes);
-                StageObjects.Add(Donuts);
-                StageObjects.Add(Grapes);
-                break;
-            case 8:
-                StageObjects.Add(Juices);
-                StageObjects.Add(HotCakes);
-                StageObjects.Add(Pears);
-                StageObjects.Add(Cookies);
-                break;
-            case 9:
-                StageObjects.Add(Churros);
-                StageObjects.Add(HotDogs);
-                StageObjects.Add(Peachs);
-                StageObjects.Add(Chocolates);
-                break;
-            default:
-                Debug.Assert(false, "응 나가");
-                break;
-        }
+            picnicIgredient[stagenum].list.Add((Serialize2DList<GameObject>.MyList<GameObject>)
+                (IEnumerable<GameObject>)LunchBoxs);
     }
 
     private IEnumerator CStageSystem()
     {
-        int count = StageObjects.Count;
+        int count = picnicIgredients.Count;
 
         for (int i = 0; i <= count; i++)
             yield return StartCoroutine(CWaitStepClear(i));
@@ -197,36 +113,26 @@ public class GameManager : MonoBehaviour
 
     private IEnumerator CWaitStepClear(int index)
     {
-        var wait = new WaitForSeconds(0.001f);
+        while (IsStepClear == false)
+            yield return null;
 
-        while (true)
+        if (index != picnicIgredients.Count)
         {
-            // 킹태훈이 한거임 훈수 해봐
-            // 
-            if (IsStepClear)
-            {
-                if (index != StageObjects.Count)
-                {
-                    RandomInstantiateObject(StageObjects[index]);
-                    IsStepClear = false;
-                    if (index != 0)
-                        StageObjs[index - 1].SetActive(true);
-                    break;
-                }
-
+            RandomInstantiateObject(picnicIgredients[index]);
+            IsStepClear = false;
+            if (index != 0)
                 StageObjs[index - 1].SetActive(true);
-                break;
-            }
-            yield return wait;
         }
+
+        StageObjs[index - 1].SetActive(true);
     }
 
     /// <summary>
     /// 스테이지 오브젝트를 슬롯에 랜덤으로 생성하는 함수
     /// </summary>
-    private void RandomInstantiateObject(List<GameObject> stageobjs)
+    private void RandomInstantiateObject(List<GameObject> picnicingredients)
     {
-        if (stageobjs.Count == 0)
+        if (picnicingredients.Count == 0)
         {
             Debug.Assert(false, "Stage Objects is Null");
             return;
@@ -234,20 +140,18 @@ public class GameManager : MonoBehaviour
 
         var slottr = new List<Transform>(slots);
 
-        StageObject stageobj;
+        PicnicIngredients stageobj;
 
         for (int i = 0; i < slots.Count; i++)
         {
             int num = Random.Range(0, slottr.Count);
 
-            stageobj = Instantiate(stageobjs[i], slottr[num]).GetComponent<StageObject>();
+            stageobj = Instantiate(picnicingredients[i], slottr[num]).GetComponent<PicnicIngredients>();
             stageobj.num = (i + 1) % 3;
             stageobj.IsCurrect = (stagenum % 3 == stageobj.num);
 
             slottr.RemoveAt(num);
         }
-
-        stageobj = null;
     }
 
 

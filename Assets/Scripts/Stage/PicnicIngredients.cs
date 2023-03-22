@@ -4,13 +4,13 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 
 [RequireComponent(typeof(CanvasGroup))]
-public class StageObject : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler
+public class PicnicIngredients : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler
 {
     public bool IsCurrect;
     public bool CanDrag = true;
     public int num;
-    public RectTransform OriginParent;
-    public RectTransform rect;
+    [HideInInspector] public RectTransform OriginParent;
+    [HideInInspector] public RectTransform rect;
 
     private Vector2 AnchoredPos;
     private bool isTweening;
@@ -77,7 +77,7 @@ public class StageObject : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndD
 
         if (CanDrag == false)
         {
-            var stageobjs = FindObjectsOfType<StageObject>();
+            var stageobjs = FindObjectsOfType<PicnicIngredients>();
 
             foreach (var stageobj in stageobjs)
                 Destroy(stageobj.gameObject);
